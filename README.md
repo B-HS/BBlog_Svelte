@@ -1,38 +1,10 @@
-# create-svelte
+# 블로그 프로젝트 제 3탄 Svelte로 프론트 만들기
+- 리액트.. 뷰 .. 이제 스벨트도 써 보자
+# 스택
+- SvelteKit : https://kit.svelte.dev/
+- Spring boot : https://spring.io/
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+# 기타 라이브러리들
+- Skeleton (UI) : https://www.skeleton.dev/components/radio-groups
+- Iconify (Icon) : https://iconify.design/
+- svelte-i18n : https://github.com/kaisermann/svelte-i18n

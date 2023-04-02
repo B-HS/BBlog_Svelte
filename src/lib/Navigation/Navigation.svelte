@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { drawerStore } from '@skeletonlabs/skeleton';
-	import menus from './menus';
+	import { _ } from 'svelte-i18n';
+	import menus from '../Variables/menus';
 	function drawerClose(): void {
 		drawerStore.close();
 	}
@@ -10,7 +11,7 @@
 	<ul>
 		{#each menus as menu}
 			<li>
-				<a class="btn btn-sm" href={menu.href} on:click={drawerClose}>{menu.value}</a>
+				<a class="btn btn-sm" href={menu.href} on:click={drawerClose}>{$_(menu.value)}</a>
 			</li>
 		{/each}
 	</ul>

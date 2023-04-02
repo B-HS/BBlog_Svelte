@@ -2,5 +2,9 @@
 	"page_title": "현석",
 	"introduce": "소개",
 	"blog": "블로그",
-	"portfolio": "포트폴리오"
+	"portfolio": "포트폴리오",
+	"blog_all": "전체",
+	"blog_dev": "개발",
+	"blog_daily": "일상",
+	"blog_search": "검색"
 }
