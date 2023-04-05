@@ -1,8 +1,8 @@
 import { writable } from 'svelte/store';
-import type { articleState } from '../../app';
+import type { articleState, articleTitleProps } from '../../app';
 
 export const article = {
-	article: writable<articleState>({
+	article: writable<articleState & articleTitleProps & { tags: string[] }>({
 		date: '',
 		desc: '',
 		title: '',

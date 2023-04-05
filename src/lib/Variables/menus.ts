@@ -4,4 +4,4 @@ const menus = [
 	{ value: 'portfolio', tabNum: 2, href: '/portfolio' }
 ];
 
-export default menus
+export default menus;

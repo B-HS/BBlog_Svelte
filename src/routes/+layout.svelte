@@ -11,7 +11,7 @@
 </script>
 
 <BDrawer />
-<AppShell class="min-w-[400px]"  slotSidebarLeft="bg-surface-500/5 {classesSidebarLeft}">
+<AppShell class="min-w-[400px]" slotSidebarLeft="bg-surface-500/5 {classesSidebarLeft}">
 	<Header />
 	<slot />
 </AppShell>

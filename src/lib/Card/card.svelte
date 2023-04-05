@@ -1,14 +1,17 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Icon from '@iconify/svelte';
-	import type { articleState } from '../../app';
-	export let cardInfo: articleState;
+	import type { articleState, articleTitleProps } from '../../app';
+	export let cardInfo: articleState & articleTitleProps & { tags: string[] };
 	export let type: string;
 	const tags = cardInfo.tags as string[];
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="card flex w-full shadow-lg cursor-pointer transition-transform hover:-translate-y-1" on:click={() => goto(`${type}/${cardInfo.num}`)}>
+<div
+	class="card flex w-full shadow-lg cursor-pointer transition-transform hover:-translate-y-1"
+	on:click={() => goto(`${type}/${cardInfo.num}`)}
+>
 	<div class="card-img">
 		<img
 			src="https://paulryan.com.au/wp-content/uploads/2015/01/high-resolution-wallpapers-25.jpg"
@@ -32,9 +35,12 @@
 			</section>
 		</section>
 		<h3 class="h-[50%] py-2 opacity-50 hover:opacity-100 transition-opacity">{cardInfo.desc}</h3>
-		<section class="flex">
+		<section class="flex z-[999]">
 			{#each tags as tag}
-				<span class="chip variant-filled px-3 py-1 text-sm font-semibold mr-2 mb-2">{tag}</span>
+				<a
+					class="btn px-3 pb-1 pt-2 text-sm font-semibold mr-2 mb-2 border border-gray-500 border-opacity-30 hover:border-opacity-80 hover:-translate-y-0.5"
+					href={`${type}`}># {tag}</a
+				>
 			{/each}
 		</section>
 	</div>

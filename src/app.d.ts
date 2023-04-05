@@ -1,7 +1,22 @@
 export interface articleState {
 	num: number | string;
-	title: string;
 	desc: string;
-	date: string;
 	tags?: string[];
+}
+
+export interface articleTitleProps {
+	title: string;
+	date: string;
+	views?: number;
+}
+
+export interface articleCommentProps {
+	nickname: string;
+	iconUrl: string;
+	password?: string;
+	date: string;
+	commentDesc: string;
+	commentGroup: number;
+	commentSort: number;
+	hide: boolean;
 }

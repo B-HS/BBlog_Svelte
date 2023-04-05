@@ -14,9 +14,9 @@
 
 <svelte:window bind:innerWidth />
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<AppBar class="h-[3.75rem]">
+<AppBar class="h-[64px] shadow-md">
 	<svelte:fragment slot="lead">
-		<div class="flex items-center">
+		<div class="flex items-center h-full">
 			<button class="lg:hidden btn btn-sm mr-4" on:click={drawerOpen}>
 				<span>
 					<svg viewBox="0 0 100 80" class="fill-token w-4 h-4">
@@ -26,12 +26,7 @@
 					</svg>
 				</span>
 			</button>
-			<strong
-				class="text-xl uppercase cursor-pointer"
-				on:click={() => (window.location.href = '/')}
-			>
-				{$_('page_title')}
-			</strong>
+			<a class="btn btn-sm text-xl uppercase" href="/">{$_('page_title')}</a>
 		</div>
 	</svelte:fragment>
 

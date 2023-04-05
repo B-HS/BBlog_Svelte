@@ -1,7 +1,6 @@
 <script>
 	import VerticalCard from '../../lib/Card/verticalCard.svelte';
 	import { post } from '../../temp/post';
-
 	$: tabSet = 0;
 </script>
 
