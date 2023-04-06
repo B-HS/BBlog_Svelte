@@ -11,6 +11,7 @@ export interface articleTitleProps {
 }
 
 export interface articleCommentProps {
+	replyNum:number;
 	nickname: string;
 	iconUrl: string;
 	password?: string;

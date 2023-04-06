@@ -12,7 +12,10 @@
 	<input id="icon" class="w-0" type="file" />
 </section>
 <section class="reply_add flex border-gray-600 px-2">
-	<textarea class="textarea border-0" rows="2" placeholder="내용" />
+	<textarea class="textarea border-0 resize-none" rows="2" placeholder="내용" />
+</section>
+<section class="reply_btn flex w-full justify-end px-2 pt-2">
+	<button class="opacity-50 hover:opacity-100 transition-opacity border px-3 pt-1">Submit</button>
 </section>
 
 <style lang="sass">
