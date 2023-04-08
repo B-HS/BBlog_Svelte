@@ -10,7 +10,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
-	class="overflow-hidden shadow-lg py-5 cursor-pointer transition-transform hover:-translate-y-1"
+	class="card overflow-hidden shadow-lg pb-5 cursor-pointer transition-transform hover:-translate-y-1"
 	on:click={() => goto(`${type}/${cardInfo.num}`)}
 >
 	<img

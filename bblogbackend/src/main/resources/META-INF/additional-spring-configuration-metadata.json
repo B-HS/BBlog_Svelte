@@ -23,10 +23,5 @@
     "name": "dev.hyns.redisport",
     "type": "java.lang.String",
     "description": "resdisport"
-  },
-  {
-    "name": "dev.hyns.writePassword",
-    "type": "java.lang.String",
-    "description": "article write password"
   }
 ]}

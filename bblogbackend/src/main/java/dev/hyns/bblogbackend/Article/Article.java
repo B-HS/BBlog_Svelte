@@ -1,0 +1,66 @@
+package dev.hyns.bblogbackend.Article;
+
+import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import dev.hyns.bblogbackend.Article.Comment.Comment;
+import dev.hyns.bblogbackend.Article.Tag.Tag;
+import dev.hyns.bblogbackend.Article.Visit.Visit;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@EntityListeners(AuditingEntityListener.class)
+public class Article {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long aid;
+
+    @Column(columnDefinition = "LONGTEXT")
+    private String title;
+
+    @Column(columnDefinition = "LONGTEXT")
+    private String context;
+
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @Column
+    private Boolean hide;
+
+    @Column
+    private Menu menu;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "article", orphanRemoval = true)
+    private Set<Comment> comments = new LinkedHashSet<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "article", orphanRemoval = true)
+    private Set<Tag> tags = new LinkedHashSet<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "article", orphanRemoval = true)
+    private Set<Visit> visits = new LinkedHashSet<>();
+
+    public enum Menu {
+        INTRO, FRONTEND, BACKEND, ETC, PORTFOLIO
+    }
+}
