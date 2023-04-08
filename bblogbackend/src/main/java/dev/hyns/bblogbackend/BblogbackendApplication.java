@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class BblogbackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BblogbackendApplication.class, args); 
+		SpringApplication.run(BblogbackendApplication.class, args);
 	}
-
 }

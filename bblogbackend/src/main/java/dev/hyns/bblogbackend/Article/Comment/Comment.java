@@ -44,7 +44,7 @@ public class Comment {
     private Long commentSort;
 
     @Column(columnDefinition = "LONGTEXT")
-    private Long commnetImg;
+    private String commentImg;
 
     @Column
     private LocalDateTime uploadedDated;
@@ -52,4 +52,7 @@ public class Comment {
     @ManyToOne
     private Article article;
 
+    public void updateComment(CommentDTO dto){
+        this.commentDesc = dto.getCommentDesc();
+    }
 }

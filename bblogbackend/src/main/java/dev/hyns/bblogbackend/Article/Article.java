@@ -48,6 +48,9 @@ public class Article {
     @Column
     private Menu menu;
 
+    @Column(columnDefinition = "LONGTEXT")
+    private String thumbnail;
+
     @Builder.Default
     @OneToMany(mappedBy = "article", orphanRemoval = true)
     private Set<Comment> comments = new LinkedHashSet<>();
@@ -60,7 +63,14 @@ public class Article {
     @OneToMany(mappedBy = "article", orphanRemoval = true)
     private Set<Visit> visits = new LinkedHashSet<>();
 
+    public void updateArticle(ArticleDTO dto) {
+        this.title = dto.getTitle();
+        this.context = dto.getContext();
+        this.hide = dto.getHide();
+        this.menu = dto.getMenu();
+    }
+
     public enum Menu {
-        INTRO, FRONTEND, BACKEND, ETC, PORTFOLIO
+        INTRO, FRONTEND, BACKEND, ETC, PORTFOLIO, ALL
     }
 }

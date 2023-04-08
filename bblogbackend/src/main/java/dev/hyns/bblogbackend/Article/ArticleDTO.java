@@ -25,4 +25,7 @@ public class ArticleDTO {
     private Menu menu;
     private List<String> tags;
     private int visitCnt;
+    private int size;
+    private int page;
+    private String thumbnail;
 }
