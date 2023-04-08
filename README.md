@@ -4,8 +4,8 @@
 # 남은 작업
 - 댓글 답글/수정/삭제 모달
 - 상태 관리 툴 파악
-- 포트폴리오 탭 전체
-- 백엔드 전체(관리자 비밀번호만 존재, 토큰은 액세스토큰 온리 + 레디스로 유효관리)
+- 포트폴리오 글내용
+- api잇기
 # 스택
 - SvelteKit : https://kit.svelte.dev/
 - Spring boot : https://spring.io/
