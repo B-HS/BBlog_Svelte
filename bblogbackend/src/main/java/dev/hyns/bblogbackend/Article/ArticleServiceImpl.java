@@ -71,6 +71,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<HashMap<String, Object>> articleList(Menu menu, Integer page, Integer size) {
         HashMap<String, Object> result = new HashMap<>();
         Page<Article> entities;

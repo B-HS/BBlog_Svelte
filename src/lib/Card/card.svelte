@@ -1,12 +1,12 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
-	import type { articleState, articleTitleProps } from '../../app';
-	export let cardInfo: articleState & articleTitleProps & { tags: string[] };
+	import type { article, articleState, articleTitleProps } from '../../app';
+	export let cardInfo: article;
 	export let type: string;
 	const tags = cardInfo.tags as string[];
 </script>
 
-<a class="card w-full flex hover:-translate-y-0.5 transition-transform" href={`/${type}/${cardInfo.num}`}>
+<a class="card w-full flex hover:-translate-y-0.5 transition-transform" href={`/${type}/${cardInfo.aid}`}>
 	<div class="card_img flex border border-gray-600 border-opacity-50 object-cover">
 		<img
 			src="https://mi.gumyo.net/files/47df371c-ec7f-4579-ac93-ca32fd25d54b"
@@ -21,7 +21,7 @@
 			<span class="opacity-50 uppercase flex gap-1"> <Icon icon="mdi:menu" class="translate-y-0.5" />{type}</span>
 			<span class="text-3xl">{cardInfo.title}</span>
 		</section>
-		<span class="opacity-70">{cardInfo.desc}</span>
+		<span class="opacity-70">{cardInfo.context}</span>
 		<section class="tags flex">
 			{#each tags as tag}
 				<a

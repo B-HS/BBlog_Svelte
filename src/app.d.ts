@@ -21,3 +21,15 @@ export interface articleCommentProps {
 	commentSort: number;
 	hide: boolean;
 }
+
+
+export interface article {
+	aid: number;
+	title: string;
+	context: string;
+	createdDate: Date | string;
+	hide: boolean;
+	menu: string;
+	thumbnail: string;
+	tags:string[]
+}
