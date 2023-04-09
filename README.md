@@ -3,9 +3,7 @@
 
 # 남은 작업
 - 댓글 답글/수정/삭제 모달
-- 상태 관리 툴 파악
 - 포트폴리오 글내용
-- api잇기
 # 스택
 - SvelteKit : https://kit.svelte.dev/
 - Spring boot : https://spring.io/
