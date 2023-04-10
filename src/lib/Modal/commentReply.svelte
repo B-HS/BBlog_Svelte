@@ -16,7 +16,7 @@
 </script>
 
 <section
-	class="modal z-[1000] w-full h-full absolute top-0 left-0 flex justify-center items-center bg-black dark:bg-white bg-opacity-30 dark:bg-opacity-30"
+	class="modal z-[1000] w-full h-full absolute top-0 left-0 flex justify-center items-center bg-white dark:bg-black bg-opacity-30 dark:bg-opacity-30"
 	style={`display: ${isOpen ? 'block' : 'none'}`}
 >
 	<span>Reply</span>

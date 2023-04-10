@@ -71,6 +71,6 @@ public class Article {
     }
 
     public enum Menu {
-        INTRO, FRONTEND, BACKEND, ETC, PORTFOLIO, ALL
+        INTRO, DEV, ETC, PORTFOLIO, ALL
     }
 }
