@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import dev.hyns.bblogbackend.Article.Article.Menu;
 import dev.hyns.bblogbackend.Article.Tag.Tag;
 import dev.hyns.bblogbackend.Article.Tag.TagRepository;
+import dev.hyns.bblogbackend.Article.Visit.VisitRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -34,11 +35,15 @@ public class ArticleServiceImpl implements ArticleService {
     private String DIRADRESS;
     private final ArticleRepository arepo;
     private final TagRepository trepo;
+    private final VisitRepository vrepo;
 
     @Override
+    @Transactional
     public ResponseEntity<ArticleDTO> readArticle(Long num) {
         Article result = arepo.findById(num).orElseThrow(() -> new IllegalArgumentException("Article not exist"));
-        return new ResponseEntity<ArticleDTO>(toDTO(result), HttpStatus.OK);
+        ArticleDTO dto = toDTO(result);
+        dto.setVisitCnt(vrepo.countByArticleAid(num).intValue());
+        return new ResponseEntity<ArticleDTO>(dto, HttpStatus.OK);
     }
 
     @Override

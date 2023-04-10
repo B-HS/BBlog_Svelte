@@ -8,14 +8,12 @@
 	$: isReplyOpen = false;
 	$: isEditOpen = false;
 	$: isDeleteOpen = false;
-	$: console.log(isReplyOpen);
 </script>
 
 <section class="comment border-gray-600 border-t my-5 px-2 py-5">
 	<section class="comment_main flex">
 		<section class="comment_icon w-28 flex align-top justify-center px-3 pb-6 pt-0">
 			<Avatar src="https://avatars.githubusercontent.com/u/49316060" width="w-32" />
-			<!-- {comment.iconUrl} -->
 		</section>
 		<section class="comment_main w-full flex flex-col gap-3">
 			<section class="comment_user flex gap-2 items-baseline">

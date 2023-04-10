@@ -11,7 +11,7 @@ export interface articleTitleProps {
 }
 
 export interface articleCommentProps {
-	replyNum:number;
+	replyNum: number;
 	nickname: string;
 	iconUrl: string;
 	password?: string;
@@ -22,7 +22,6 @@ export interface articleCommentProps {
 	hide: boolean;
 }
 
-
 export interface article {
 	aid: number;
 	title: string;
@@ -31,5 +30,6 @@ export interface article {
 	hide: boolean;
 	menu: string;
 	thumbnail: string;
-	tags:string[]
+	tags: string[];
+	visitCnt: number;
 }
