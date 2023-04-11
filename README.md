@@ -2,9 +2,11 @@
 - 리액트.. 뷰 .. 이제 스벨트도 써 보자
 
 # 남은 작업
-- 댓글 동적로딩(등록, 모달창 ajax)
-- 밀린 i18n 레이아웃 작업
-- 포트폴리오 글내용
+- 댓글 대댓/수정/삭제 ajax
+- 로그인 페이지
+- 글쓰기 페이지
+- 일어 언어셋 작성 / 스위치 적용
+- 포트폴리오 ajax
 # 스택
 - SvelteKit : https://kit.svelte.dev/
 - Spring boot : https://spring.io/

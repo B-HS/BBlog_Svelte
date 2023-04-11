@@ -3,7 +3,7 @@ import { init, register } from 'svelte-i18n';
 
 const defaultLocale = 'ko';
 
-register('ko', () => import('./locale/ko.json'));
+register('ko', () => import('./locale/ko'));
 
 init({
 	fallbackLocale: defaultLocale,

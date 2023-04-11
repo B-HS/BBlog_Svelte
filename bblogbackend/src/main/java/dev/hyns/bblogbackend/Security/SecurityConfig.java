@@ -36,8 +36,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests().requestMatchers(
                 "/article/write",
                 "/article/modify",
-                "/article/delete",
-                "/image/upload"
+                "/article/delete"
                 ).hasAuthority("ADMIN");
         http.authorizeHttpRequests(auth -> {
             auth.anyRequest().permitAll();

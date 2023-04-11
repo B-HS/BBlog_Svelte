@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -20,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import dev.hyns.bblogbackend.Article.Article.Menu;
 import dev.hyns.bblogbackend.Article.Tag.Tag;
@@ -98,20 +98,19 @@ public class ArticleServiceImpl implements ArticleService {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-
     @Override
-    public Set<String> ImgUpload(List<MultipartFile> files) {
-
-        return files.stream().map(file->{
-            String fileName = UUID.randomUUID().toString() + "."+ FilenameUtils.getExtension(file.getOriginalFilename());
-            try {
-                file.transferTo(new File(DIRADRESS + fileName));
-                return fileName;
-            } catch (Exception e) {
-                return "basic.png";
-            }
-        }).collect(Collectors.toSet());
+    public String ImgUpload(MultipartRequest files) {
+        MultipartFile file = files.getFile("upload");
+        String fileName = UUID.randomUUID().toString() + "."
+                + FilenameUtils.getExtension(file.getOriginalFilename());
+        try {
+            file.transferTo(new File(DIRADRESS + fileName));
+            return fileName;
+        } catch (Exception e) {
+            return "basic.png";
+        }
     }
+
     @Override
     public List<Object> ImgRead(String filename) {
         List<Object> result = new ArrayList<>();

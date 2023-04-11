@@ -2,11 +2,10 @@ package dev.hyns.bblogbackend.Article;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import dev.hyns.bblogbackend.Article.Article.Menu;
 import dev.hyns.bblogbackend.Article.Tag.Tag;
@@ -17,7 +16,7 @@ public interface ArticleService {
     ResponseEntity<Long> modifyArticle(ArticleDTO dto);
     ResponseEntity<Boolean> deleteArticle(Long num);
     ResponseEntity<HashMap<String, Object>> articleList(Menu menu, Integer page, Integer size);
-    Set<String> ImgUpload(List<MultipartFile> files);
+    String ImgUpload(MultipartRequest files);
     List<Object> ImgRead(String name);
 
     default ArticleDTO toDTO(Article entity) {

@@ -2,6 +2,7 @@ package dev.hyns.bblogbackend.Article.Comment;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import dev.hyns.bblogbackend.Article.Article;
@@ -46,7 +47,7 @@ public class Comment {
     @Column(columnDefinition = "LONGTEXT")
     private String commentImg;
 
-    @Column
+    @CreatedDate
     private LocalDateTime uploadedDated;
 
     @ManyToOne

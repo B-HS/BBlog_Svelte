@@ -49,7 +49,7 @@
 	onMount(() => {
 		articles.update((val) => (val = data.articles));
 		total.update((val) => (val = data.total));
-
+		page.update(val => val+=1)
 		const obr = new IntersectionObserver((ele) => {
 			if (ele[0].isIntersecting) getMoreArticle();
 		});
@@ -84,5 +84,5 @@
 			{/if}
 		</svelte:fragment>
 	</TabGroup>
-	<div class="w-full h-10" bind:this={observeObj}>{pg >= totalPage?"더보기가 존재하지 않습니다":"로드 중"}</div>
+	<div class="w-full h-10" bind:this={observeObj}>{pg >= totalPage?$_('load_not_exist'):$_('loading')}</div>
 </div>

@@ -7,6 +7,8 @@ export interface articleState {
 export interface articleTitleProps {
 	title: string;
 	date: string;
+	type?: string;
+	subType?: string;
 	views?: number;
 }
 
@@ -33,3 +35,19 @@ export interface article {
 	tags: string[];
 	visitCnt: number;
 }
+
+export interface comment {
+	rid?: number;
+	commentDesc: string;
+	nickname: string;
+	pw?: string;
+	commentGroup: number;
+	commentSort: number;
+	commentImg: string;
+	uploadedDated?: Date | string;
+	aid: number;
+	size?: number;
+	page?: number;
+}
+
+export type FileEventTarget = EventTarget & { files: FileList };
