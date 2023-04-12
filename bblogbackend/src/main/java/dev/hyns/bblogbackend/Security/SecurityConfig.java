@@ -24,6 +24,7 @@ public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final LoginSuccessHandler loginSuccessHanlder;
+    private final LoginFailureHandler loginFailureHandler;
     private final JWTAuthorizationFilter jwtAuthorizationFilter;
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager)
@@ -63,6 +64,7 @@ public class SecurityConfig {
         AbstAuthProcessFilterImpl filter = new AbstAuthProcessFilterImpl();
         filter.setAuthenticationManager(authenticationManager);
         filter.setAuthenticationSuccessHandler(loginSuccessHanlder);
+        filter.setAuthenticationFailureHandler(loginFailureHandler);
         return filter;
     }
 }

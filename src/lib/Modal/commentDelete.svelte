@@ -1,10 +1,13 @@
 <script lang="ts">
+	import commentAjax from '$lib/Store/ajax/commentAjax';
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
+	import type { comment } from '../../app';
 	export let isOpen: boolean;
+	export let cmt: comment;
+
 	const modalClose = () => {
-		console.log(1234);
 		isOpen = false;
 	};
 
@@ -18,6 +21,13 @@
 			window.removeEventListener('keydown', (e) => modalCloseByEscape(e));
 		};
 	});
+
+	const commentDelete = () => {
+		commentAjax.deleteComment({ pw, aid: cmt.aid, rid: cmt.rid });
+		pw=''
+		modalClose()
+	};
+	$: pw = '';
 </script>
 
 <section
@@ -34,11 +44,13 @@
 		<div class="border-t border-opacity-10 border-gray-200">
 			<dl>
 				<div class="px-4 py-5 sm:grid">
-					<input type="password" class="input w-full border-0 text-center" placeholder={$_('pw')} />
+					<input type="password" class="input w-full border-0 text-center" bind:value={pw} placeholder={$_('pw')} />
 				</div>
 
 				<div class="px-3 pb-2 flex justify-end">
-					<button class="btn btn-sm opacity-50 hover:opacity-100 transition-opacity">{$_('comment_delete')}</button>
+					<button class="btn btn-sm opacity-50 hover:opacity-100 transition-opacity" on:click={commentDelete}
+						>{$_('comment_delete')}</button
+					>
 				</div>
 			</dl>
 		</div>

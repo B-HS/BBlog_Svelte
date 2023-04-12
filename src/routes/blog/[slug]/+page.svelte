@@ -12,12 +12,13 @@
 	import 'dayjs/locale/ko';
 	import { onDestroy, onMount } from 'svelte';
 	import articleAjax from '$lib/Store/ajax/articleAjax';
-	import articleStore from '$lib/Store/articleStore';
 	import type { comment } from '../../../app';
+	import commentAjax from '$lib/Store/ajax/commentAjax';
+	import commentStore from '$lib/Store/commentStore';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	let comments: comment[] = [];
-	articleStore.commentList.subscribe((val) => (comments = [...val]));
+	commentStore.commentList.subscribe((val) => (comments = [...val]));
 
 	onMount(async () => {
 		await fetch('../v1/visit/read', {
@@ -25,12 +26,12 @@
 			body: JSON.stringify({ aid: data.slug, visitUrl: document.referrer ? document.referrer : 'LINK NOT CHECKED' }),
 			headers: { 'Content-Type': 'application/json' }
 		});
-		articleAjax.loadCommentList(5, 0, data.slug);
+		commentAjax.loadCommentList(5, 0, data.slug);
 	});
 
-	onDestroy(()=>{
-		articleAjax.reset()
-	})
+	onDestroy(() => {
+		articleAjax.reset();
+	});
 </script>
 
 <section class="container mx-auto m-5 py-3 max-w-5xl px-2">

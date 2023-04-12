@@ -1,8 +1,11 @@
 <script lang="ts">
+	import commentAjax from '$lib/Store/ajax/commentAjax';
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
+	import type { comment } from '../../app';
 	export let isOpen: boolean;
+	export let cmt: comment;
 	const modalClose = () => (isOpen = false);
 
 	const modalCloseByEscape = (e: KeyboardEvent) => {
@@ -15,6 +18,15 @@
 			window.removeEventListener('keydown', (e) => modalCloseByEscape(e));
 		};
 	});
+
+	const commentModify = ()=>{
+		commentAjax.modifyComment({aid:cmt.aid, rid:cmt.rid, pw, commentDesc})
+		modalClose()
+		pw=''
+		commentDesc=''
+	}
+	$: pw = '';
+	$: commentDesc = '';
 </script>
 
 <section
@@ -31,12 +43,12 @@
 		<div class="border-t border-opacity-10 border-gray-200">
 			<dl>
 				<div class="px-4 py-5 flex flex-col gap-2">
-					<input type="text" class="input w-full border-0 text-center" placeholder={$_('context')} />
-					<input type="password" class="input w-full border-0 text-center" placeholder={$_('pw')} />
+					<input type="text" class="input w-full border-0 text-center" bind:value={commentDesc} placeholder={$_('context')} />
+					<input type="password" class="input w-full border-0 text-center" bind:value={pw} placeholder={$_('pw')} />
 				</div>
 
 				<div class="px-3 pb-2 flex justify-end">
-					<button class="btn btn-sm opacity-50 hover:opacity-100 transition-opacity">{$_('comment_edit')}</button>
+					<button class="btn btn-sm opacity-50 hover:opacity-100 transition-opacity" on:click={commentModify}>{$_('comment_edit')}</button>
 				</div>
 			</dl>
 		</div>

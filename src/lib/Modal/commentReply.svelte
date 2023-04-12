@@ -2,7 +2,10 @@
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
+	import type { comment } from '../../app';
+	import commentAjax from '$lib/Store/ajax/commentAjax';
 	export let isOpen: boolean;
+	export let cmt: comment;
 	const modalClose = () => (isOpen = false);
 
 	const modalCloseByEscape = (e: KeyboardEvent) => {
@@ -15,6 +18,24 @@
 			window.removeEventListener('keydown', (e) => modalCloseByEscape(e));
 		};
 	});
+
+	const commentReply = () => {
+		commentAjax.writeComment({
+			aid: cmt.aid,
+			commentDesc,
+			nickname,
+			pw,
+			commentGroup: cmt.commentGroup,
+			commentSort: 1,
+			commentImg:
+				'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FYWnhg%2Fbtr9rgVjbom%2FE4BgkmjwqMdKwzo6JiFAL1%2Fimg.png'
+		});
+		modalClose();
+	};
+
+	$: nickname = '';
+	$: pw = '';
+	$: commentDesc = '';
 </script>
 
 <section
@@ -31,13 +52,15 @@
 		<div class="border-t border-opacity-10 border-gray-200">
 			<dl>
 				<div class="px-4 py-5 flex flex-col gap-2">
-					<input type="text" class="input w-full border-0 text-center" placeholder={$_('nickname')} />
-					<input type="password" class="input w-full border-0 text-center" placeholder={$_('pw')} />
-					<textarea class="input w-full border-0 text-center" placeholder={$_('context')} />
+					<input type="text" class="input w-full border-0 text-center" bind:value={nickname} placeholder={$_('nickname')} />
+					<input type="password" class="input w-full border-0 text-center" bind:value={pw} placeholder={$_('pw')} />
+					<textarea class="input w-full border-0 text-center" bind:value={commentDesc} placeholder={$_('context')} />
 				</div>
 
 				<div class="px-3 pb-2 flex justify-end">
-					<button class="btn btn-sm opacity-50 hover:opacity-100 transition-opacity">{$_('submit')}</button>
+					<button class="btn btn-sm opacity-50 hover:opacity-100 transition-opacity" on:click={commentReply}
+						>{$_('submit')}</button
+					>
 				</div>
 			</dl>
 		</div>

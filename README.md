@@ -2,11 +2,9 @@
 - 리액트.. 뷰 .. 이제 스벨트도 써 보자
 
 # 남은 작업
-- 댓글 대댓/수정/삭제 ajax
 - 로그인 페이지
 - 글쓰기 페이지
-- 일어 언어셋 작성 / 스위치 적용
-- 포트폴리오 ajax
+- 포트폴리오 파트 ajax
 # 스택
 - SvelteKit : https://kit.svelte.dev/
 - Spring boot : https://spring.io/

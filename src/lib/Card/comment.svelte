@@ -17,7 +17,7 @@
 	$: isDeleteOpen = false;
 </script>
 
-<section class="comment border-gray-600 my-5 px-2 py-5">
+<section class={`comment border-gray-600 my-5 px-2 py-5 ${comment.commentSort===1?"pl-16":''}`}>
 	<section class="comment_main flex">
 		<section class="comment_icon w-28 flex align-top justify-center px-3 pb-6 pt-0">
 			<Avatar src={comment.commentImg} width="w-32" />
@@ -40,6 +40,6 @@
 		</section>
 	</section>
 </section>
-<CommentReply bind:isOpen={isReplyOpen} />
-<CommentEdit bind:isOpen={isEditOpen} />
-<CommentDelete bind:isOpen={isDeleteOpen} />
+<CommentReply cmt = {comment} bind:isOpen={isReplyOpen} />
+<CommentEdit cmt = {comment} bind:isOpen={isEditOpen} />
+<CommentDelete cmt = {comment} bind:isOpen={isDeleteOpen} />

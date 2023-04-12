@@ -1,9 +1,10 @@
 <script lang="ts">
 	import articleAjax from '$lib/Store/ajax/articleAjax';
-	import Icon from '@iconify/svelte';
-	import type { comment } from '../../app';
-	import { _ } from 'svelte-i18n';
+	import commentAjax from '$lib/Store/ajax/commentAjax';
 	import URL from '$lib/Variables/URL';
+	import Icon from '@iconify/svelte';
+	import { _ } from 'svelte-i18n';
+	import type { comment } from '../../app';
 	export let aid: string | number;
 	$: uploaded = false;
 	let commentParams: comment = {
@@ -30,7 +31,7 @@
 	};
 
 	const writeComment = async () => {
-		await articleAjax.writeComment(commentParams);
+		await commentAjax.writeComment(commentParams);
 		commentParams = {
 			commentDesc: '',
 			nickname: '',

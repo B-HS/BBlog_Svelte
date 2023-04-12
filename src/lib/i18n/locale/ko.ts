@@ -21,5 +21,7 @@ export default {
 	"edit_title":"댓글 수정",
 	"reply_title":"답글 등록",
 	"load_not_exist":"더보기가 존재하지 않습니다",
-	"loading": "불러오는 중 . . ."
+	"loading": "불러오는 중 . . .",
+	"login_title": "Hyunseok",
+	"login_btn": "로그인"
 }

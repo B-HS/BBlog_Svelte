@@ -38,14 +38,14 @@ export interface article {
 
 export interface comment {
 	rid?: number;
-	commentDesc: string;
-	nickname: string;
+	commentDesc?: string;
+	nickname?: string;
 	pw?: string;
-	commentGroup: number;
-	commentSort: number;
-	commentImg: string;
+	commentGroup?: number;
+	commentSort?: number;
+	commentImg?: string;
 	uploadedDated?: Date | string;
-	aid: number;
+	aid?: number;
 	size?: number;
 	page?: number;
 }

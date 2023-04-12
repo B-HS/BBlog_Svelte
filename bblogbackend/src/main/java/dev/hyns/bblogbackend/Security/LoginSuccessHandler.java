@@ -3,8 +3,7 @@ package dev.hyns.bblogbackend.Security;
 import java.io.IOException;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import jakarta.servlet.ServletException;
@@ -16,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final SiteManagerRepository srepo;
     private final JWTManager jwtManager;
 
@@ -30,17 +29,6 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         srepo.save(member);
         response.addCookie(new Cookie("token", token));
         response.getWriter().write("logged");
-        super.onAuthenticationSuccess(request, response, authentication);
-    }
-
-    protected class NoRedirectStrategy implements RedirectStrategy {
-
-        @Override
-        public void sendRedirect(HttpServletRequest request,
-                HttpServletResponse response, String url) throws IOException {
-
-        }
-
     }
 
 }

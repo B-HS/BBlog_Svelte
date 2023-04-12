@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { AppBar, drawerStore, LightSwitch, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
-	import { _ } from 'svelte-i18n';
+	import { _, init } from 'svelte-i18n';
 	import icons from '../Variables/icons';
 	import menus from '../Variables/menus';
 	const drawerOpen = () =>
@@ -10,6 +10,7 @@
 		});
 	$: lang = 0;
 	$: innerWidth = 0;
+	$: lang===0?init({fallbackLocale:'ko'}):init({fallbackLocale:'jp'})
 </script>
 
 <svelte:window bind:innerWidth />

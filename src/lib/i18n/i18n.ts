@@ -4,6 +4,7 @@ import { init, register } from 'svelte-i18n';
 const defaultLocale = 'ko';
 
 register('ko', () => import('./locale/ko'));
+register('jp', () => import('./locale/jp'));
 
 init({
 	fallbackLocale: defaultLocale,
