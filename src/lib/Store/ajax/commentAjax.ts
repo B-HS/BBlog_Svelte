@@ -16,6 +16,20 @@ const loadCommentList = async (size: number, page: number, aid: string) => {
 	}
 };
 
+const loadMoreCommentList = async (size: number, page: number, aid: string) => {
+	console.log(size, page, aid);
+	
+	globalStore.isLoading.update((val) => (val = true));
+	const { data, statusText } = await axios.post('/v1/comment/list', { aid: aid, page: page, size: size });
+	const { comments, total } = data;
+
+	if (statusText === 'OK') {
+		commentStore.commentList.update((val) => (val = [...val, ...comments]));
+		commentStore.commentTotal.update((val) => (val = total));
+		globalStore.isLoading.update((val) => (val = false));
+	}
+};
+
 const writeComment = async (params: comment) => {
 	globalStore.isLoading.update((val) => (val = true));
 	const { data, statusText } = await axios.post('/v1/comment/write', { ...params });
@@ -46,7 +60,10 @@ const modifyComment = async (params: comment) => {
 const reset = () => {
 	globalStore.isLoading.update((val) => (val = true));
 	commentStore.commentList.update((val) => (val = []));
+	commentStore.page.update(val=> val=0)
+	commentStore.size.update(val=> val=5)
+	commentStore.commentTotal.update(val=>val=0)
 	globalStore.isLoading.update((val) => (val = false));
 };
 
-export default { loadCommentList, writeComment, deleteComment, reset, modifyComment };
+export default { loadCommentList, writeComment, deleteComment, reset, modifyComment, loadMoreCommentList };

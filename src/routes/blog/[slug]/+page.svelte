@@ -15,11 +15,28 @@
 	import type { comment } from '../../../app';
 	import commentAjax from '$lib/Store/ajax/commentAjax';
 	import commentStore from '$lib/Store/commentStore';
+	import { _ } from 'svelte-i18n';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	let comments: comment[] = [];
-	commentStore.commentList.subscribe((val) => (comments = [...val]));
+	let totalPage: number;
+	let pg: number;
+	let sg: number;
+	const { commentList, page, size, commentTotal } = commentStore;
+	commentList.subscribe((val) => (comments = [...val]));
+	commentTotal.subscribe((val) => totalPage = val);
+	size.subscribe((val) => (sg = val));
+	page.subscribe((val) => (pg = val));
 
+	const getMoreComment = () => {
+		if (pg >= totalPage) {
+			return;
+		}
+		commentAjax.loadMoreCommentList(sg, pg, data.slug);
+		page.update((val) => (val += 1));
+	};
+
+	let observeObj: HTMLDivElement;
 	onMount(async () => {
 		await fetch('../v1/visit/read', {
 			method: 'POST',
@@ -27,10 +44,15 @@
 			headers: { 'Content-Type': 'application/json' }
 		});
 		commentAjax.loadCommentList(5, 0, data.slug);
+		const obr = new IntersectionObserver((ele) => {
+			if (ele[0].isIntersecting) getMoreComment();
+		});
+		obr.observe(observeObj);
 	});
 
 	onDestroy(() => {
 		articleAjax.reset();
+		commentAjax.reset()
 	});
 </script>
 
@@ -51,4 +73,5 @@
 	{#each comments as comment}
 		<Comment {comment} />
 	{/each}
+	<div class="w-full h-25" bind:this={observeObj}>{pg >= totalPage ? $_('load_not_exist') : $_('loading')}</div>
 </section>
