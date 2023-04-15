@@ -24,8 +24,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     private final UserDetailsServiceImpl udserimpl;
     private final SiteManagerRepository srepo;
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = request.getHeader("token");
         if (token == null) {
             filterChain.doFilter(request, response);
@@ -45,7 +44,6 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     }
     public Authentication getAuthentication(String email) {
         UserDetails userDetails = udserimpl.loadUserByUsername(email);
-        return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
-                userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }
 }

@@ -12,9 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping(value = "visit")
 public class VisitController {
-
     private final VisitService vser;
-
     @PostMapping("/read")
     public ResponseEntity<Boolean> visitPages(@RequestBody VisitDTO visit) {
         return vser.visit(visit);

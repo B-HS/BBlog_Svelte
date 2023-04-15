@@ -13,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import lombok.RequiredArgsConstructor;
 
 @EnableWebSecurity
@@ -21,34 +20,25 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final LoginSuccessHandler loginSuccessHanlder;
     private final LoginFailureHandler loginFailureHandler;
     private final JWTAuthorizationFilter jwtAuthorizationFilter;
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager)
-            throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         http.csrf(val->val.disable());
         http.httpBasic(val->val.disable());
         http.formLogin(val->val.disable());
         http.logout(val->val.disable());
         http.sessionManagement(val -> val.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.authorizeHttpRequests(auth -> auth.requestMatchers(
-            "/article/write",
-            "/article/modify",
-            "/article/delete",
-            "/article/check"
-            ).hasAuthority("ADMIN"));
+        http.authorizeHttpRequests(auth -> auth.requestMatchers("/article/write","/article/modify","/article/delete","/article/check").hasAuthority("ADMIN"));
         http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
         http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    PasswordEncoder passwordEncoder() {return new BCryptPasswordEncoder();}
 
     @Bean
     AuthenticationManager authenticationManager() {

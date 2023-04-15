@@ -19,10 +19,8 @@ public class ImageController {
     public ResponseEntity<String> imageUpload(MultipartRequest files) {
         return new ResponseEntity<>(aser.ImgUpload(files), HttpStatus.OK);
     }
-
     @GetMapping("/image/{name}")
     public ResponseEntity<byte[]> imageRead(@PathVariable("name") String name) {
-        byte[] file = (byte[]) aser.ImgRead(name).get(0);
-        return new ResponseEntity<>(file, HttpStatus.OK);
+        return new ResponseEntity<>((byte[]) aser.ImgRead(name).get(0), HttpStatus.OK);
     }
 }

@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 @Entity
 @Getter
 @AllArgsConstructor
@@ -21,10 +20,8 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tid;
-
     @Column(columnDefinition = "LONGTEXT")
     private String tag;
-
     @ManyToOne
     private Article article;
 }

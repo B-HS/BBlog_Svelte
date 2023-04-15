@@ -25,37 +25,19 @@ public class JWTManager {
     public String tokenGenerate(String id, String nickname, String userImg, Long expireRate) {
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
         Date today = new Date();
-        String jwt = Jwts.builder()
-                .setIssuer("hyns.dev")
-                .setIssuedAt(today)
-                .setExpiration(new Date(today.getTime() + ((DAY / 24 / 6) * expireRate)))
-                .claim("nickname", nickname)
-                .claim("userImg", userImg)
-                .setSubject("bblog token")
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
-        return jwt;
+        return Jwts.builder().setIssuer("hyns.dev").setIssuedAt(today).setExpiration(new Date(today.getTime() + ((DAY / 24 / 6) * expireRate))).claim("nickname", nickname).claim("userImg", userImg).setSubject("bblog token").signWith(key, SignatureAlgorithm.HS256).compact();
     }
 
     public Boolean tokenValidator(String token) {
-        try {
-            Jwts.parserBuilder().setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).build()
+        try {Jwts.parserBuilder().setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).build()
                     .parseClaimsJws(token.split("Bearer ")[1]);
             return true;
-        } catch (SecurityException | MalformedJwtException e) {
-        } catch (ExpiredJwtException e) {
-        } catch (UnsupportedJwtException e) {
-        } catch (IllegalArgumentException e) {
-        }
+        } catch (SecurityException | MalformedJwtException |ExpiredJwtException | UnsupportedJwtException |IllegalArgumentException e) {new Exception("token exception");}
         return false;
     }
 
     public Claims tokenParser(String token) {
-        try {
-            return Jwts.parserBuilder().setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).build()
-                    .parseClaimsJws(token.split("Bearer ")[1]).getBody();
-        } catch (ExpiredJwtException e) {
-            return e.getClaims();
-        }
+        try {return Jwts.parserBuilder().setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).build().parseClaimsJws(token.split("Bearer ")[1]).getBody();}
+        catch (ExpiredJwtException e) {return e.getClaims();}
     }
 }

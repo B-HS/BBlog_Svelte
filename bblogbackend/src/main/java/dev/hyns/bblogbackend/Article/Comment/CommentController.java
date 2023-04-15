@@ -15,22 +15,18 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(value = "comment")
 public class CommentController {
     private final CommentService cser;
-
     @PostMapping("/write")
     ResponseEntity<Long> write(@RequestBody CommentDTO dto) {
         return cser.commentWrite(dto);
     }
-
     @PostMapping("/modify")
     ResponseEntity<Long> modify(@RequestBody CommentDTO dto) {
         return cser.commentModify(dto);
     }
-
     @PostMapping("/delete")
     ResponseEntity<Boolean> delete(@RequestBody CommentDTO dto) {
         return cser.commentDelete(dto);
     }
-
     @PostMapping("/list")
     ResponseEntity<HashMap<String, Object>> list(@RequestBody CommentDTO dto) {
         return cser.commentList(dto.getPage(), dto.getSize(), dto.getAid());

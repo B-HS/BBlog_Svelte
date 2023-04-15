@@ -28,13 +28,10 @@ public class Visit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long vid;
-
     @CreatedDate
     private LocalDateTime visitDate;
-
     @Column(columnDefinition = "LONGTEXT")
     private String visitUrl;
-
     @ManyToOne
     private Article article;
 }

@@ -28,28 +28,20 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rid;
-
     @Column(columnDefinition = "LONGTEXT")
     private String commentDesc;
-
     @Column
     private String nickname;
-
     @Column
     private String pw;
-
     @Column
     private Long commentGroup;
-
     @Column
     private Long commentSort;
-
     @Column(columnDefinition = "LONGTEXT")
     private String commentImg;
-
     @CreatedDate
     private LocalDateTime uploadedDated;
-
     @ManyToOne
     private Article article;
 

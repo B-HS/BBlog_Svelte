@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,8 +20,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     @Transactional
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-            Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         SiteManager member = srepo.findById(1L).get();
         String token = jwtManager.tokenGenerate(member.getAdminId(), member.getNickname(), member.getImg(), 10L);
         member.updateToken(token);
@@ -30,5 +28,4 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         response.addCookie(new Cookie("token", "Bearer " + token));
         response.getWriter().write("logged");
     }
-
 }
