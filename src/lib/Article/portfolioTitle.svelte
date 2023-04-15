@@ -11,12 +11,12 @@
 	</h5>
 	<section class="title_main flex items-baseline justify-between w-full">
 		<h2>{titleProps.title}</h2>
-		<section class="title_etc text-sm flex gap-2 px-2 opacity-70">
-			<span>{titleProps.date}</span>
-			{#if titleProps.views}
-			<span class="text-gray-600"> | </span>
-			<span>{titleProps.views} {$_('views')}</span>
-			{/if}
+		<section class="title_etc text-sm flex gap-2 opacity-70">
+			<section class="title_date">
+				<span>{titleProps.date}</span>
+				<span> ~ </span>
+				<span>{titleProps.endDate}</span>
+			</section>
 		</section>
 	</section>
 </section>

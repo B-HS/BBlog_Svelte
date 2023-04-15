@@ -3,10 +3,10 @@
 	import Card from '$lib/Card/card.svelte';
 	import articleStore from '$lib/Store/articleStore';
 	import blogMenus from '$lib/Variables/blogMenus';
-	import { Tab, TabGroup } from '@skeletonlabs/skeleton';
+	import { Tab, TabGroup, filter } from '@skeletonlabs/skeleton';
 	import { _ } from 'svelte-i18n';
 	import type { article as articleProps } from '../../app';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import articleAjax from '$lib/Store/ajax/articleAjax';
 	const { articles, currentTab, total, page, size } = articleStore;
 	export let data: PageData;
@@ -49,11 +49,14 @@
 	onMount(() => {
 		articles.update((val) => (val = data.articles));
 		total.update((val) => (val = data.total));
-		page.update(val => val+=1)
+		page.update((val) => (val += 1));
 		const obr = new IntersectionObserver((ele) => {
 			if (ele[0].isIntersecting) getMoreArticle();
 		});
 		obr.observe(observeObj);
+	});
+	onDestroy(() => {
+		articleAjax.reset();
 	});
 </script>
 
@@ -84,5 +87,5 @@
 			{/if}
 		</svelte:fragment>
 	</TabGroup>
-	<div class="w-full h-10" bind:this={observeObj}>{pg >= totalPage?$_('load_not_exist'):$_('loading')}</div>
+	<div class="w-full h-10" bind:this={observeObj}>{pg >= totalPage ? $_('load_not_exist') : $_('loading')}</div>
 </div>

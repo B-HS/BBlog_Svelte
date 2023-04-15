@@ -27,5 +27,9 @@ export default {
 	"unknownError": "알 수 없는 문제",
 	"serverError":"잠시 후 다시 시도해주세요",
 	"pageError":"페이지가 없거나 권한이 존재하지 않습니다",
-	"goback":"이전페이지로 돌아가기"
+	"goback":"이전페이지로 돌아가기",
+	"github":"Github",
+	"publish":"배포 사이트",
+	"moveToGithub":"깃허브로 이동",
+	"moveToPublish":"배포 사이트로 이동"
 }

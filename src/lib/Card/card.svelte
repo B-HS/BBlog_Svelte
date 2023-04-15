@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
-	import type { article, articleState, articleTitleProps } from '../../app';
+	import type { article } from '../../app';
 	export let cardInfo: article;
 	export let type: string;
 	const tags = cardInfo.tags as string[];
@@ -22,9 +22,10 @@
 			<span class="text-3xl">{cardInfo.title}</span>
 		</section>
 		<span class="opacity-70">{cardInfo.context}</span>
-		<section class="tags flex">
+		<section class="tags flex flex-wrap gap-y-2">
 			{#each tags as tag}
 				<a
+					on:click={(e) => e.stopPropagation()}
 					class="btn px-3 pb-1 pt-2 text-sm font-semibold mr-2 border border-gray-500 border-opacity-30 hover:border-opacity-80 hover:-translate-y-0.5"
 					href={`${type}`}># {tag}</a
 				>

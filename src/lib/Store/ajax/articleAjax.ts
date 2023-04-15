@@ -13,6 +13,8 @@ const uploadImage = async (file: FormData) => {
 };
 
 const loadArticleList = async (size: number, page: number, menu: string) => {
+	console.log(size, page, menu);
+	
 	globalStore.isLoading.update((val) => (val = true));
 	const { data, statusText } = await axios.post('/v1/article/list', { menu: menu, page: page, size: size });
 	const { articles, total } = data;

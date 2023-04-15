@@ -10,6 +10,7 @@ export interface articleTitleProps {
 	type?: string;
 	subType?: string;
 	views?: number;
+	endDate?: string;
 }
 
 export interface articleCommentProps {
@@ -34,6 +35,10 @@ export interface article {
 	thumbnail: string;
 	tags: string[];
 	visitCnt: number;
+	github?: string;
+	publish?: string;
+	startDate?: Date | string;
+	endDate?: Date | string;
 }
 
 export interface comment {
@@ -48,6 +53,11 @@ export interface comment {
 	aid?: number;
 	size?: number;
 	page?: number;
+}
+
+export interface externalLinkProps {
+	url?: string;
+	type?: string;
 }
 
 export type FileEventTarget = EventTarget & { files: FileList };

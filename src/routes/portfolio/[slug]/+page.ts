@@ -1,17 +1,17 @@
-import type { article } from '../../app';
+import type { article } from '../../../app';
 import type { PageLoad } from './$types';
 
 export const load = (async ({ fetch, params }) => {
-	const result = await fetch('./v1/article/list', {
+	const result = await fetch('../v1/article/read', {
 		method: 'POST',
-		body: JSON.stringify({ menu: 'ALL', page: 0, size: 10 }),
+		body: JSON.stringify({ aid: params.slug }),
 		headers: { 'Content-Type': 'application/json' }
 	});
 
 	const data = await result.json();
 
 	return {
-		articles: data.articles as article[],
-		total: JSON.parse(JSON.stringify(data.total))
+		article: data as article,
+		slug: params.slug
 	};
 }) satisfies PageLoad;

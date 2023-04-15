@@ -6,7 +6,7 @@
 </script>
 
 <Drawer>
-	<section class="flex justify-center items-center flex-col gap-5 p-7">
+	<section class="flex justify-center items-center flex-col gap-5 p-7 z-[99999]">
 		<h2 class="p-0">Menu</h2>
 		<Navigation />
 		<section class="flex gap-2 items-baseline text-lg">

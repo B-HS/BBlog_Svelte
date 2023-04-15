@@ -28,4 +28,8 @@ public class ArticleDTO {
     private int size;
     private int page;
     private String thumbnail;
+    private String github;
+    private String publish;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 }

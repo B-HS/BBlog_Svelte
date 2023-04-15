@@ -6,9 +6,9 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
-
 import dev.hyns.bblogbackend.Article.Article.Menu;
 import dev.hyns.bblogbackend.Article.Tag.Tag;
 import dev.hyns.bblogbackend.Article.Tag.TagRepository;
@@ -86,7 +85,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         Page<Article> entities;
         if (menu == Menu.ALL) {
-            entities = arepo.findAll(PageRequest.of(page, size, Direction.DESC, "aid"));
+            entities = arepo.findAllByMenuNotIn(PageRequest.of(page, size, Direction.DESC, "aid"), Set.of(Menu.PORTFOLIO, Menu.INTRO));
         } else {
             entities = arepo.findDistinctAllByMenu(PageRequest.of(page, size, Direction.DESC, "aid"), menu);
         }

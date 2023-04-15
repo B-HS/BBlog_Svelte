@@ -27,4 +27,9 @@ export default {
 	"unknownError": "不明なエラー",
 	"serverError":"新たに接続し直してください",
 	"pageError":"ページの不在、もしくは認証情報がございません",
+	"goback":"前のページにもどる",
+	"github":"Github",
+	"publish":"サイト",
+	"moveToGithub": "Githubへ移動",
+	"moveToPublish": "パブリッシ済のサイトへ移動"
 }

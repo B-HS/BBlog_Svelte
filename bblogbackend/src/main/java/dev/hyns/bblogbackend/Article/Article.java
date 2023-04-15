@@ -32,33 +32,32 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long aid;
-
     @Column(columnDefinition = "LONGTEXT")
     private String title;
-
     @Column(columnDefinition = "LONGTEXT")
     private String context;
-
     @CreatedDate
     private LocalDateTime createdDate;
-
+    @Column
+    private LocalDateTime startDate;
+    @Column
+    private LocalDateTime endDate;
     @Column
     private Boolean hide;
-
     @Column
     private Menu menu;
-
     @Column(columnDefinition = "LONGTEXT")
     private String thumbnail;
-
+    @Column(columnDefinition = "LONGTEXT")
+    private String github;
+    @Column(columnDefinition = "LONGTEXT")
+    private String publish;
     @Builder.Default
     @OneToMany(mappedBy = "article", orphanRemoval = true)
     private Set<Comment> comments = new LinkedHashSet<>();
-
     @Builder.Default
     @OneToMany(mappedBy = "article", orphanRemoval = true)
     private Set<Tag> tags = new LinkedHashSet<>();
-
     @Builder.Default
     @OneToMany(mappedBy = "article", orphanRemoval = true)
     private Set<Visit> visits = new LinkedHashSet<>();

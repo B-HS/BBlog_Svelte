@@ -24,16 +24,18 @@
 	let sg: number;
 	const { commentList, page, size, commentTotal } = commentStore;
 	commentList.subscribe((val) => (comments = [...val]));
-	commentTotal.subscribe((val) => totalPage = val);
+	commentTotal.subscribe((val) => (totalPage = val));
 	size.subscribe((val) => (sg = val));
 	page.subscribe((val) => (pg = val));
 
-	const getMoreComment = () => {
+	const getMoreComment = async () => {
 		if (pg >= totalPage) {
 			return;
 		}
+		console.log(pg, sg);
+
+		await commentAjax.loadMoreCommentList(sg, pg, data.slug);
 		page.update((val) => (val += 1));
-		commentAjax.loadMoreCommentList(sg, pg, data.slug);
 	};
 
 	let observeObj: HTMLDivElement;
@@ -43,7 +45,8 @@
 			body: JSON.stringify({ aid: data.slug, visitUrl: document.referrer ? document.referrer : 'LINK NOT CHECKED' }),
 			headers: { 'Content-Type': 'application/json' }
 		});
-		commentAjax.loadCommentList(5, 0, data.slug);
+		await commentAjax.loadCommentList(sg, pg, data.slug);
+		page.update((val) => (val += 1));
 		const obr = new IntersectionObserver((ele) => {
 			if (ele[0].isIntersecting) getMoreComment();
 		});
@@ -52,7 +55,7 @@
 
 	onDestroy(() => {
 		articleAjax.reset();
-		commentAjax.reset()
+		commentAjax.reset();
 	});
 </script>
 
@@ -61,7 +64,7 @@
 		titleProps={{
 			date: `${dayjs(data.article.createdDate).format('YYYY-MM-DD HH:mm:ss')}`,
 			title: `${data.article.title}`,
-			type: `blog`,
+			type: `portfolio`,
 			subType: data.article.menu,
 			views: data.article.visitCnt
 		}}
