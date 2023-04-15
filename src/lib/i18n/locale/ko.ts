@@ -23,5 +23,9 @@ export default {
 	"load_not_exist":"더보기가 존재하지 않습니다",
 	"loading": "불러오는 중 . . .",
 	"login_title": "Hyunseok",
-	"login_btn": "로그인"
+	"login_btn": "로그인",
+	"unknownError": "알 수 없는 문제",
+	"serverError":"잠시 후 다시 시도해주세요",
+	"pageError":"페이지가 없거나 권한이 존재하지 않습니다",
+	"goback":"이전페이지로 돌아가기"
 }

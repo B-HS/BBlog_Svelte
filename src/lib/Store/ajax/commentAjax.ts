@@ -1,5 +1,4 @@
 import axios from 'axios';
-import articleStore from '../articleStore';
 import globalStore from '../globalStore';
 import type { comment } from '../../../app';
 import commentStore from '../commentStore';
@@ -17,8 +16,6 @@ const loadCommentList = async (size: number, page: number, aid: string) => {
 };
 
 const loadMoreCommentList = async (size: number, page: number, aid: string) => {
-	console.log(size, page, aid);
-	
 	globalStore.isLoading.update((val) => (val = true));
 	const { data, statusText } = await axios.post('/v1/comment/list', { aid: aid, page: page, size: size });
 	const { comments, total } = data;

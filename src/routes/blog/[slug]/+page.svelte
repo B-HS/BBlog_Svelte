@@ -32,8 +32,8 @@
 		if (pg >= totalPage) {
 			return;
 		}
-		commentAjax.loadMoreCommentList(sg, pg, data.slug);
 		page.update((val) => (val += 1));
+		commentAjax.loadMoreCommentList(sg, pg, data.slug);
 	};
 
 	let observeObj: HTMLDivElement;

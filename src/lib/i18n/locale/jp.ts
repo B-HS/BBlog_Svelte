@@ -23,5 +23,8 @@ export default {
 	"load_not_exist":"最後のスレです。",
 	"loading": "ロード中。。。",
 	"login_title": "Hyunseok",
-	"login_btn": "ログイン"
+	"login_btn": "ログイン",
+	"unknownError": "不明なエラー",
+	"serverError":"新たに接続し直してください",
+	"pageError":"ページの不在、もしくは認証情報がございません",
 }

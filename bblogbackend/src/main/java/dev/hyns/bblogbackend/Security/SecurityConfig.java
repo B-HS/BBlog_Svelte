@@ -34,14 +34,13 @@ public class SecurityConfig {
         http.formLogin(val->val.disable());
         http.logout(val->val.disable());
         http.sessionManagement(val -> val.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.authorizeHttpRequests().requestMatchers(
-                "/article/write",
-                "/article/modify",
-                "/article/delete"
-                ).hasAuthority("ADMIN");
-        http.authorizeHttpRequests(auth -> {
-            auth.anyRequest().permitAll();
-        });
+        http.authorizeHttpRequests(auth -> auth.requestMatchers(
+            "/article/write",
+            "/article/modify",
+            "/article/delete",
+            "/article/check"
+            ).hasAuthority("ADMIN"));
+        http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
         http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

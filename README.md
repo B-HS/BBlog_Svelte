@@ -4,8 +4,13 @@
 # 남은 작업
 - 로그인 로직(헤더~쿠키)
 - 글쓰기 페이지
-- 댓글 페이징
 - 포트폴리오 파트 ajax
+- ajax 결과 toast로 띄우기
+- axios config에 동적으로 토큰 씌우기
+
+
+# 오류
+- 댓글 페이징 (스크롤이 너무 빠르면 이상하게 나옴)
 # 스택
 - SvelteKit : https://kit.svelte.dev/
 - Spring boot : https://spring.io/

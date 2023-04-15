@@ -79,6 +79,11 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional
     public ResponseEntity<HashMap<String, Object>> articleList(Menu menu, Integer page, Integer size) {
         HashMap<String, Object> result = new HashMap<>();
+        if (menu == Menu.INTRO) {
+            result.put("article", toDTO(arepo.findOneByMenuEqualsOrderByAidDesc(menu)
+                    .orElseThrow(() -> new IllegalArgumentException("Article not exist"))));
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
         Page<Article> entities;
         if (menu == Menu.ALL) {
             entities = arepo.findAll(PageRequest.of(page, size, Direction.DESC, "aid"));
@@ -92,7 +97,6 @@ public class ArticleServiceImpl implements ArticleService {
                         .substring(0, 100));
             }
             return dto;
-
         }).toList());
         result.put("total", entities.getTotalPages());
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -120,11 +124,8 @@ public class ArticleServiceImpl implements ArticleService {
                 result.add(FileCopyUtils.copyToByteArray(file));
                 result.add(Files.probeContentType(file.toPath()));
             }
-
         } catch (Exception e) {
-
         }
         return result;
     }
-
 }

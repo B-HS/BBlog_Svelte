@@ -23,17 +23,18 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     private final JWTManager jwtManager;
     private final UserDetailsServiceImpl udserimpl;
     private final SiteManagerRepository srepo;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String token = request.getHeader("token");
-        
         if (token == null) {
             filterChain.doFilter(request, response);
             return;
         }
-
+        if(jwtManager.tokenValidator(token)){
+            filterChain.doFilter(request, response);
+            return;
+        }
         SiteManager member = srepo.findById(1L).orElseThrow(() -> new UsernameNotFoundException("INVALID USER"));
         if(member.getToken() == token){
             SecurityContextHolder.getContext().setAuthentication(getAuthentication(member.getAdminId()));
@@ -42,11 +43,9 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         }
     }
-
     public Authentication getAuthentication(String email) {
         UserDetails userDetails = udserimpl.loadUserByUsername(email);
         return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
                 userDetails.getAuthorities());
     }
-
 }

@@ -27,7 +27,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String token = jwtManager.tokenGenerate(member.getAdminId(), member.getNickname(), member.getImg(), 10L);
         member.updateToken(token);
         srepo.save(member);
-        response.addCookie(new Cookie("token", token));
+        response.addCookie(new Cookie("token", "Bearer " + token));
         response.getWriter().write("logged");
     }
 
