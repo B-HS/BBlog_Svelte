@@ -9,7 +9,7 @@
 		{#each props as prs}
 			<a
 				class="uppercase btn px-3 pb-1 pt-2 text-sm font-semibold mr-2 border border-gray-500 border-opacity-30 hover:border-opacity-80 hover:-translate-y-0.5"
-				href={`${prs.url}`}>{prs.type === 'github' ? $_('moveToGithub') : $_('moveToPublish')}</a
+				href={`${prs.url}`}>{prs.type === 'github' ? $_('move_to_github') : $_('move_to_publish')}</a
 			>
 		{/each}
 	</section>

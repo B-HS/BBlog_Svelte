@@ -68,7 +68,5 @@ public class Article {
         this.hide = dto.getHide();
         this.menu = dto.getMenu();
     }
-    public enum Menu {
-        INTRO, DEV, ETC, PORTFOLIO, ALL
-    }
+    public enum Menu { INTRO, DEV, ETC, PORTFOLIO, ALL }
 }

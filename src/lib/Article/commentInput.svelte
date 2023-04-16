@@ -1,7 +1,6 @@
 <script lang="ts">
 	import articleAjax from '$lib/Store/ajax/articleAjax';
 	import commentAjax from '$lib/Store/ajax/commentAjax';
-	import URL from '$lib/Variables/URL';
 	import Icon from '@iconify/svelte';
 	import { _ } from 'svelte-i18n';
 	import type { comment } from '../../app';
@@ -24,7 +23,7 @@
 		if (target.files) {
 			formData.append('upload', target.files[0]);
 			articleAjax.uploadImage(formData).then((res) => {
-				commentParams.commentImg = `${URL.backendUrl}/v1/image/` + res;
+				commentParams.commentImg = `/v1/image/` + res;
 				uploaded = true;
 			});
 		}

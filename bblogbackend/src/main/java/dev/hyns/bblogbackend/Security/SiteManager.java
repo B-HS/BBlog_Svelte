@@ -1,7 +1,6 @@
 package dev.hyns.bblogbackend.Security;
 
 import java.util.Set;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -22,30 +21,18 @@ public class SiteManager {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mid;
-
     @Column(unique = true)
     private String adminId;
-
     @Column
     private String password;
-    
     @Column
     private String nickname;
-
     @Enumerated
     private Set<Role> roles;
-
     @Column(columnDefinition = "LONGTEXT")
     private String img;
-    
     @Column(columnDefinition = "LONGTEXT")
     private String token;
-
-    public void updateToken(String token){
-        this.token = token;
-    }
-
-    public enum Role{
-        ADMIN
-    }
+    public void updateToken(String token){this.token = token;}
+    public enum Role{ADMIN}
 }

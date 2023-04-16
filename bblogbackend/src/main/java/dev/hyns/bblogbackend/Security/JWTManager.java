@@ -29,8 +29,7 @@ public class JWTManager {
     }
 
     public Boolean tokenValidator(String token) {
-        try {Jwts.parserBuilder().setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).build()
-                    .parseClaimsJws(token.split("Bearer ")[1]);
+        try {Jwts.parserBuilder().setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).build().parseClaimsJws(token.split("Bearer ")[1]);
             return true;
         } catch (SecurityException | MalformedJwtException |ExpiredJwtException | UnsupportedJwtException |IllegalArgumentException e) {new Exception("token exception");}
         return false;

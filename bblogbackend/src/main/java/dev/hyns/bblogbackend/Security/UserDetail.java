@@ -9,8 +9,7 @@ public class UserDetail implements UserDetails {
     private SiteManager manager;
     public UserDetail(SiteManager manager) {this.manager = manager;}
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        String[] managerRole = manager.getRoles().stream().map(v -> v.name()).toArray(String[]::new);return AuthorityUtils.createAuthorityList(managerRole);}
+    public Collection<? extends GrantedAuthority> getAuthorities() {String[] managerRole = manager.getRoles().stream().map(v -> v.name()).toArray(String[]::new);return AuthorityUtils.createAuthorityList(managerRole);}
     @Override
     public String getUsername() {return manager.getAdminId();}
     @Override

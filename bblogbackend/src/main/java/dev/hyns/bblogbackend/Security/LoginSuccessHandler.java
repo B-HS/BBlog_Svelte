@@ -1,7 +1,6 @@
 package dev.hyns.bblogbackend.Security;
 
 import java.io.IOException;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -25,7 +24,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String token = jwtManager.tokenGenerate(member.getAdminId(), member.getNickname(), member.getImg(), 10L);
         member.updateToken(token);
         srepo.save(member);
-        response.addCookie(new Cookie("token", "Bearer " + token));
+        Cookie cookie = new Cookie("token", token);
+        cookie.setPath("/");
+        response.addCookie(cookie);
         response.getWriter().write("logged");
     }
 }

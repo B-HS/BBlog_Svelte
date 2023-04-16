@@ -2,11 +2,9 @@
 - 리액트.. 뷰 .. 이제 스벨트도 써 보자
 
 # 남은 작업
-- ajax 결과 toast로 띄우기
-- Drawer active상태 path에 맞게 나오게끔 수정
-- 검색
-- 글쓰기
-- 로그인 테스트
+- 레이아웃 배경 three.js로 꾸미기
+- i18n　밀린 언어 처리하기
+- 배포
 
 # 스택
 - SvelteKit : https://kit.svelte.dev/

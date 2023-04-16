@@ -32,11 +32,10 @@
 		if (pg >= totalPage) {
 			return;
 		}
-		console.log(pg, sg);
-
 		await commentAjax.loadMoreCommentList(sg, pg, data.slug);
 		page.update((val) => (val += 1));
 	};
+
 
 	let observeObj: HTMLDivElement;
 	onMount(async () => {
@@ -64,7 +63,7 @@
 		titleProps={{
 			date: `${dayjs(data.article.createdDate).format('YYYY-MM-DD HH:mm:ss')}`,
 			title: `${data.article.title}`,
-			type: `portfolio`,
+			type: `blog`,
 			subType: data.article.menu,
 			views: data.article.visitCnt
 		}}

@@ -36,8 +36,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final TagRepository trepo;
     private final VisitRepository vrepo;
 
-    @Override
-    @Transactional
+    @Override @Transactional
     public ResponseEntity<ArticleDTO> readArticle(Long num) {
         Article result = arepo.findById(num).orElseThrow(() -> new IllegalArgumentException("Article not exist"));
         ArticleDTO dto = toDTO(result);
@@ -45,42 +44,34 @@ public class ArticleServiceImpl implements ArticleService {
         return new ResponseEntity<ArticleDTO>(dto, HttpStatus.OK);
     }
 
-    @Override
-    @Transactional
+    @Override @Transactional
     public ResponseEntity<Long> writeArticle(ArticleDTO dto) {
         Article article = arepo.save(toEntity(dto));
-        trepo.saveAll(dto.getTags().stream().map(v -> Tag.builder().tag(v).article(article).build())
-                .collect(Collectors.toSet()));
+        trepo.saveAll(dto.getTags().stream().map(v -> Tag.builder().tag(v).article(article).build()).collect(Collectors.toSet()));
         return new ResponseEntity<Long>(article.getAid(), HttpStatus.OK);
     }
 
-    @Override
-    @Transactional
+    @Override @Transactional
     public ResponseEntity<Long> modifyArticle(ArticleDTO dto) {
-        Article target = arepo.findById(dto.getAid())
-                .orElseThrow(() -> new IllegalArgumentException("Article not exist"));
+        Article target = arepo.findById(dto.getAid()).orElseThrow(() -> new IllegalArgumentException("Article not exist"));
         target.updateArticle(dto);
         arepo.save(target);
         trepo.deleteAll(target.getTags());
-        trepo.saveAll(dto.getTags().stream().map(v -> Tag.builder().tag(v).article(target).build())
-                .collect(Collectors.toSet()));
+        trepo.saveAll(dto.getTags().stream().map(v -> Tag.builder().tag(v).article(target).build()).collect(Collectors.toSet()));
         return new ResponseEntity<Long>(target.getAid(), HttpStatus.OK);
     }
 
-    @Override
-    @Transactional
+    @Override @Transactional
     public ResponseEntity<Boolean> deleteArticle(Long num) {
         arepo.deleteById(num);
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
-    @Override
-    @Transactional
+    @Override @Transactional
     public ResponseEntity<HashMap<String, Object>> articleList(Menu menu, Integer page, Integer size) {
         HashMap<String, Object> result = new HashMap<>();
         if (menu == Menu.INTRO) {
-            result.put("article", toDTO(arepo.findOneByMenuEqualsOrderByAidDesc(menu)
-                    .orElseThrow(() -> new IllegalArgumentException("Article not exist"))));
+            result.put("article", toDTO(arepo.findOneByMenuEqualsOrderByAidDesc(menu).orElseThrow(() -> new IllegalArgumentException("Article not exist"))));
             return new ResponseEntity<>(result, HttpStatus.OK);
         }
         Page<Article> entities;
@@ -92,8 +83,7 @@ public class ArticleServiceImpl implements ArticleService {
         result.put("articles", entities.getContent().stream().map(v -> {
             ArticleDTO dto = toDTO(v);
             if (dto.getContext().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "").length() > 100) {
-                dto.setContext(dto.getContext().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "")
-                        .substring(0, 100));
+                dto.setContext(dto.getContext().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "").substring(0, 100));
             }
             return dto;
         }).toList());
@@ -104,14 +94,11 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public String ImgUpload(MultipartRequest files) {
         MultipartFile file = files.getFile("upload");
-        String fileName = UUID.randomUUID().toString() + "."
-                + FilenameUtils.getExtension(file.getOriginalFilename());
+        String fileName = UUID.randomUUID().toString() + "." + FilenameUtils.getExtension(file.getOriginalFilename());
         try {
             file.transferTo(new File(DIRADRESS + fileName));
             return fileName;
-        } catch (Exception e) {
-            return "basic.png";
-        }
+        } catch (Exception e) {return "basic.png";}
     }
 
     @Override
@@ -123,8 +110,7 @@ public class ArticleServiceImpl implements ArticleService {
                 result.add(FileCopyUtils.copyToByteArray(file));
                 result.add(Files.probeContentType(file.toPath()));
             }
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {}
         return result;
     }
 }

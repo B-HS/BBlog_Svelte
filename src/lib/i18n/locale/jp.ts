@@ -30,6 +30,6 @@ export default {
 	"goback":"前のページにもどる",
 	"github":"Github",
 	"publish":"サイト",
-	"moveToGithub": "Githubへ移動",
-	"moveToPublish": "パブリッシ済のサイトへ移動"
+	"move_to_github": "Githubへ移動",
+	"move_to_publish": "パブリッシ済のサイトへ移動"
 }

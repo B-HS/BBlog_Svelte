@@ -19,33 +19,27 @@ public class CommentServiceImpl implements CommentService {
     private final PasswordEncoder encoder;
     private final CommentRepository crepo;
 
-    @Override
-    @Transactional
+    @Override @Transactional
     public ResponseEntity<Long> commentWrite(CommentDTO dto) {
         if (dto.getCommentSort() == 0) {
-            Long lastNum = crepo.lastCmtNum().orElseGet(() -> 0L);
-            dto.setCommentGroup(lastNum);
+            dto.setCommentGroup(crepo.lastCmtNum().orElseGet(() -> 0L));
         }
         dto.setPw(encoder.encode(dto.getPw()));
         return new ResponseEntity<>(crepo.save(toEntity(dto)).getRid(), HttpStatus.OK);
     }
 
-    @Override
-    @Transactional
+    @Override @Transactional
     public ResponseEntity<Long> commentModify(CommentDTO dto) {
-        Comment target = crepo.findById(dto.getRid())
-                .orElseThrow(() -> new IllegalArgumentException("Comment not exist"));
+        Comment target = crepo.findById(dto.getRid()).orElseThrow(() -> new IllegalArgumentException("Comment not exist"));
         if (encoder.matches(dto.getPw(), target.getPw())) {
             target.updateComment(dto);
         }
         return new ResponseEntity<>(crepo.save(target).getRid(), HttpStatus.OK);
     }
 
-    @Override
-    @Transactional
+    @Override @Transactional
     public ResponseEntity<Boolean> commentDelete(CommentDTO dto) {
-        Comment target = crepo.findById(dto.getRid())
-                .orElseThrow(() -> new IllegalArgumentException("Comment not exist"));
+        Comment target = crepo.findById(dto.getRid()).orElseThrow(() -> new IllegalArgumentException("Comment not exist"));
         if (encoder.matches(dto.getPw(), target.getPw())) {
             crepo.delete(target);
             return new ResponseEntity<>(true, HttpStatus.OK);
@@ -56,12 +50,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public ResponseEntity<HashMap<String, Object>> commentList(Integer page, Integer size, long aid) {
         HashMap<String, Object> result = new HashMap<>();
-        Page<Comment> entities = crepo.findDistinctAllByArticleAidOrderByCommentGroupAscCommentSortAscRidAsc(
-                PageRequest.of(page, size, Direction.DESC, "rid"),
-                aid);
+        Page<Comment> entities = crepo.findDistinctAllByArticleAidOrderByCommentGroupAscCommentSortAscRidAsc(PageRequest.of(page, size, Direction.DESC, "rid"),aid);
         result.put("comments", entities.getContent().stream().map(v -> toDTO(v)).toList());
         result.put("total", entities.getTotalPages());
         return new ResponseEntity<HashMap<String, Object>>(result, HttpStatus.OK);
     }
-
 }

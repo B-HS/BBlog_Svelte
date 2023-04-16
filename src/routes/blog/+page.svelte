@@ -46,6 +46,15 @@
 	};
 
 	let observeObj: HTMLDivElement;
+
+	const menuChange = async (menu: number) => {
+		page.update((val) => (val = 0));
+		articleAjax.reset();
+		currentTab.update((val) => (val = menu));
+		await articleAjax.loadArticleList(sg, pg, currentMenu);
+		page.update((val) => (val += 1));
+	};
+
 	onMount(() => {
 		articles.update((val) => (val = data.articles));
 		total.update((val) => (val = data.total));
@@ -63,7 +72,7 @@
 <div class="container mx-auto p-10 space-y-4">
 	<TabGroup>
 		{#each blogMenus as menus, idx}
-			<Tab bind:group={tab} name={menus.value} value={idx}>{$_(menus.value)}</Tab>
+			<Tab bind:group={tab} name={menus.value} value={idx} on:click={() => menuChange(idx)}>{$_(menus.value)}</Tab>
 		{/each}
 		<svelte:fragment slot="panel">
 			{#if tab === 0}
@@ -79,11 +88,17 @@
 					{/if}
 				</section>
 			{:else if tab === 1}
-				<span>tab 2</span>
+				<section class="card_area flex flex-col gap-3">
+					{#each articleList as po}
+						<Card cardInfo={po} type={'blog'} />
+					{/each}
+				</section>
 			{:else if tab === 2}
-				<span>tab 3</span>
-			{:else if tab === 3}
-				<span>tab 4</span>
+				<section class="card_area flex flex-col gap-3">
+					{#each articleList as po}
+						<Card cardInfo={po} type={'blog'} />
+					{/each}
+				</section>
 			{/if}
 		</svelte:fragment>
 	</TabGroup>

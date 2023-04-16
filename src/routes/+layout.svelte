@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import { _ } from 'svelte-i18n';
 	import BDrawer from '$lib/Navigation/Drawer.svelte';
-	import { AppShell, ConicGradient, type ConicStop } from '@skeletonlabs/skeleton';
+	import { AppShell, ConicGradient, Toast, type ConicStop } from '@skeletonlabs/skeleton';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '@skeletonlabs/skeleton/themes/theme-hamlindigo.css';
 	import '../app.postcss';
@@ -17,8 +17,6 @@
 	$: classesSidebarLeft = $page.url.pathname === '/' ? 'w-0' : 'w-0 lg:w-64';
 	let loading: boolean;
 	globalStore.isLoading.subscribe((val) => (loading = val));
-
-
 </script>
 
 {#if loading}
@@ -29,7 +27,9 @@
 		spin>{$_('loading')}</ConicGradient
 	>
 {/if}
+
 <BDrawer />
+<Toast />
 <AppShell class="min-w-[400px]" slotSidebarLeft="bg-surface-500/5 {classesSidebarLeft}">
 	<Header />
 	<slot />

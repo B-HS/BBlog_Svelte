@@ -26,15 +26,15 @@ export interface articleCommentProps {
 }
 
 export interface article {
-	aid: number;
+	aid?: number;
 	title: string;
 	context: string;
-	createdDate: Date | string;
+	createdDate?: Date | string;
 	hide: boolean;
 	menu: string;
 	thumbnail: string;
 	tags: string[];
-	visitCnt: number;
+	visitCnt?: number;
 	github?: string;
 	publish?: string;
 	startDate?: Date | string;

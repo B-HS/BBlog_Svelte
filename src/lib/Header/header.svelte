@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
+	import routeStore from '$lib/Store/routerGuard/routeStore';
 	import Icon from '@iconify/svelte';
 	import { AppBar, drawerStore, LightSwitch, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
 	import { _, init } from 'svelte-i18n';
 	import icons from '../Variables/icons';
 	import menus from '../Variables/menus';
-	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
-	import routeStore from '$lib/Store/routerGuard/routeStore';
+	import { tst } from '$lib/Variables/toastStyleConfig';
 	let auth = 'user';
 	routeStore.authentication.subscribe((val) => (auth = val));
 	const drawerOpen = () =>
@@ -16,7 +17,7 @@
 	$: lang = 0;
 	$: innerWidth = 0;
 	$: lang === 0 ? init({ fallbackLocale: 'ko' }) : init({ fallbackLocale: 'jp' });
-	$: typeof document !== 'undefined' ? routerGuard($page) : '';
+	$: typeof document !== 'undefined' ? routerGuard($page, true) : '';
 </script>
 
 <svelte:window bind:innerWidth />

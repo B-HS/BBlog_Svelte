@@ -16,3 +16,11 @@
 		{/each}
 	</ul>
 </nav>
+
+<style lang="sass">
+	.list-nav
+		a
+			&:focus
+				background: none !important
+				color: inherit !important
+</style>

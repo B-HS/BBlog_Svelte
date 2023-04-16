@@ -44,8 +44,5 @@ public class Comment {
     private LocalDateTime uploadedDated;
     @ManyToOne
     private Article article;
-
-    public void updateComment(CommentDTO dto){
-        this.commentDesc = dto.getCommentDesc();
-    }
+    public void updateComment(CommentDTO dto){this.commentDesc = dto.getCommentDesc();}
 }

@@ -9,10 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -30,20 +28,15 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        if(jwtManager.tokenValidator(token)){
-            filterChain.doFilter(request, response);
-            return;
-        }
+        if(!jwtManager.tokenValidator(token)){new ServletException("INVALID TOKEN");}
         SiteManager member = srepo.findById(1L).orElseThrow(() -> new UsernameNotFoundException("INVALID USER"));
-        if(member.getToken() == token){
+        if(member.getToken().equals(token.split("Bearer ")[1])){
             SecurityContextHolder.getContext().setAuthentication(getAuthentication(member.getAdminId()));
-            String newToken = jwtManager.tokenGenerate(member.getAdminId(), member.getNickname(), member.getImg(), 10L);
-            response.addCookie(new Cookie("token", newToken));
             filterChain.doFilter(request, response);
-        }
+        };
     }
-    public Authentication getAuthentication(String email) {
-        UserDetails userDetails = udserimpl.loadUserByUsername(email);
+    public Authentication getAuthentication(String name) {
+        UserDetails userDetails = udserimpl.loadUserByUsername(name);
         return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }
 }

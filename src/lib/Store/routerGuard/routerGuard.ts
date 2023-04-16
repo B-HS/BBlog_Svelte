@@ -1,30 +1,15 @@
 import type { Page } from '@sveltejs/kit';
-import routeStore from './routeStore';
 import { getCookie } from 'typescript-cookie';
+import routeStore from './routeStore';
 import { tokenChecker } from './tokenChecker';
 
-export const routerGuard = async (path: Page) => {
-	const store = routeStore;
+const store = routeStore;
+let isAuthenticated: string;
+
+export const routerGuard = async (path: Page, isNormal?: boolean) => {
 	let urlParams: string | string[] = '';
-	let isAuthenticated: string;
 	store.authentication.subscribe((val) => (isAuthenticated = val));
 	store.urls.subscribe((val) => (urlParams = val));
-
-	const adminCheck = async () => {
-		const cookie = getCookie('token');
-
-		if (typeof cookie === 'undefined') {
-			store.authentication.update((val) => (val = 'user'));
-		} else {
-			const { statusText } = await tokenChecker('Bearer' + cookie);
-			statusText === 'OK'
-				? store.authentication.update((val) => (val = 'admin'))
-				: store.authentication.update((val) => (val = 'user'));
-		}
-		if (isAuthenticated === 'user') {
-			window.location.href = '/error';
-		}
-	};
 
 	if (Array.isArray(urlParams)) {
 		const status = urlParams
@@ -38,9 +23,41 @@ export const routerGuard = async (path: Page) => {
 				return sum + currValue;
 			}, 0);
 
-		if (status > 0) adminCheck();
+		if (status > 0) isNormal ? adminCheck(false, true) : adminCheck();
 		return;
 	}
 
-	if (urlParams === path.route.id) adminCheck();
+	if (urlParams === path.route.id) isNormal ? adminCheck(false, true) : adminCheck();
+};
+
+export const adminCheck = async (isLogin?: boolean, isNormal?: boolean) => {
+	if (document) {
+		const cookie = getCookie('token');
+		
+		if (typeof cookie === 'undefined') {
+			store.authentication.update((val) => (val = 'user'));
+			if (isLogin) {
+				return false;
+			}
+			if (isNormal) {
+				store.authentication.update((val) => (val = 'user'));
+				return;
+			}
+			window.location.href = '/error';
+		} else {
+			const { statusText } = await tokenChecker('Bearer ' + cookie);
+			statusText === 'OK'
+				? store.authentication.update((val) => (val = 'admin'))
+				: store.authentication.update((val) => (val = 'user'));
+		}
+		if (isAuthenticated === 'user') {
+			if (isLogin) {
+				return false;
+			}
+			window.location.href = '/error';
+		}
+		if (isLogin) {
+			return true;
+		}
+	}
 };
