@@ -18,7 +18,7 @@
 		alt=""
 	/>
 	<span>{errorMsg}</span>
-	<button class="gobackbtn btn btn-sm" on:click={goBack}>돌아가기</button>
+	<button class="gobackbtn btn btn-sm" on:click={goBack}>{$_('goback')}</button>
 </section>
 
 <style lang="sass" scoped>

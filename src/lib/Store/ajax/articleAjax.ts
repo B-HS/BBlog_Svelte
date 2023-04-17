@@ -6,14 +6,17 @@ import globalStore from '../globalStore';
 import type { article } from '../../../app';
 import { adminCheck } from '../routerGuard/routerGuard';
 import { Cookies } from 'typescript-cookie';
-
+import { dictionary } from 'svelte-i18n';
+// 타입이 애매해서 any로 돌림, 어차피 값은 lang의 ts파일 목록
+let dic :any
+dictionary.subscribe(val=>dic=val)
 axios.interceptors.response.use(
 	(res) => {
 		globalStore.isLoading.update((val) => (val = false));
 		return res;
 	},
 	(error: AxiosError) => {
-		tst('fail', `${error.response?.status} - 요청에 실패하였습니다`);
+		tst('fail', `${error.response?.status} ${dic.ko.request_fail}`);
 		globalStore.isLoading.update((val) => (val = false));
 	}
 );
@@ -22,7 +25,7 @@ const uploadImage = async (file: FormData) => {
 	globalStore.isLoading.update((val) => (val = true));
 	const { data, statusText } = await axios.post(`/v1/image/upload`, file);
 	if (statusText === 'OK') {
-		tst('success', '이미지 업로드에 성공하였습니다');
+		tst('success', dic.ko.image_upload_success);
 		globalStore.isLoading.update((val) => (val = false));
 		return data;
 	}

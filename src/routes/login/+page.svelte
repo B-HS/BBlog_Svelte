@@ -7,17 +7,17 @@
 	const login = () => {
 		userAjax.login({ adminId: id, password: pw }).then(async (res: boolean) => {
 			if (!res) {
-				toastStore.trigger({ message: '로그인 실패' });
+				tst("fail", $_("login_fail"))
 				return;
 			}
 
 			const result = await adminCheck(true, true);
 
 			if (!result) {
-				tst("fail", "로그인에 실패하였습니다")
+				tst("fail", $_("login_fail"))
 				return;
 			}
-			tst("success", "로그인에 성공하였습니다")
+			tst("success", $_("login_success"))
 			history.back();
 		});
 	};
@@ -28,14 +28,14 @@
 
 <section class="w-full flex justify-center items-center h-full bg-opacity-10">
 	<section class="login_section w-[17.5%] min-h-[30%] shadow-2xl p-3 flex flex-col items-center rounded-sm min-w-[300px]">
-		<h3 class="opacity-80 mt-5">{$_('login_title')}</h3>
+		<h3 class="opacity-80 my-5">{$_('login_title')}</h3>
 		<section class="input_area flex flex-col gap-3">
 			<section class="input_area_id">
-				<label for="id"> ID </label>
+				<label for="id"> {$_("id")} </label>
 				<input bind:value={id} id="id" type="text" class="input border-0" />
 			</section>
 			<section class="input_area_pw">
-				<label for="pw"> PASSWORD </label>
+				<label for="pw"> {$_("pw")} </label>
 				<input bind:value={pw} id="pw" type="password" class="input border-0" />
 			</section>
 			<section class="input_area_btn flex justify-end">

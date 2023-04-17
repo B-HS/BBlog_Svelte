@@ -7,8 +7,22 @@ export const load = (async ({ fetch, params }) => {
 		headers: { 'Content-Type': 'application/json', mode: 'no-cors', credentials: 'include' }
 	});
 
-	const data = await result.json();
-
+	let data = await result.json();
+	if(!!data){
+		data.article = {
+			aid: 0,
+			title: "",
+			context: "준비 중",
+			createdDate: new Date(),
+			hide: false,
+			menu: "INTRO",
+			thumbnail: "",
+			tags: [],
+			visitCnt: 0,
+			github: "string",
+			publish: "string",
+		}
+	}
 	return {
 		article: data.article
 	};

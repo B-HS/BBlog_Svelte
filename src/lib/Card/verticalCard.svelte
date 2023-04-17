@@ -50,7 +50,7 @@
 				href={`${type}/${cardInfo.aid}`}
 				class="border border-gray-500 border-opacity-30 hover:border-opacity-80 hover:-translate-y-0.5 btn p-2"
 			>
-				<span class="translate-y-0.5">DETAIL</span>
+				<span class="translate-y-0.5">{$_("detail")}</span>
 			</a>
 		{/if}
 	</div>

@@ -58,7 +58,7 @@
 					linkOnPaste: true
 				}),
 				Placeholder.configure({
-					placeholder: '내용'
+					placeholder: $_("context")
 				})
 			],
 			onTransaction: () => {
@@ -150,13 +150,13 @@
 				return;
 			}
 			if (hashInput.length > 35) {
-				tst('warning', '30자 이하로만 입력 가능합니다');
+				tst('warning', $_("thirty_character"));
 				hashInput = '';
 				return;
 			}
 
 			if (hashList.includes(hashInput)) {
-				tst('warning', '등록된 태그입니다');
+				tst('warning', $_("already_registered"));
 				hashInput = '';
 				return;
 			}
@@ -199,12 +199,12 @@
 			</RadioGroup>
 			<RadioGroup border="0" background="0">
 				{#each hideList as hide}
-					<RadioItem bind:group={currentHide} class="transition-all" name="justify" value={hide}>{$_(hide.toString())}</RadioItem>
+					<RadioItem bind:group={currentHide} class="transition-all" name="justify" value={hide}>{$_(hide?"hide_true":"hide_false")}</RadioItem>
 				{/each}
 			</RadioGroup>
 		</section>
 		<section class="title">
-			<input bind:value={title} type="text" class="input border-0 text-2xl p-3 px-5" placeholder="타이틀" />
+			<input bind:value={title} type="text" class="input border-0 text-2xl p-3 px-5" placeholder={$_("title")} />
 		</section>
 		<section class="btn_part flex justify-between text-2xl p-2 px-5 border-b border-slate-100 dark:bg-slate-500 bg-slate-300">
 			<button on:click={undo} class="cursor-pointer">
@@ -257,7 +257,7 @@
 					<input
 						id="tagInput"
 						type="text"
-						placeholder="태그를 입력해주세요"
+						placeholder={$_("enter_tag")}
 						bind:value={hashInput}
 						class="h-7 bg-transparent outline-none border-0 focus:ring-transparent shadow-none px-1"
 						on:keypress={(e) => setHashtag(e)}
@@ -271,22 +271,22 @@
 		>
 			<span class="text-slate-500">|</span>
 			<section class="start_date flex">
-				<span>시작일 :</span>
+				<span>{$_("start_date")} :</span>
 				<DateInput closeOnSelection={true} format={'yyyy-MM-dd'} {locale} bind:value={startDate} />
 			</section>
 			<span class="text-slate-500">|</span>
 			<section class="end_date flex">
-				<span>종료일 :</span>
+				<span>{$_("end_date")} :</span>
 				<DateInput closeOnSelection={true} format={'yyyy-MM-dd'} {locale} bind:value={endDate} />
 			</section>
 			<span class="text-slate-500">|</span>
 			<section class="end_date flex gap-1">
-				<label for="github">깃허브 :</label>
-				<input bind:value={github} id="github" type="text"  placeholder="주소" class="h-6 bg-transparent border-none focus:ring-0 shadow-none p-0">
+				<label for="github">{$_("github")} :</label>
+				<input bind:value={github} id="github" type="text"  placeholder={$_("adress")} class="h-6 bg-transparent border-none focus:ring-0 shadow-none p-0">
 			</section>
 			<section class="end_date flex gap-1">
-				<label for="github">배포사이트 :</label>
-				<input bind:value={publish} id="github" type="text"  placeholder="주소" class="h-6 bg-transparent border-none focus:ring-0 shadow-none p-0">
+				<label for="github">{$_("publish")} :</label>
+				<input bind:value={publish} id="github" type="text"  placeholder={$_("adress")} class="h-6 bg-transparent border-none focus:ring-0 shadow-none p-0">
 			</section>
 		</section>
 		<button class="btn dark:bg-slate-800" on:click={write}>등록</button>

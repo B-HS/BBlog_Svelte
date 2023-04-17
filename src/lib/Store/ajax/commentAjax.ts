@@ -3,6 +3,10 @@ import axios, { AxiosError } from 'axios';
 import type { comment } from '../../../app';
 import commentStore from '../commentStore';
 import globalStore from '../globalStore';
+import { dictionary } from 'svelte-i18n';
+// 타입이 애매해서 any로 돌림, 어차피 값은 lang의 ts파일 목록
+let dic :any
+dictionary.subscribe(val=>dic=val)
 
 axios.interceptors.response.use(
 	(res) => {
@@ -10,7 +14,7 @@ axios.interceptors.response.use(
 		return res;
 	},
 	(error: AxiosError) => {
-		tst('fail', `${error.response?.status} - 요청에 실패하였습니다`);
+		tst('fail', `${error.response?.status} ${dic.ko.request_fail}`);
 		globalStore.isLoading.update((val) => (val = false));
 	}
 );
@@ -41,7 +45,7 @@ const writeComment = async (params: comment) => {
 	globalStore.isLoading.update((val) => (val = true));
 	const { data, statusText } = await axios.post(`/v1/comment/write`, { ...params });
 	if (statusText === 'OK') {
-		tst('success', '댓글이 등록되었습니다');
+		tst('success', dic.ko.comment_registered);
 		loadCommentList(data + 10, 0, params.aid as unknown as string);
 	}
 };
@@ -52,7 +56,7 @@ const deleteComment = async (params: comment) => {
 		.post(`/v1/comment/delete`, { ...params })
 		.finally(() => globalStore.isLoading.update((val) => (val = false)));
 	if (statusText === 'OK') {
-		tst('success', '댓글이 삭제되었습니다');
+		tst('success', dic.ko.comment_removed);
 		loadCommentList(params.rid! + 10, 0, params.aid as unknown as string);
 	}
 };
@@ -62,7 +66,7 @@ const modifyComment = async (params: comment) => {
 	const { data, statusText } = await axios.post(`/v1/comment/modify`, { ...params });
 	if (statusText === 'OK') {
 		loadCommentList(data + 5, 0, params.aid as unknown as string);
-		tst('success', '댓글이 수정되었습니다');
+		tst('success', dic.ko.comment_edited);
 	}
 };
 

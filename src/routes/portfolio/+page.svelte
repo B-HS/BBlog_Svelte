@@ -3,6 +3,7 @@
 	import VerticalCard from '../../lib/Card/verticalCard.svelte';
 	import articleAjax from '$lib/Store/ajax/articleAjax';
 	import { onDestroy } from 'svelte';
+	import { _ } from 'svelte-i18n';
 	export let data: PageData;
 
 	onDestroy(() => {
@@ -15,5 +16,9 @@
 		{#each data.articles as po}
 			<VerticalCard cardInfo={po} type={'portfolio'} />
 		{/each}
+		
+		{#if data.articles.length===0}
+			<span>{$_("portfolio_invalid")}</span>
+		{/if}
 	</section>
 </div>
