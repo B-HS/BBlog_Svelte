@@ -16,12 +16,12 @@
 	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
 	import { _ } from 'svelte-i18n';
 	import { ko } from 'date-fns/locale';
-	
+
 	const menuList = ['INTRO', 'DEV', 'ETC', 'PORTFOLIO'];
 	const hideList = [true, false];
-	let title: string = ""
-	let github:string = "";
-	let publish:string = "";
+	let title: string = '';
+	let github: string = '';
+	let publish: string = '';
 	let startDate = new Date();
 	let endDate = new Date();
 	let editor: Editor;
@@ -32,11 +32,11 @@
 	let imgBox: HTMLInputElement;
 	let currentMenu = menuList[1];
 	let currentHide = hideList[1];
-	let thumbnail:string = "basic.png"
+	let thumbnail: string = 'basic.png';
 	let locale = localeFromDateFnsLocale(ko);
 
 	onMount(() => {
-		adminCheck()
+		adminCheck();
 		editor = new Editor({
 			element: ele,
 			extensions: [
@@ -58,7 +58,7 @@
 					linkOnPaste: true
 				}),
 				Placeholder.configure({
-					placeholder: $_("context")
+					placeholder: $_('context')
 				})
 			],
 			onTransaction: () => {
@@ -69,7 +69,7 @@
 					class: 'outline-none'
 				}
 			},
-			content: context ? context : ''
+			content: context
 		});
 	});
 	onDestroy(() => {
@@ -83,7 +83,7 @@
 		if (target.files) {
 			formData.append('upload', target.files[0]);
 			articleAjax.uploadImage(formData).then((res) => {
-				thumbnail = `/v1/image/` + res
+				thumbnail = `/v1/image/` + res;
 				editor
 					.chain()
 					.focus()
@@ -101,9 +101,6 @@
 	};
 	const strike = () => {
 		editor.chain().focus().toggleStrike().run();
-	};
-	const bullet = () => {
-		editor.chain().focus().toggleBulletList().run();
 	};
 	const codeblock = () => {
 		editor.chain().focus().toggleCodeBlock().run();
@@ -150,13 +147,13 @@
 				return;
 			}
 			if (hashInput.length > 35) {
-				tst('warning', $_("thirty_character"));
+				tst('warning', $_('thirty_character'));
 				hashInput = '';
 				return;
 			}
 
 			if (hashList.includes(hashInput)) {
-				tst('warning', $_("already_registered"));
+				tst('warning', $_('already_registered'));
 				hashInput = '';
 				return;
 			}
@@ -173,10 +170,10 @@
 		hashList = [...hashList].filter((v) => v != val);
 	};
 
-	const write = ()=>{
-		articleAjax.writeArticle({
+	const write = () => {
+		console.log({
 			title: title,
-			context: context,
+			context: editor.getHTML(),
 			hide: currentHide,
 			menu: currentMenu,
 			thumbnail: thumbnail,
@@ -184,9 +181,22 @@
 			github: github,
 			publish: publish,
 			startDate: startDate,
-			endDate: endDate,
-		})
-	}
+			endDate: endDate
+		});
+		
+		// articleAjax.writeArticle({
+		// 	title: title,
+		// 	context: ele.innerHTML!,
+		// 	hide: currentHide,
+		// 	menu: currentMenu,
+		// 	thumbnail: thumbnail,
+		// 	tags: hashList,
+		// 	github: github,
+		// 	publish: publish,
+		// 	startDate: startDate,
+		// 	endDate: endDate
+		// });
+	};
 </script>
 
 <section>
@@ -199,12 +209,14 @@
 			</RadioGroup>
 			<RadioGroup border="0" background="0">
 				{#each hideList as hide}
-					<RadioItem bind:group={currentHide} class="transition-all" name="justify" value={hide}>{$_(hide?"hide_true":"hide_false")}</RadioItem>
+					<RadioItem bind:group={currentHide} class="transition-all" name="justify" value={hide}
+						>{$_(hide ? 'hide_true' : 'hide_false')}</RadioItem
+					>
 				{/each}
 			</RadioGroup>
 		</section>
 		<section class="title">
-			<input bind:value={title} type="text" class="input border-0 text-2xl p-3 px-5" placeholder={$_("title")} />
+			<input bind:value={title} type="text" class="input border-0 text-2xl p-3 px-5" placeholder={$_('title')} />
 		</section>
 		<section class="btn_part flex justify-between text-2xl p-2 px-5 border-b border-slate-100 dark:bg-slate-500 bg-slate-300">
 			<button on:click={undo} class="cursor-pointer">
@@ -257,7 +269,7 @@
 					<input
 						id="tagInput"
 						type="text"
-						placeholder={$_("enter_tag")}
+						placeholder={$_('enter_tag')}
 						bind:value={hashInput}
 						class="h-7 bg-transparent outline-none border-0 focus:ring-transparent shadow-none px-1"
 						on:keypress={(e) => setHashtag(e)}
@@ -271,22 +283,34 @@
 		>
 			<span class="text-slate-500">|</span>
 			<section class="start_date flex">
-				<span>{$_("start_date")} :</span>
+				<span>{$_('start_date')} :</span>
 				<DateInput closeOnSelection={true} format={'yyyy-MM-dd'} {locale} bind:value={startDate} />
 			</section>
 			<span class="text-slate-500">|</span>
 			<section class="end_date flex">
-				<span>{$_("end_date")} :</span>
+				<span>{$_('end_date')} :</span>
 				<DateInput closeOnSelection={true} format={'yyyy-MM-dd'} {locale} bind:value={endDate} />
 			</section>
 			<span class="text-slate-500">|</span>
 			<section class="end_date flex gap-1">
-				<label for="github">{$_("github")} :</label>
-				<input bind:value={github} id="github" type="text"  placeholder={$_("adress")} class="h-6 bg-transparent border-none focus:ring-0 shadow-none p-0">
+				<label for="github">{$_('github')} :</label>
+				<input
+					bind:value={github}
+					id="github"
+					type="text"
+					placeholder={$_('adress')}
+					class="h-6 bg-transparent border-none focus:ring-0 shadow-none p-0"
+				/>
 			</section>
 			<section class="end_date flex gap-1">
-				<label for="github">{$_("publish")} :</label>
-				<input bind:value={publish} id="github" type="text"  placeholder={$_("adress")} class="h-6 bg-transparent border-none focus:ring-0 shadow-none p-0">
+				<label for="github">{$_('publish')} :</label>
+				<input
+					bind:value={publish}
+					id="github"
+					type="text"
+					placeholder={$_('adress')}
+					class="h-6 bg-transparent border-none focus:ring-0 shadow-none p-0"
+				/>
 			</section>
 		</section>
 		<button class="btn dark:bg-slate-800" on:click={write}>등록</button>

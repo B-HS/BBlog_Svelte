@@ -8,7 +8,7 @@ export const load = (async ({ fetch, params }) => {
 	});
 
 	let data = await result.json();
-	if(!!data){
+	if(data.article.aid<1){
 		data.article = {
 			aid: 0,
 			title: "",
