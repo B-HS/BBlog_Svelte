@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
+	import { navigating } from '$app/stores';
 	import routeStore from '$lib/Store/routerGuard/routeStore';
 	import Icon from '@iconify/svelte';
 	import { AppBar, drawerStore, LightSwitch, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
 	import { _, init } from 'svelte-i18n';
 	import icons from '../Variables/icons';
 	import menus from '../Variables/menus';
-	import { tst } from '$lib/Variables/toastStyleConfig';
+	import { onMount } from 'svelte';
+
 	let auth = 'user';
 	routeStore.authentication.subscribe((val) => (auth = val));
 	const drawerOpen = () =>
@@ -17,7 +19,10 @@
 	$: lang = 0;
 	$: innerWidth = 0;
 	$: lang === 0 ? init({ fallbackLocale: 'ko' }) : init({ fallbackLocale: 'jp' });
-	$: typeof document !== 'undefined' ? routerGuard($page, true) : '';
+	$: if ($navigating) routerGuard($page, true);
+	onMount(() => {
+		routerGuard($page, true);
+	});
 </script>
 
 <svelte:window bind:innerWidth />
@@ -61,11 +66,11 @@
 		{/if}
 		<section class="icons flex gap-3">
 			{#each icons as ele}
-				<a class="btn btn-lg p-0" href={ele.href}>
-					{#if ele.rule === auth}
+				{#if ele.rule === auth}
+					<a class="btn btn-lg p-0" href={ele.href}>
 						<Icon icon={ele.value} />
-					{/if}
-				</a>
+					</a>
+				{/if}
 			{/each}
 		</section>
 	</svelte:fragment>

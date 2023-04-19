@@ -54,5 +54,12 @@ export default {
 	comment_registered: '댓글이 등록되었습니다',
 	comment_removed: '댓글이 삭제되었습니다',
 	comment_edited: '댓글이 수정되었습니다',
-	detail:"자세히"
+	detail:"자세히",
+	comment_no_desc:"댓글 내용을 입력해주세요",
+	comment_no_nickname:"닉네임을 입력해주세요",
+	comment_no_pw:"비밀번호를 입력해주세요",
+	write_no_title:"제목을 입력해주세요",
+	write_no_desc:"내용을 입력해주세요",
+	no_id:"아이디를 입력해주세요",
+	no_pw:"비밀번호를 입력해주세요"
 };

@@ -7,6 +7,8 @@ const store = routeStore;
 let isAuthenticated: string;
 
 export const routerGuard = async (path: Page, isNormal?: boolean) => {
+	console.log("checking");
+	
 	let urlParams: string | string[] = '';
 	store.authentication.subscribe((val) => (isAuthenticated = val));
 	store.urls.subscribe((val) => (urlParams = val));
@@ -24,10 +26,10 @@ export const routerGuard = async (path: Page, isNormal?: boolean) => {
 			}, 0);
 
 		if (status > 0) isNormal ? adminCheck(false, true) : adminCheck();
+		isNormal ? adminCheck(false, true) : urlParams === path.route.id? adminCheck : ""
 		return;
 	}
-
-	if (urlParams === path.route.id) isNormal ? adminCheck(false, true) : adminCheck();
+	
 };
 
 export const adminCheck = async (isLogin?: boolean, isNormal?: boolean) => {

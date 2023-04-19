@@ -6,7 +6,7 @@
 	const tags = cardInfo.tags as string[];
 </script>
 
-<a class="card w-full flex hover:-translate-y-0.5 transition-transform" href={`/${type}/${cardInfo.aid}`}>
+<a class="card w-full flex hover:-translate-y-0.5 transition-transform shadow-md" href={`/${type}/${cardInfo.aid}`}>
 	<div class="card_img flex border border-gray-600 border-opacity-50 object-cover">
 		<img
 			src="https://mi.gumyo.net/files/47df371c-ec7f-4579-ac93-ca32fd25d54b"
@@ -25,7 +25,7 @@
 		<section class="tags flex flex-wrap gap-y-2">
 			{#each tags as tag}
 				<a
-					class="btn px-3 pb-1 pt-2 text-sm font-semibold mr-2 border border-gray-500 border-opacity-30 hover:border-opacity-80 hover:-translate-y-0.5"
+					class="btn px-3 py-1 text-sm font-semibold mr-2 border border-gray-500 border-opacity-30 hover:border-opacity-80 hover:-translate-y-0.5"
 					href={`/${type}/${cardInfo.aid}`}># {tag}</a
 				>
 			{/each}
@@ -40,5 +40,9 @@
 		.card_img 
 			max-width: 100%
 			justify-content: center
+			border: none !important
+		.card_main
+			border-right: none
+			border-bottom: none
 
 </style>

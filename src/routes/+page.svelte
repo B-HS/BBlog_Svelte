@@ -21,7 +21,7 @@
 </script>
 
 <section>
-	<section class="intro container mx-auto m-5 p-5 max-w-5xl border border-opacity-20 border-slate-500 flex flex-col gap-2 shadow-md">
+	<section class="intro container mx-auto m-5 p-2 max-w-5xl border border-opacity-20 border-slate-500 flex flex-col gap-2 shadow-md">
 		<section class="intro_date flex gap-1 opacity-70 hover:opacity-100 transition-opacity">
 			<Icon icon="material-symbols:date-range-outline-rounded" class="translate-y-[0.225rem]" />
 			{dayjs(data.article.createdDate).format('YYYY MM DD')} - Hyunseok Byun

@@ -36,17 +36,20 @@
 		return true;
 	};
 
-	const commentReply = () => {
-		commentAjax.writeComment({
-			aid: cmt.aid,
-			commentDesc,
-			nickname,
-			pw,
-			commentGroup: cmt.commentGroup,
-			commentSort: 1,
-			commentImg:
-				'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FYWnhg%2Fbtr9rgVjbom%2FE4BgkmjwqMdKwzo6JiFAL1%2Fimg.png'
-		});
+	const commentReply = async () => {
+		if (validator()){
+			await commentAjax.writeComment({
+				aid: cmt.aid,
+				commentDesc,
+				nickname,
+				pw,
+				commentGroup: cmt.commentGroup,
+				commentSort: 1,
+				commentImg:
+					'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FYWnhg%2Fbtr9rgVjbom%2FE4BgkmjwqMdKwzo6JiFAL1%2Fimg.png'
+			});
+		}
+			
 		modalClose();
 	};
 
