@@ -21,13 +21,12 @@
 			<span class="opacity-50 uppercase flex gap-1"> <Icon icon="mdi:menu" class="translate-y-0.5" />{type}</span>
 			<span class="text-3xl">{cardInfo.title}</span>
 		</section>
-		<span class="opacity-70">{cardInfo.context}</span>
+		<span class="opacity-70">{@html cardInfo.context}</span>
 		<section class="tags flex flex-wrap gap-y-2">
 			{#each tags as tag}
 				<a
-					on:click={(e) => e.stopPropagation()}
 					class="btn px-3 pb-1 pt-2 text-sm font-semibold mr-2 border border-gray-500 border-opacity-30 hover:border-opacity-80 hover:-translate-y-0.5"
-					href={`${type}`}># {tag}</a
+					href={`/${type}/${cardInfo.aid}`}># {tag}</a
 				>
 			{/each}
 		</section>

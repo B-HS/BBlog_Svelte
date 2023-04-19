@@ -7,8 +7,7 @@
 	<section class="flex z-[999]">
 		{#each tags as tag}
 			<a
-				on:click={(e) => e.stopPropagation()}
-				class="btn px-3 pb-1 pt-2 text-sm font-semibold mr-2 border border-gray-500 border-opacity-30 hover:border-opacity-80 hover:-translate-y-0.5"
+				class="btn px-3 py-1 text-sm font-semibold mr-2 border border-gray-500 border-opacity-30 hover:border-opacity-80 hover:-translate-y-0.5"
 				href={`${type}`}># {tag}</a
 			>
 		{/each}

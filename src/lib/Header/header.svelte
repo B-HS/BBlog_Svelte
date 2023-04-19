@@ -22,7 +22,7 @@
 
 <svelte:window bind:innerWidth />
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<AppBar class="h-[64px] shadow-md">
+<AppBar class="h-[70px] shadow-md">
 	<svelte:fragment slot="lead">
 		<div class="flex items-center h-full">
 			<button class="lg:hidden btn btn-sm mr-4" on:click={drawerOpen}>

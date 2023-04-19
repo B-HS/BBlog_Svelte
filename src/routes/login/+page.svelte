@@ -2,24 +2,38 @@
 	import userAjax from '$lib/Store/ajax/userAjax';
 	import { adminCheck } from '$lib/Store/routerGuard/routerGuard';
 	import { tst } from '$lib/Variables/toastStyleConfig';
-	import { toastStore } from '@skeletonlabs/skeleton';
 	import { _ } from 'svelte-i18n';
+
+	const validator = () => {
+		if (!id || id.trim().length === 0) {
+			tst('warning', $_('no_id'));
+			return false;
+		}
+		if (!pw || pw.trim().length === 0) {
+			tst('warning', $_('no_ㅔㅈ'));
+			return false;
+		}
+		return true;
+	};
+
 	const login = () => {
-		userAjax.login({ adminId: id, password: pw }).then(async (res: boolean) => {
-			if (!res) {
-				tst("fail", $_("login_fail"))
-				return;
-			}
+		if (validator()) {
+			userAjax.login({ adminId: id, password: pw }).then(async (res: boolean) => {
+				if (!res) {
+					tst('fail', $_('login_fail'));
+					return;
+				}
 
-			const result = await adminCheck(true, true);
+				const result = await adminCheck(true, true);
 
-			if (!result) {
-				tst("fail", $_("login_fail"))
-				return;
-			}
-			tst("success", $_("login_success"))
-			history.back();
-		});
+				if (!result) {
+					tst('fail', $_('login_fail'));
+					return;
+				}
+				tst('success', $_('login_success'));
+				history.back();
+			});
+		}
 	};
 
 	$: id = '';
@@ -31,11 +45,11 @@
 		<h3 class="opacity-80 my-5">{$_('login_title')}</h3>
 		<section class="input_area flex flex-col gap-3">
 			<section class="input_area_id">
-				<label for="id"> {$_("id")} </label>
+				<label for="id"> {$_('id')} </label>
 				<input bind:value={id} id="id" type="text" class="input border-0" />
 			</section>
 			<section class="input_area_pw">
-				<label for="pw"> {$_("pw")} </label>
+				<label for="pw"> {$_('pw')} </label>
 				<input bind:value={pw} id="pw" type="password" class="input border-0" />
 			</section>
 			<section class="input_area_btn flex justify-end">

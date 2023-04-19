@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
 	import type { comment } from '../../app';
+	import { tst } from '$lib/Variables/toastStyleConfig';
 	export let isOpen: boolean;
 	export let cmt: comment;
 
@@ -22,10 +23,18 @@
 		};
 	});
 
+	const validator = () => {
+		if (!pw || pw.trim().length === 0) {
+			tst('warning', $_('comment_no_pw'));
+			return false;
+		}
+		return true;
+	};
+
 	const commentDelete = () => {
-		commentAjax.deleteComment({ pw, aid: cmt.aid, rid: cmt.rid });
-		pw=''
-		modalClose()
+		if (validator()) commentAjax.deleteComment({ pw, aid: cmt.aid, rid: cmt.rid });
+		pw = '';
+		modalClose();
 	};
 	$: pw = '';
 </script>

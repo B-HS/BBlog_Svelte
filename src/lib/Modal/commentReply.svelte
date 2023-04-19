@@ -4,6 +4,7 @@
 	import { _ } from 'svelte-i18n';
 	import type { comment } from '../../app';
 	import commentAjax from '$lib/Store/ajax/commentAjax';
+	import { tst } from '$lib/Variables/toastStyleConfig';
 	export let isOpen: boolean;
 	export let cmt: comment;
 	const modalClose = () => (isOpen = false);
@@ -18,6 +19,22 @@
 			window.removeEventListener('keydown', (e) => modalCloseByEscape(e));
 		};
 	});
+
+	const validator = () => {
+		if (!pw || pw.trim().length === 0) {
+			tst('warning', $_('comment_no_pw'));
+			return false;
+		}
+		if (!commentDesc || commentDesc.trim().length === 0) {
+			tst('warning', $_('comment_no_desc'));
+			return false;
+		}
+		if (!nickname || nickname.trim().length === 0) {
+			tst('warning', $_('comment_no_nickname'));
+			return false;
+		}
+		return true;
+	};
 
 	const commentReply = () => {
 		commentAjax.writeComment({

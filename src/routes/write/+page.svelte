@@ -170,37 +170,38 @@
 		hashList = [...hashList].filter((v) => v != val);
 	};
 
-	const write = () => {
-		console.log({
-			title: title,
-			context: editor.getHTML(),
-			hide: currentHide,
-			menu: currentMenu,
-			thumbnail: thumbnail,
-			tags: hashList,
-			github: github,
-			publish: publish,
-			startDate: startDate,
-			endDate: endDate
-		});
-		
-		// articleAjax.writeArticle({
-		// 	title: title,
-		// 	context: ele.innerHTML!,
-		// 	hide: currentHide,
-		// 	menu: currentMenu,
-		// 	thumbnail: thumbnail,
-		// 	tags: hashList,
-		// 	github: github,
-		// 	publish: publish,
-		// 	startDate: startDate,
-		// 	endDate: endDate
-		// });
+	const validator = () => {
+		if (!title || title.trim().length === 0) {
+			tst('warning', $_('write_no_title'));
+			return false;
+		}
+		if (!context || editor.getText().trim().length === 0) {
+			tst('warning', $_('write_no_desc'));
+			return false;
+		}
+		return true;
+	};
+
+	const write = async () => {
+		if (validator()) {
+			await articleAjax.writeArticle({
+				title: title,
+				context: editor.getHTML(),
+				hide: currentHide,
+				menu: currentMenu,
+				thumbnail: thumbnail,
+				tags: hashList,
+				github: github,
+				publish: publish,
+				startDate: startDate,
+				endDate: endDate
+			});
+		}
 	};
 </script>
 
 <section>
-	<section class=" container mx-auto m-5 max-w-5xl flex flex-col shadow-lg">
+	<section class="container mx-auto m-5 max-w-5xl flex flex-col shadow-lg">
 		<section class="etc input border-0 rounded-none border-b dark:border-slate-500 p-1 flex justify-between uppercase">
 			<RadioGroup border="0" background="0">
 				{#each menuList as menu}
@@ -262,10 +263,10 @@
 		</section>
 		<section class="tag w-full h-full">
 			<div class="p-3 bg-slate-300 dark:bg-slate-500 flex flex-wrap gap-3 items-center">
-				<Icon icon="mdi:tag" />
+				<Icon icon="mdi:tag" class="translate-y-[0.125rem]" />
 				<WriteTags tags={hashList} tagDelete={deleteHashTag} />
 				<section class="taginput flex items-center translate-y-[0.1rem]">
-					<label for="tagInput" class="-translate-y-[1px]"><Icon icon="mdi:pencil" /></label>
+					<label for="tagInput" class="-translate-y-[1px]"><Icon icon="mdi:pencil" class="translate-y-[0.1rem]" /></label>
 					<input
 						id="tagInput"
 						type="text"
@@ -313,7 +314,7 @@
 				/>
 			</section>
 		</section>
-		<button class="btn dark:bg-slate-800" on:click={write}>등록</button>
+		<button class="btn dark:bg-slate-800" on:click={write}>{$_('write_submit')}</button>
 	</section>
 </section>
 
