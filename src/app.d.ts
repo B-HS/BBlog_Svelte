@@ -39,6 +39,7 @@ export interface article {
 	publish?: string;
 	startDate?: Date | string;
 	endDate?: Date | string;
+	pureDesc?: string;
 }
 
 export interface comment {

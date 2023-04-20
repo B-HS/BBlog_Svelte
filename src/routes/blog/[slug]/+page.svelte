@@ -36,7 +36,6 @@
 		page.update((val) => (val += 1));
 	};
 
-
 	let observeObj: HTMLDivElement;
 	onMount(async () => {
 		await fetch('../v1/visit/read', {
@@ -57,6 +56,19 @@
 		commentAjax.reset();
 	});
 </script>
+
+<svelte:head>
+	<title>{`HS :: ${data.article.title}`}</title>
+	<meta name="description" content={`${data.article.context.replace(/<[^>]+>/g, '')}`} />
+	<meta name="keywords" content={`${data.article.tags.join(', ')}`} />
+	<meta property="og:type" content="blog" />
+	<meta property="og:url" content="https://hyns.dev" />
+	<meta property="og:title" content={`HS :: ${data.article.title}`} />
+	<meta property="og:image" content={"/"+data.article.thumbnail} />
+	<meta property="og:description" content={`${data.article.context.replace(/<[^>]+>/g, '')}`} />
+	<meta property="og:site_name" content="Hyunseok" />
+	<meta property="og:locale" content="ko_KR" />
+</svelte:head>
 
 <section class="container mx-auto m-5 py-3 max-w-5xl px-2">
 	<Title

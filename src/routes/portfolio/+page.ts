@@ -1,3 +1,4 @@
+import type { article } from '../../app';
 import type { PageLoad } from './$types';
 
 export const load = (async ({ fetch, params }) => {
@@ -10,7 +11,7 @@ export const load = (async ({ fetch, params }) => {
 	const data = await result.json();
 
 	return {
-		articles: data.articles,
+		articles: data.articles as article[],
 		total: JSON.parse(JSON.stringify(data.total))
 	};
 }) satisfies PageLoad;

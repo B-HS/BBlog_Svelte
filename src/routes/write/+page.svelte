@@ -175,7 +175,7 @@
 			tst('warning', $_('write_no_title'));
 			return false;
 		}
-		if (!context || editor.getText().trim().length === 0) {
+		if (!editor.getText() || editor.getText().trim().length === 0) {
 			tst('warning', $_('write_no_desc'));
 			return false;
 		}

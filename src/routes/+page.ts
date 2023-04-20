@@ -24,6 +24,7 @@ export const load = (async ({ fetch, params }) => {
 		}
 	}
 	return {
-		article: data.article
+		article: data.article,
+		pureDesc: data.article.context.replace(/<[^>]+>/g, "").replace(/&nbsp;/g,'')
 	};
 }) satisfies PageLoad;
