@@ -80,7 +80,7 @@
 			views: data.article.visitCnt
 		}}
 	/>
-	<Description desc={data.article.context} />
+	<Description desc={data.article.context} article={data.article} />
 	<Tags tags={data.article.tags} type="blog" />
 	<CommentInput aid={data.slug} />
 
