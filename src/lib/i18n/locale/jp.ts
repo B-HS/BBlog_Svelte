@@ -54,5 +54,18 @@ export default {
 	comment_registered: 'コメント登録しました',
 	comment_removed: 'コメントを削除しました',
 	comment_edited: 'コメントを修正しました',
-	detail: '詳しく'
+	detail: '詳しく',
+	comment_no_desc: 'コメントの内容を入力してください',
+	comment_no_nickname: 'ニックネームを入力してください',
+	comment_no_pw: 'パスワードを入力してください',
+	write_no_title: 'タイトルを入力してください',
+	write_no_desc: '内容を入力してください',
+	no_id: 'アイディーを入力してください',
+	no_pw: 'パスワードを入力してください',
+	article_delete: 'スレ削除',
+	article_modify: 'スレ修正',
+	delete: '削除',
+	modify: '修正',
+	close: '閉じる',
+	is_del: '削除しますか?'
 };

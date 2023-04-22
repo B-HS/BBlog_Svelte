@@ -79,11 +79,11 @@
 	bind:this={dialog}
 	on:close={() => (showModal = false)}
 	on:click|self={() => dialog.close()}
-	class="w-[50%] h-[90%] min-w-[385px] py-5 card shadow-xl"
+	class="w-[50%] h-fit min-w-[385px] py-5 card shadow-xl"
 >
 	<div on:click|stopPropagation class="flex flex-col gap-2 min-w-[350px] justify-between h-full">
 		<section class="m-header border-b border-black dark:border-slate-500 py-2 px-1 h-[7%] dark:text-white">
-			<span class="text-2xl">글수정</span>
+			<span class="text-2xl">{$_('article_modify')}</span>
 		</section>
 		<section class="tags reply_add flex border-gray-600 dark:text-white">
 			<section class="flex z-[999] items-center h-full">
@@ -123,11 +123,11 @@
 		<section class="m-footer w-full flex justify-end h-[5%] gap-3">
 			<button
 				class="btn btn-sm border dark:text-white border-slate-500 border-opacity-30 hover:border-opacity-100"
-				on:click={() => dialog.close()}>Close</button
+				on:click={() => dialog.close()}>{$_('close')}</button
 			>
 			<button
 				class="btn btn-sm border dark:text-white border-slate-500 border-opacity-30 hover:border-opacity-100"
-				on:click={modify}>Modify</button
+				on:click={modify}>{$_('modify')}</button
 			>
 		</section>
 	</div>
