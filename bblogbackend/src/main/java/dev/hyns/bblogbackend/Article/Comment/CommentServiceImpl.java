@@ -51,7 +51,7 @@ public class CommentServiceImpl implements CommentService {
     public ResponseEntity<HashMap<String, Object>> commentList(Integer page, Integer size, long aid) {
         HashMap<String, Object> result = new HashMap<>();
         Page<Comment> entities = crepo.findDistinctAllByArticleAidOrderByCommentGroupAscCommentSortAscRidAsc(PageRequest.of(page, size, Direction.DESC, "rid"),aid);
-        result.put("comments", entities.getContent().stream().map(v -> toDTO(v)).toList());
+        result.put("comments", entities.getContent().stream().map(v -> {CommentDTO dto = toDTO(v); dto.setPw(null); return dto;}).toList());
         result.put("total", entities.getTotalPages());
         return new ResponseEntity<HashMap<String, Object>>(result, HttpStatus.OK);
     }
