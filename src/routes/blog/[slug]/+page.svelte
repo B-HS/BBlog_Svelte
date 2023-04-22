@@ -16,7 +16,6 @@
 	import commentAjax from '$lib/Store/ajax/commentAjax';
 	import commentStore from '$lib/Store/commentStore';
 	import { _ } from 'svelte-i18n';
-	import axios from 'axios';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	let comments: comment[] = [];
@@ -42,7 +41,8 @@
 	onMount(() => {
 		typeof document.referrer !==undefined?referrer= document.referrer:"NOT CHEKCED"
 		articleAjax.visit(data.slug as unknown as number, referrer)
-		commentAjax.loadCommentList(sg, pg, data.slug);
+		commentStore.commentList.update(val=>val=data.comments)
+		commentStore.page.update(val=>val=1)
 		page.update((val) => (val += 1));
 		const obr = new IntersectionObserver((ele) => {
 			if (ele[0].isIntersecting) getMoreComment();
@@ -83,7 +83,7 @@
 	<Tags tags={data.article.tags} />
 	<CommentInput aid={data.slug} />
 
-	{#each comments as comment}
+	{#each data.comments as comment}
 		<Comment {comment} />
 	{/each}
 	<div class="w-full h-25" bind:this={observeObj}>{pg >= totalPage ? $_('load_not_exist') : $_('loading')}</div>
