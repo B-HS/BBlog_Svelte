@@ -7,8 +7,8 @@
 	import 'dayjs/locale/ko';
 	import timezone from 'dayjs/plugin/timezone';
 	import utc from 'dayjs/plugin/utc';
-	import type { comment } from '../../app';
 	import { _ } from 'svelte-i18n';
+	import type { comment } from '../../app';
 	export let comment: comment;
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
@@ -17,7 +17,7 @@
 	$: isDeleteOpen = false;
 </script>
 
-<section class={`comment border-gray-600 my-5 px-2 py-5 ${comment.commentSort===1?"pl-16":''}`}>
+<section class={`comment border-gray-600 my-5 px-2 py-5 ${comment.commentSort === 1 ? 'pl-16' : ''}`}>
 	<section class="comment_main flex">
 		<section class="comment_icon w-28 flex align-top justify-center px-3 pb-6 pt-0">
 			<Avatar src={comment.commentImg} width="w-32" />
@@ -31,15 +31,21 @@
 				{comment.commentDesc}
 			</section>
 			<section class="comment_btns flex gap-3 justify-start w-full text-sm">
-				<button class="opacity-70 hover:opacity-100 transition-opacity" on:click={() => (isReplyOpen = true)}>{$_('comment_reply')}</button>
+				<button class="opacity-70 hover:opacity-100 transition-opacity" on:click={() => (isReplyOpen = true)}
+					>{$_('comment_reply')}</button
+				>
 				<span class="text-gray-600"> | </span>
-				<button class="opacity-70 hover:opacity-100 transition-opacity" on:click={() => (isEditOpen = true)}>{$_('comment_edit')}</button>
+				<button class="opacity-70 hover:opacity-100 transition-opacity" on:click={() => (isEditOpen = true)}
+					>{$_('comment_edit')}</button
+				>
 				<span class="text-gray-600"> | </span>
-				<button class="opacity-70 hover:opacity-100 transition-opacity" on:click={() => (isDeleteOpen = true)}>{$_('comment_delete')}</button>
+				<button class="opacity-70 hover:opacity-100 transition-opacity" on:click={() => (isDeleteOpen = true)}
+					>{$_('comment_delete')}</button
+				>
 			</section>
 		</section>
 	</section>
 </section>
-<CommentReply cmt = {comment} bind:isOpen={isReplyOpen} />
-<CommentEdit cmt = {comment} bind:isOpen={isEditOpen} />
-<CommentDelete cmt = {comment} bind:isOpen={isDeleteOpen} />
+<CommentReply cmt={comment} bind:isOpen={isReplyOpen} />
+<CommentEdit cmt={comment} bind:isOpen={isEditOpen} />
+<CommentDelete cmt={comment} bind:isOpen={isDeleteOpen} />

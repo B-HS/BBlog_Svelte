@@ -2,8 +2,8 @@
 	import Navigation from '$lib/Navigation/Navigation.svelte';
 	import Icon from '@iconify/svelte';
 	import { Drawer } from '@skeletonlabs/skeleton';
-	import icons from '../Variables/icons';
 	import { _ } from 'svelte-i18n';
+	import icons from '../Variables/icons';
 </script>
 
 <Drawer>

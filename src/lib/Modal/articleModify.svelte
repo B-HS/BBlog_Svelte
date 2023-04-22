@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { _ } from 'svelte-i18n';
 	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
 	import { tst } from '$lib/Variables/toastStyleConfig';
-	import { onMount } from 'svelte';
-	import type { article } from '../../app';
 	import Icon from '@iconify/svelte';
-	import WriteTags from './writeTags.svelte';
+	import { onMount } from 'svelte';
+	import { _ } from 'svelte-i18n';
+	import type { article } from '../../app';
+
+	import WriteTags from '$lib/Article/writeTags.svelte';
 	import articleAjax from '$lib/Store/ajax/articleAjax';
 	export let showModal: boolean;
 	export let article: article;
@@ -81,7 +82,9 @@
 	class="w-[50%] h-[90%] min-w-[385px] py-5 card shadow-xl"
 >
 	<div on:click|stopPropagation class="flex flex-col gap-2 min-w-[350px] justify-between h-full">
-		<section class="m-header border-b border-black dark:border-slate-500 py-2 px-1 h-[7%] dark:text-white"> <span class="text-2xl">글수정</span></section>
+		<section class="m-header border-b border-black dark:border-slate-500 py-2 px-1 h-[7%] dark:text-white">
+			<span class="text-2xl">글수정</span>
+		</section>
 		<section class="tags reply_add flex border-gray-600 dark:text-white">
 			<section class="flex z-[999] items-center h-full">
 				<WriteTags tagDelete={deleteHashTag} tags={modifiedArticle.tags} />

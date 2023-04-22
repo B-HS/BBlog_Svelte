@@ -1,23 +1,18 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import commentAjax from '$lib/Store/ajax/commentAjax';
+	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
+	import { tst } from '$lib/Variables/toastStyleConfig';
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
 	import type { comment } from '../../app';
-	import { tst } from '$lib/Variables/toastStyleConfig';
 	export let isOpen: boolean;
 	export let cmt: comment;
-	const modalClose = () => (isOpen = false);
-
-	const modalCloseByEscape = (e: KeyboardEvent) => {
-		if (e.code === 'Escape') isOpen = false;
-	};
-
+	let dialog: HTMLDialogElement;
+	$: if (dialog && isOpen) dialog.showModal();
 	onMount(() => {
-		window.addEventListener('keydown', (e) => modalCloseByEscape(e));
-		return () => {
-			window.removeEventListener('keydown', (e) => modalCloseByEscape(e));
-		};
+		routerGuard($page, true);
 	});
 
 	const validator = () => {
@@ -34,7 +29,7 @@
 
 	const commentModify = () => {
 		if (validator()) commentAjax.modifyComment({ aid: cmt.aid, rid: cmt.rid, pw, commentDesc });
-		modalClose();
+		dialog.close();
 		pw = '';
 		commentDesc = '';
 	};
@@ -42,14 +37,17 @@
 	$: commentDesc = '';
 </script>
 
-<section
-	class="modal z-[1000] w-full h-full absolute top-0 left-0 flex justify-center items-center bg-white dark:bg-black bg-opacity-30 dark:bg-opacity-30 backdrop-blur-sm"
-	style={`display: ${isOpen ? 'flex' : 'none'}`}
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<dialog
+	bind:this={dialog}
+	on:close={() => (isOpen = false)}
+	on:click|self={() => dialog.close()}
+	class="card w-[20%] min-w-[350px] h-fit shadow-xl"
 >
-	<div class="overflow-hidden w-[30%] min-w-[350px] bg-gray-200 dark:bg-gray-800 shadow-lg">
+	<div on:click|stopPropagation class="flex flex-col gap-2 justify-between h-full w-full dark:text-white">
 		<div class="px-4 py-3 flex items-center justify-between">
 			<h3 class="text-base font-semibold leading-6 dark:text-gray-100">{$_('edit_title')}</h3>
-			<button on:click={modalClose}>
+			<button on:click={() => dialog.close()}>
 				<Icon icon="material-symbols:close" class="text-xl cursor-pointer" />
 			</button>
 		</div>
@@ -68,4 +66,4 @@
 			</dl>
 		</div>
 	</div>
-</section>
+</dialog>

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import routeStore from '$lib/Store/routerGuard/routeStore';
 	import type { article } from '../../app';
-	import Delete from './delete.svelte';
-	import Modify from './modify.svelte';
+	import Delete from '../Modal/articleDelete.svelte';
+	import Modify from '../Modal/articleModify.svelte';
 	export let article: article;
 	let showModify = false;
 	let showDelete = false;

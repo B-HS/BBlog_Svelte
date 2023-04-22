@@ -14,8 +14,8 @@
 		<section class="title_etc text-sm flex gap-2 px-2 opacity-70 py-3">
 			<span>{titleProps.date}</span>
 			{#if titleProps.views}
-			<span class="text-gray-600"> | </span>
-			<span>{titleProps.views} {$_('views')}</span>
+				<span class="text-gray-600"> | </span>
+				<span>{titleProps.views} {$_('views')}</span>
 			{/if}
 		</section>
 	</section>

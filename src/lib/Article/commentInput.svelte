@@ -1,10 +1,10 @@
 <script lang="ts">
 	import articleAjax from '$lib/Store/ajax/articleAjax';
 	import commentAjax from '$lib/Store/ajax/commentAjax';
+	import { tst } from '$lib/Variables/toastStyleConfig';
 	import Icon from '@iconify/svelte';
 	import { _ } from 'svelte-i18n';
 	import type { comment } from '../../app';
-	import { tst } from '$lib/Variables/toastStyleConfig';
 	export let aid: string | number;
 	$: uploaded = false;
 	let commentParams: comment = {
@@ -48,7 +48,7 @@
 	};
 
 	const writeComment = async () => {
-		if(validator()) await commentAjax.writeComment(commentParams);
+		if (validator()) await commentAjax.writeComment(commentParams);
 		commentParams = {
 			commentDesc: '',
 			nickname: '',

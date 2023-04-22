@@ -1,33 +1,16 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
-	import { tst } from '$lib/Variables/toastStyleConfig';
-	import { onMount } from 'svelte';
-	import { _ } from 'svelte-i18n';
-	import type { article } from '../../app';
 	import articleAjax from '$lib/Store/ajax/articleAjax';
+	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
+	import { onMount } from 'svelte';
+	import type { article } from '../../app';
 	export let showModal: boolean;
 	export let article: article;
 	let dialog: HTMLDialogElement;
-	let tab: boolean = true;
-	let modifiedArticle: article = article;
-	let hashInput: string;
 	$: if (dialog && showModal) dialog.showModal();
 	onMount(() => {
 		routerGuard($page, true);
 	});
-
-	const validator = () => {
-		if (!modifiedArticle.title || modifiedArticle.title.trim().length === 0) {
-			tst('warning', $_('write_no_title'));
-			return false;
-		}
-		if (!modifiedArticle.context || modifiedArticle.context.trim().length === 0) {
-			tst('warning', $_('write_no_desc'));
-			return false;
-		}
-		return true;
-	};
 
 	const articleDelete = () => {
 		articleAjax.deleteArticle(article);

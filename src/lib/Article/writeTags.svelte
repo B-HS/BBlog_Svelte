@@ -9,10 +9,9 @@
 			<button
 				on:click={(e) => {
 					e.stopPropagation();
-					tagDelete(tag)
+					tagDelete(tag);
 				}}
-				class="pt-1 px-3 text-sm  transition-all"
-				># {tag}</button
+				class="pt-1 px-3 text-sm transition-all"># {tag}</button
 			>
 		{/each}
 	</section>

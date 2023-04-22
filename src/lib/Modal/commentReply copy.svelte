@@ -57,7 +57,7 @@
 	bind:this={dialog}
 	on:close={() => (isOpen = false)}
 	on:click|self={() => dialog.close()}
-	class="card w-[20%] min-w-[350px] h-fit shadow-xl"
+	class="card w-[20%] min-w-[350px] h-[15%] shadow-xl"
 >
 	<div on:click|stopPropagation class="flex flex-col gap-2 justify-between h-full w-full dark:text-white">
 		<div class="px-4 py-3 flex items-center justify-between">

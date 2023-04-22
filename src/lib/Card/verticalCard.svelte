@@ -30,27 +30,30 @@
 	</div>
 	<div class="px-6 pb-5 flex gap-2 w-full justify-end">
 		{#if cardInfo.github}
-			<a on:click={(e)=>e.stopPropagation()}
+			<a
+				on:click={(e) => e.stopPropagation()}
 				href={cardInfo.github}
 				class="border border-gray-500 border-opacity-30 hover:border-opacity-80 hover:-translate-y-0.5 btn p-2"
 			>
-				<span class="translate-y-0.5">{$_("github")}</span>
+				<span class="translate-y-0.5">{$_('github')}</span>
 			</a>
 		{/if}
 		{#if cardInfo.publish}
-			<a on:click={(e)=>e.stopPropagation()}
+			<a
+				on:click={(e) => e.stopPropagation()}
 				href={cardInfo.publish}
 				class="border border-gray-500 border-opacity-30 hover:border-opacity-80 hover:-translate-y-0.5 btn p-2"
 			>
-				<span class="translate-y-0.5">{$_("publish")}</span>
+				<span class="translate-y-0.5">{$_('publish')}</span>
 			</a>
 		{/if}
 		{#if cardInfo.context}
-			<a on:click={(e)=>e.stopPropagation()}
+			<a
+				on:click={(e) => e.stopPropagation()}
 				href={`${type}/${cardInfo.aid}`}
 				class="border border-gray-500 border-opacity-30 hover:border-opacity-80 hover:-translate-y-0.5 btn p-2"
 			>
-				<span class="translate-y-0.5">{$_("detail")}</span>
+				<span class="translate-y-0.5">{$_('detail')}</span>
 			</a>
 		{/if}
 	</div>
