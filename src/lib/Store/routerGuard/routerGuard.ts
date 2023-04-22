@@ -7,8 +7,6 @@ const store = routeStore;
 let isAuthenticated: string;
 
 export const routerGuard = async (path: Page, isNormal?: boolean) => {
-	console.log("checking");
-	
 	let urlParams: string | string[] = '';
 	store.authentication.subscribe((val) => (isAuthenticated = val));
 	store.urls.subscribe((val) => (urlParams = val));
