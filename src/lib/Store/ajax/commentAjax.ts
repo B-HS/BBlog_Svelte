@@ -21,24 +21,22 @@ axios.interceptors.response.use(
 
 const loadCommentList = async (size: number, page: number, aid: string) => {
 	globalStore.isLoading.update((val) => (val = true));
-	const { data, statusText } = await axios.post(`/v1/comment/list`, { aid: aid, page: page, size: size });
-	const { comments, total } = data;
-
-	if (statusText === 'OK') {
-		commentStore.commentList.update((val) => (val = [...comments]));
-		commentStore.commentTotal.update((val) => (val = total));
-	}
+	axios.post(`/v1/comment/list`, { aid: aid, page: page, size: size }).then(res=>{
+		if (res.statusText === 'OK') {
+			commentStore.commentList.update((val) => (val = [...res.data.comments]));
+			commentStore.commentTotal.update((val) => (val = res.data.total));
+		}
+	})
 };
 
 const loadMoreCommentList = async (size: number, page: number, aid: string) => {
 	globalStore.isLoading.update((val) => (val = true));
-	const { data, statusText } = await axios.post(`/v1/comment/list`, { aid: aid, page: page, size: size });
-	const { comments, total } = data;
-
-	if (statusText === 'OK') {
-		commentStore.commentList.update((val) => (val = [...val, ...comments]));
-		commentStore.commentTotal.update((val) => (val = total));
-	}
+	axios.post(`/v1/comment/list`, { aid: aid, page: page, size: size }).then(res=>{
+		if (res.statusText === 'OK') {
+			commentStore.commentList.update((val) => (val = [...val, ...res.data.comments]));
+			commentStore.commentTotal.update((val) => (val = res.data.total));
+		}
+	})
 };
 
 const writeComment = async (params: comment) => {
