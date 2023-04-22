@@ -216,9 +216,9 @@
 				{/each}
 			</RadioGroup>
 		</section>
-		<section class="title">
+		<form class="title">
 			<input bind:value={title} type="text" class="input border-0 text-2xl p-3 px-5" placeholder={$_('title')} />
-		</section>
+		</form>
 		<section class="btn_part flex justify-between text-2xl p-2 px-5 border-b border-slate-100 dark:bg-slate-500 bg-slate-300">
 			<button on:click={undo} class="cursor-pointer">
 				<Icon icon="ic:baseline-undo" />
@@ -255,7 +255,9 @@
 			</button>
 			<button on:click={() => imgBox.click()} class="cursor-pointer">
 				<Icon icon="material-symbols:image-outline-sharp" />
-				<input class="hidden" type="file" bind:this={imgBox} on:change={imgUpload} />
+				<form>
+					<input class="hidden" type="file" bind:this={imgBox} on:change={imgUpload} />
+				</form>
 			</button>
 		</section>
 		<section class="context w-full h-full bg-white">
@@ -265,7 +267,7 @@
 			<div class="p-3 bg-slate-300 dark:bg-slate-500 flex flex-wrap gap-3 items-center">
 				<Icon icon="mdi:tag" class="translate-y-[0.125rem]" />
 				<WriteTags tags={hashList} tagDelete={deleteHashTag} />
-				<section class="taginput flex items-center translate-y-[0.1rem]">
+				<form class="taginput flex items-center translate-y-[0.1rem]">
 					<label for="tagInput" class="-translate-y-[1px]"><Icon icon="mdi:pencil" class="translate-y-[0.1rem]" /></label>
 					<input
 						id="tagInput"
@@ -275,7 +277,7 @@
 						class="h-7 bg-transparent outline-none border-0 focus:ring-transparent shadow-none px-1"
 						on:keypress={(e) => setHashtag(e)}
 					/>
-				</section>
+				</form>
 			</div>
 		</section>
 		<section
@@ -293,7 +295,7 @@
 				<DateInput closeOnSelection={true} format={'yyyy-MM-dd'} {locale} bind:value={endDate} />
 			</section>
 			<span class="text-slate-500">|</span>
-			<section class="end_date flex gap-1">
+			<form class="end_date flex gap-1">
 				<label for="github">{$_('github')} :</label>
 				<input
 					bind:value={github}
@@ -302,8 +304,8 @@
 					placeholder={$_('adress')}
 					class="h-6 bg-transparent border-none focus:ring-0 shadow-none p-0"
 				/>
-			</section>
-			<section class="end_date flex gap-1">
+			</form>
+			<form class="end_date flex gap-1">
 				<label for="github">{$_('publish')} :</label>
 				<input
 					bind:value={publish}
@@ -312,7 +314,7 @@
 					placeholder={$_('adress')}
 					class="h-6 bg-transparent border-none focus:ring-0 shadow-none p-0"
 				/>
-			</section>
+			</form>
 		</section>
 		<button class="btn dark:bg-slate-800" on:click={write}>{$_('write_submit')}</button>
 	</section>

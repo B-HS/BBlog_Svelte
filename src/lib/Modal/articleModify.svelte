@@ -88,7 +88,7 @@
 		<section class="tags reply_add flex border-gray-600 dark:text-white">
 			<section class="flex z-[999] items-center h-full">
 				<WriteTags tagDelete={deleteHashTag} tags={modifiedArticle.tags} />
-				<section class="taginput flex items-center translate-y-[0.1rem] mb-1">
+				<form class="taginput flex items-center translate-y-[0.1rem] mb-1">
 					<label for="tagInput" class="-translate-y-[1px]"><Icon icon="mdi:pencil" class="translate-y-[0.1rem]" /></label>
 					<input
 						id="tagInput"
@@ -98,11 +98,11 @@
 						class="h-7 bg-transparent outline-none border-0 focus:ring-transparent shadow-none px-1"
 						on:keypress={(e) => setHashtag(e)}
 					/>
-				</section>
+				</form>
 			</section>
 		</section>
 
-		<section class="m-body flex flex-col gap-2 h-[80%] relative mb-[30px] dark:text-white">
+		<form class="m-body flex flex-col gap-2 h-[80%] relative mb-[30px] dark:text-white">
 			<input type="text" class="input border-none h-[2.75rem]" />
 			<section class="m-body_context h-full">
 				{#if tab}
@@ -119,7 +119,7 @@
 				<button class="btn btn-sm p-1 border-b rounded-none" on:click={() => (tab = true)}>HTML</button>
 				<button class="btn btn-sm p-1 border-b rounded-none" on:click={() => (tab = false)}>Preview</button>
 			</section>
-		</section>
+		</form>
 		<section class="m-footer w-full flex justify-end h-[5%] gap-3">
 			<button
 				class="btn btn-sm border dark:text-white border-slate-500 border-opacity-30 hover:border-opacity-100"

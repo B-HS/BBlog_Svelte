@@ -53,10 +53,10 @@
 		</div>
 		<div class="border-t border-opacity-10 border-gray-200">
 			<dl>
-				<div class="px-4 py-5 flex flex-col gap-2">
+				<form class="px-4 py-5 flex flex-col gap-2">
 					<input type="text" class="input w-full border-0 text-center" bind:value={commentDesc} placeholder={$_('context')} />
-					<input type="password" class="input w-full border-0 text-center" bind:value={pw} placeholder={$_('pw')} />
-				</div>
+					<input type="password" class="input w-full border-0 text-center" bind:value={pw} placeholder={$_('pw')} autocomplete="off" />
+				</form>
 
 				<div class="px-3 pb-2 flex justify-end">
 					<button class="btn btn-sm opacity-50 hover:opacity-100 transition-opacity" on:click={commentModify}

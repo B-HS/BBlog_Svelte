@@ -20,12 +20,8 @@ axios.interceptors.response.use(
 );
 
 const loadCommentList = async (size: number, page: number, aid: string) => {
-	console.log(size, page, aid);
-	
 	globalStore.isLoading.update((val) => (val = true));
 	const { data, statusText } = await axios.post(`/v1/comment/list`, { aid: aid, page: page, size: size });
-	console.log(data);
-	
 	const { comments, total } = data;
 
 	if (statusText === 'OK') {

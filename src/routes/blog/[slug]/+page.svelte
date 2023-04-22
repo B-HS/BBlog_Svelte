@@ -37,13 +37,13 @@
 	};
 
 	let observeObj: HTMLDivElement;
-	onMount(async () => {
-		await fetch('/v1/visit/read', {
+	onMount(() => {
+		fetch('/v1/visit/read', {
 			method: 'POST',
 			body: JSON.stringify({ aid: data.slug, visitUrl: document.referrer ? document.referrer : 'LINK NOT CHECKED' }),
 			headers: { 'Content-Type': 'application/json' }
 		});
-		await commentAjax.loadCommentList(sg, pg, data.slug);
+		commentAjax.loadCommentList(sg, pg, data.slug);
 		page.update((val) => (val += 1));
 		const obr = new IntersectionObserver((ele) => {
 			if (ele[0].isIntersecting) getMoreComment();
