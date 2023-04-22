@@ -18,7 +18,7 @@
 
 	const login = () => {
 		if (validator()) {
-			userAjax.login({ adminId: id, password: pw }).then(async (res: boolean) => {
+			userAjax.login({ adminId: id, password: pw }).then(async (res) => {
 				if (!res) {
 					tst('fail', $_('login_fail'));
 					return;
@@ -50,7 +50,7 @@
 			</form>
 			<form class="input_area_pw">
 				<label for="pw"> {$_('pw')} </label>
-				<input bind:value={pw} id="pw" type="password" class="input border-0" autocomplete="off"/>
+				<input bind:value={pw} id="pw" type="password" class="input border-0" autocomplete="off" />
 			</form>
 			<section class="input_area_btn flex justify-end">
 				<button

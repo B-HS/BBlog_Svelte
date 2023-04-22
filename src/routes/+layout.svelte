@@ -9,7 +9,7 @@
 	import Header from '../lib/Header/header.svelte';
 	import './styles.sass';
 	import globalStore from '$lib/Store/globalStore';
-
+	import "axios"
 	const conicStops: ConicStop[] = [
 		{ color: 'transparent', start: 0, end: 25 },
 		{ color: 'rgb(var(--color-primary-500))', start: 75, end: 100 }

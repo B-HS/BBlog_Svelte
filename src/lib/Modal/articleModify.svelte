@@ -103,7 +103,7 @@
 		</section>
 
 		<form class="m-body flex flex-col gap-2 h-[80%] relative mb-[30px] dark:text-white">
-			<input type="text" class="input border-none h-[2.75rem]" />
+			<input type="text" bind:value={modifiedArticle.title} class="input border-none h-[2.75rem]" />
 			<section class="m-body_context h-full">
 				{#if tab}
 					<textarea

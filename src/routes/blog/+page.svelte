@@ -73,7 +73,7 @@
 <svelte:head>
 	<title>{`HS :: Articles`}</title>
 	<meta name="description" content={`${data.articles.map(val=>val.context).join(" ").replace(/<[^>]+>/g, "")}`} />
-	<meta name="keywords" content={`${data.articles[0].tags.join(', ')}`} />
+	<meta name="keywords" content={`${data.articles.length>0?data.articles[0].tags.join(', '):[]}`} />
 	<meta property="og:type" content="blog" />
 	<meta property="og:url" content="https://hyns.dev" />
 	<meta property="og:title" content={`HS :: Articles`} />
