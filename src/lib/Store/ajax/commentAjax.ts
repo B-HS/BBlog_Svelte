@@ -1,12 +1,12 @@
 import { tst } from '$lib/Variables/toastStyleConfig';
 import axios, { AxiosError } from 'axios';
+import { dictionary } from 'svelte-i18n';
 import type { comment } from '../../../app';
 import commentStore from '../commentStore';
 import globalStore from '../globalStore';
-import { dictionary } from 'svelte-i18n';
 // 타입이 애매해서 any로 돌림, 어차피 값은 lang의 ts파일 목록
-let dic :any
-dictionary.subscribe(val=>dic=val)
+let dic: any;
+dictionary.subscribe((val) => (dic = val));
 
 axios.interceptors.response.use(
 	(res) => {
@@ -21,51 +21,52 @@ axios.interceptors.response.use(
 
 const loadCommentList = async (size: number, page: number, aid: string) => {
 	globalStore.isLoading.update((val) => (val = true));
-	axios.post(`/v1/comment/list`, { aid: aid, page: page, size: size }).then(res=>{
+	await axios.post(`/v1/comment/list`, { aid: aid, page: page, size: size }).then((res) => {
 		if (res.statusText === 'OK') {
 			commentStore.commentList.update((val) => (val = [...res.data.comments]));
 			commentStore.commentTotal.update((val) => (val = res.data.total));
 		}
-	})
+	});
 };
 
 const loadMoreCommentList = async (size: number, page: number, aid: string) => {
 	globalStore.isLoading.update((val) => (val = true));
-	axios.post(`/v1/comment/list`, { aid: aid, page: page, size: size }).then(res=>{
+	await axios.post(`/v1/comment/list`, { aid: aid, page: page, size: size }).then((res) => {
 		if (res.statusText === 'OK') {
 			commentStore.commentList.update((val) => (val = [...val, ...res.data.comments]));
 			commentStore.commentTotal.update((val) => (val = res.data.total));
 		}
-	})
+	});
 };
 
 const writeComment = async (params: comment) => {
 	globalStore.isLoading.update((val) => (val = true));
-	const { data, statusText } = await axios.post(`/v1/comment/write`, { ...params });
-	if (statusText === 'OK') {
-		tst('success', dic.ko.comment_registered);
-		loadCommentList(data + 10, 0, params.aid as unknown as string);
-	}
+	await axios.post(`/v1/comment/write`, { ...params }).then((res) => {
+		if (res.statusText === 'OK') {
+			tst('success', dic.ko.comment_registered);
+			loadCommentList(res.data + 10, 0, params.aid as unknown as string);
+		}
+	});
 };
 
 const deleteComment = async (params: comment) => {
 	globalStore.isLoading.update((val) => (val = true));
-	const { statusText } = await axios
-		.post(`/v1/comment/delete`, { ...params })
-		.finally(() => globalStore.isLoading.update((val) => (val = false)));
-	if (statusText === 'OK') {
-		tst('success', dic.ko.comment_removed);
-		loadCommentList(params.rid! + 10, 0, params.aid as unknown as string);
-	}
+	await axios.post(`/v1/comment/delete`, { ...params }).then((res) => {
+		if (res.statusText === 'OK') {
+			tst('success', dic.ko.comment_removed);
+			loadCommentList(params.rid! + 10, 0, params.aid as unknown as string);
+		}
+	});
 };
 
 const modifyComment = async (params: comment) => {
 	globalStore.isLoading.update((val) => (val = true));
-	const { data, statusText } = await axios.post(`/v1/comment/modify`, { ...params });
-	if (statusText === 'OK') {
-		loadCommentList(data + 5, 0, params.aid as unknown as string);
-		tst('success', dic.ko.comment_edited);
-	}
+	await axios.post(`/v1/comment/modify`, { ...params }).then((res) => {
+		if (res.statusText === 'OK') {
+			loadCommentList(res.data + 5, 0, params.aid as unknown as string);
+			tst('success', dic.ko.comment_edited);
+		}
+	});
 };
 
 const reset = () => {

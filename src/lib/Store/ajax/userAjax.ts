@@ -18,7 +18,9 @@ axios.interceptors.response.use(
 
 const login = async (params: { adminId: string; password: string }) => {
 	globalStore.isLoading.update((val) => (val = true));
-	const { data } = await axios.post(`/v1/login`, params);
+	const data = await axios.post(`/v1/login`, params).then(res=>{
+		return res.data
+	});
 	globalStore.isLoading.update((val) => (val = false));
 	return data;
 };

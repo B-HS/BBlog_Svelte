@@ -20,62 +20,70 @@ axios.interceptors.response.use(
 	}
 );
 
-const visit = async (aid:number, referrer:string)=>{
+const visit = async (aid: number, referrer: string) => {
 	globalStore.isLoading.update((val) => (val = true));
-	axios.post('/v1/visit/read', { aid: aid, visitUrl: referrer })
-}
+	await axios.post('/v1/visit/read', { aid: aid, visitUrl: referrer });
+};
 
 const uploadImage = async (file: FormData) => {
 	globalStore.isLoading.update((val) => (val = true));
-	const { data, statusText } = await axios.post(`/v1/image/upload`, file);
-	if (statusText === 'OK') {
-		tst('success', dic.ko.image_upload_success);
-		return data;
-	}
+	const data = await axios.post(`/v1/image/upload`, file).then((res) => {
+		if (res.statusText === 'OK') {
+			tst('success', dic.ko.image_upload_success);
+			return res.data;
+		}
+	});
+	return data;
 };
 
 const writeArticle = async (article: article) => {
 	globalStore.isLoading.update((val) => (val = true));
-	const { data, statusText } = await axios.post(`/v1/article/write`, article, {
-		headers: { token: 'Bearer ' + Cookies.get('token') }
-	});
-	if (statusText === 'OK') {
-		window.location.href = `${article.menu === 'PORTFOLIO' ? '/portfolio/' : '/blog/'}${data}`;
-	}
+	await axios
+		.post(`/v1/article/write`, article, {
+			headers: { token: 'Bearer ' + Cookies.get('token') }
+		})
+		.then((res) => {
+			if (res.statusText === 'OK') {
+				window.location.href = `${article.menu === 'PORTFOLIO' ? '/portfolio/' : '/blog/'}${res.data}`;
+			}
+		});
 };
 
 const deleteArticle = async (article: article) => {
 	globalStore.isLoading.update((val) => (val = true));
-	const { data, statusText } = await axios.post(`/v1/article/delete`, article, {
-		headers: { token: 'Bearer ' + Cookies.get('token') }
-	});
-	if (statusText === 'OK') {
-		window.location.href = `${article.menu === 'PORTFOLIO' ? '/portfolio' : '/blog'}`;
-	}
+	await axios
+		.post(`/v1/article/delete`, article, {
+			headers: { token: 'Bearer ' + Cookies.get('token') }
+		})
+		.then((res) => {
+			if (res.statusText === 'OK') {
+				window.location.href = `${article.menu === 'PORTFOLIO' ? '/portfolio' : '/blog'}`;
+			}
+		});
 };
 
 const modifyArticle = async (article: article) => {
 	globalStore.isLoading.update((val) => (val = true));
-
-	const { data, statusText } = await axios.post(`/v1/article/modify`, article, {
-		headers: { token: 'Bearer ' + Cookies.get('token') }
-	});
-
-	if (statusText === 'OK') {
-		window.location.reload();
-	}
+	await axios
+		.post(`/v1/article/modify`, article, {
+			headers: { token: 'Bearer ' + Cookies.get('token') }
+		})
+		.then((res) => {
+			if (res.statusText === 'OK') {
+				window.location.reload();
+			}
+		});
 };
 
 const loadArticleList = async (size: number, page: number, menu: string) => {
 	globalStore.isLoading.update((val) => (val = true));
-	const { data, statusText } = await axios.post(`/v1/article/list`, { menu: menu, page: page, size: size });
-	const { articles, total } = data;
-
-	if (statusText === 'OK') {
-		reset();
-		articleStore.articles.update((val) => (val = [...val, ...articles]));
-		articleStore.total.update((val) => (val = total));
-	}
+	await axios.post(`/v1/article/list`, { menu: menu, page: page, size: size }).then((res) => {
+		if (res.statusText === 'OK') {
+			reset();
+			articleStore.articles.update((val) => (val = [...val, ...res.data.articles]));
+			articleStore.total.update((val) => (val = res.data.total));
+		}
+	});
 };
 
 const reset = () => {
