@@ -1,14 +1,13 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
-	import { navigating } from '$app/stores';
+	import { navigating, page } from '$app/stores';
 	import routeStore from '$lib/Store/routerGuard/routeStore';
+	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
 	import Icon from '@iconify/svelte';
-	import { AppBar, drawerStore, LightSwitch, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
+	import { AppBar, LightSwitch, RadioGroup, RadioItem, drawerStore, modeCurrent, setModeCurrent } from '@skeletonlabs/skeleton';
+	import { onMount } from 'svelte';
 	import { _, init } from 'svelte-i18n';
 	import icons from '../Variables/icons';
 	import menus from '../Variables/menus';
-	import { onMount } from 'svelte';
 
 	let auth = 'user';
 	routeStore.authentication.subscribe((val) => (auth = val));
@@ -22,6 +21,7 @@
 	$: if ($navigating) routerGuard($page, true);
 	onMount(() => {
 		routerGuard($page, true);
+		setModeCurrent($modeCurrent);
 	});
 </script>
 
@@ -42,7 +42,6 @@
 			<a class="btn btn-sm text-xl uppercase" href="/">{$_('page_title')}</a>
 		</div>
 	</svelte:fragment>
-
 	<svelte:fragment slot="trail">
 		<RadioGroup
 			class="py-[0.1875rem] transition-all"

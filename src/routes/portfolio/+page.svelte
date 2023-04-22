@@ -16,10 +16,10 @@
 <svelte:head>
 	<title>{`HS :: Articles`}</title>
 	<meta name="description" content={`${data.articles.map(val=>val.context).join(" ").replace(/<[^>]+>/g, "")}`} />
-	<meta name="keywords" content={`${data.articles[0].tags.join(', ')}`} />
+	<meta name="keywords" content="Java, Svelte, Typescript, React, Vue, Sveltekit, Nextjs, Tailwind, Chakra UI" />
 	<meta property="og:type" content="blog" />
 	<meta property="og:url" content="https://hyns.dev" />
-	<meta property="og:title" content={`HS :: Articles`} />
+	<meta property="og:title" content={`HS :: Portfolio`} />
 	<meta property="og:image" content={"/favicon.ico"} />
 	<meta property="og:description" content={`${data.articles.map(val=>val.context).join(" ").replace(/<[^>]+>/g, "")}`} />
 	<meta property="og:site_name" content="Hyunseok" />

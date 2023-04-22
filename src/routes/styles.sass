@@ -1,11 +1,16 @@
 @tailwind base
 @tailwind components
 @tailwind utilities
-@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;700&family=Saira:wght@300;600&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;700&family=Saira:wght@300;700&display=swap')
 
 *
     text-decoration: none !important
     font-family: 'Saira', 'Hahmlet', sans-serif, serif
+    &:focus-visible
+        border: none !important
+        outline: none !important
+        box-shadow: none !important
+
 
 .ProseMirror
     min-height: 325px
@@ -14,7 +19,7 @@
         height: auto
 
 .toast
-    padding: 0.25rem 0.5rem !important
+    padding: 0.5rem 0.75rem !important
     gap: 0.25rem
     .text-base
         transform: translateY(0.5px)
@@ -47,3 +52,26 @@
         p
             padding: 0 0.5rem
             
+h1, h2, h3, h4, h5, h6
+    font-family: 'Saira', 'Hahmlet', sans-serif, serif !important
+    font-size: bold
+
+dialog[open] 
+    animation: zoom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)
+
+@keyframes zoom 
+    from 
+        transform: scale(0.95)
+    
+    to 
+        transform: scale(1)
+    
+dialog[open]::backdrop 
+    animation: fade 0.2s ease-out
+
+@keyframes fade 
+    from 
+        opacity: 0
+    
+    to 
+        opacity: 1

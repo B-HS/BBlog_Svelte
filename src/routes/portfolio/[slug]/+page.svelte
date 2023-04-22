@@ -60,6 +60,6 @@
 			{ url: data.article.publish, type: 'publish' }
 		]}
 	/>
-	<Description desc={data.article.context} />
-	<Tags tags={data.article.tags} type="blog" />
+	<Description  article={data.article} />
+	<Tags tags={data.article.tags} />
 </section>

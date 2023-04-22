@@ -1,15 +1,14 @@
 import { tst } from '$lib/Variables/toastStyleConfig';
 import axios, { AxiosError } from 'axios';
+import { dictionary } from 'svelte-i18n';
+import { Cookies } from 'typescript-cookie';
+import type { article } from '../../../app';
 import articleStore from '../articleStore';
 import commentStore from '../commentStore';
 import globalStore from '../globalStore';
-import type { article } from '../../../app';
-import { adminCheck } from '../routerGuard/routerGuard';
-import { Cookies } from 'typescript-cookie';
-import { dictionary } from 'svelte-i18n';
 // 타입이 애매해서 any로 돌림, 어차피 값은 lang의 ts파일 목록
-let dic :any
-dictionary.subscribe(val=>dic=val)
+let dic: any;
+dictionary.subscribe((val) => (dic = val));
 axios.interceptors.response.use(
 	(res) => {
 		globalStore.isLoading.update((val) => (val = false));
@@ -26,21 +25,40 @@ const uploadImage = async (file: FormData) => {
 	const { data, statusText } = await axios.post(`/v1/image/upload`, file);
 	if (statusText === 'OK') {
 		tst('success', dic.ko.image_upload_success);
-		globalStore.isLoading.update((val) => (val = false));
 		return data;
 	}
 };
 
 const writeArticle = async (article: article) => {
 	globalStore.isLoading.update((val) => (val = true));
-	
-	const { data, statusText } = await axios.post(`/v1/article/write`, article, {headers:{token:"Bearer "+Cookies.get("token")}});
+	const { data, statusText } = await axios.post(`/v1/article/write`, article, {
+		headers: { token: 'Bearer ' + Cookies.get('token') }
+	});
+	if (statusText === 'OK') {
+		window.location.href = `${article.menu === 'PORTFOLIO' ? '/portfolio/' : '/blog/'}${data}`;
+	}
+};
+
+const deleteArticle = async (article: article) => {
+	globalStore.isLoading.update((val) => (val = true));
+	const { data, statusText } = await axios.post(`/v1/article/delete`, article, {
+		headers: { token: 'Bearer ' + Cookies.get('token') }
+	});
+	if (statusText === 'OK') {
+		window.location.href = `${article.menu === 'PORTFOLIO' ? '/portfolio' : '/blog'}`;
+	}
+};
+
+const modifyArticle = async (article: article) => {
+	globalStore.isLoading.update((val) => (val = true));
+
+	const { data, statusText } = await axios.post(`/v1/article/modify`, article, {
+		headers: { token: 'Bearer ' + Cookies.get('token') }
+	});
 
 	if (statusText === 'OK') {
-		window.location.href=`${article.menu==="PORTFOLIO"?"/portfolio/":"/blog/"}${data}`
+		window.location.reload();
 	}
-	globalStore.isLoading.update((val) => (val = false));
-	
 };
 
 const loadArticleList = async (size: number, page: number, menu: string) => {
@@ -49,11 +67,10 @@ const loadArticleList = async (size: number, page: number, menu: string) => {
 	const { articles, total } = data;
 
 	if (statusText === 'OK') {
-		reset()
+		reset();
 		articleStore.articles.update((val) => (val = [...val, ...articles]));
 		articleStore.total.update((val) => (val = total));
 	}
-	globalStore.isLoading.update((val) => (val = false));
 };
 
 const reset = () => {
@@ -69,4 +86,4 @@ const reset = () => {
 	globalStore.isLoading.update((val) => (val = false));
 };
 
-export default { uploadImage, loadArticleList, reset, writeArticle };
+export default { uploadImage, loadArticleList, reset, writeArticle, modifyArticle, deleteArticle };

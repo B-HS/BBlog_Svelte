@@ -11,7 +11,7 @@
 					e.stopPropagation();
 					tagDelete(tag)
 				}}
-				class="pt-1 px-3 text-sm font-semibold border border-slate-300 border-opacity-0 hover:border-opacity-100 transition-all"
+				class="pt-1 px-3 text-sm  transition-all"
 				># {tag}</button
 			>
 		{/each}

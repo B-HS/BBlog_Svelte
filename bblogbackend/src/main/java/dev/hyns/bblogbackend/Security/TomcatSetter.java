@@ -9,7 +9,7 @@ public class TomcatSetter implements WebServerFactoryCustomizer<TomcatServletWeb
     @Override
     public void customize(TomcatServletWebServerFactory server) {
         server.addConnectorCustomizers((connector) -> { ProtocolHandler handler = connector.getProtocolHandler();
-            if (handler instanceof AbstractHttp11Protocol<?> protocol) { protocol.setMaxHttpResponseHeaderSize(Integer.MAX_VALUE/2);}
+            if (handler instanceof AbstractHttp11Protocol<?> protocol) { protocol.setMaxHttpResponseHeaderSize(Integer.MAX_VALUE/20);}
         });
     }
 }

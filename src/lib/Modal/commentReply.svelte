@@ -59,12 +59,12 @@
 </script>
 
 <section
-	class="modal z-[1000] w-full h-full absolute top-0 left-0 flex justify-center items-center bg-white dark:bg-black bg-opacity-30 dark:bg-opacity-30"
+	class="modal z-[1000] w-full h-full absolute top-0 left-0 flex justify-center items-center bg-white dark:bg-black bg-opacity-30 dark:bg-opacity-30 backdrop-blur-sm"
 	style={`display: ${isOpen ? 'flex' : 'none'}`}
 >
-	<div class="overflow-hidden w-[30%] min-w-[350px] bg-gray-800 shadow-lg">
+	<div class="overflow-hidden w-[30%] min-w-[350px] bg-gray-200 dark:bg-gray-800 shadow-lg">
 		<div class="px-4 py-3 flex items-center justify-between">
-			<h3 class="text-base font-semibold leading-6 text-gray-100">{$_('reply_title')}</h3>
+			<h3 class="text-base font-semibold leading-6 dark:text-gray-100">{$_('reply_title')}</h3>
 			<button on:click={modalClose}>
 				<Icon icon="material-symbols:close" class="text-xl cursor-pointer" />
 			</button>

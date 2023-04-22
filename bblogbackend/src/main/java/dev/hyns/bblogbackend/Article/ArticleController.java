@@ -1,9 +1,7 @@
 package dev.hyns.bblogbackend.Article;
-
 import java.util.HashMap;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +15,7 @@ public class ArticleController {
     @PostMapping("/read") ResponseEntity<ArticleDTO> read(@RequestBody ArticleDTO dto) {return aser.readArticle(dto.getAid());}
     @PostMapping("/write") ResponseEntity<Long> write(@RequestBody ArticleDTO dto) {return aser.writeArticle(dto);}
     @PostMapping("/modify") ResponseEntity<Long> modify(@RequestBody ArticleDTO dto) {return aser.modifyArticle(dto);}
-    @DeleteMapping("/delete") ResponseEntity<Boolean> delete(@RequestBody ArticleDTO dto) {return aser.deleteArticle(dto.getAid());}
+    @PostMapping("/delete") ResponseEntity<Boolean> delete(@RequestBody ArticleDTO dto) {return aser.deleteArticle(dto.getAid());}
     @PostMapping("/list") ResponseEntity<HashMap<String, Object>> list(@RequestBody ArticleDTO dto) {return aser.articleList(dto.getMenu(), dto.getPage(), dto.getSize());}
     @PostMapping("/check") ResponseEntity<Boolean> token(@RequestBody ArticleDTO dto) {return new ResponseEntity<>(true, HttpStatus.OK);}
 }
