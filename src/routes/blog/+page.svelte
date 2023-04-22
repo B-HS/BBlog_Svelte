@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import Card from '$lib/Card/card.svelte';
-	import articleStore from '$lib/Store/articleStore';
+	import articleStore from '$lib/Store/article/articleStore';
 	import blogMenus from '$lib/Variables/blogMenus';
 	import { Tab, TabGroup, filter } from '@skeletonlabs/skeleton';
 	import { _ } from 'svelte-i18n';
 	import type { article as articleProps } from '../../app';
 	import { onDestroy, onMount } from 'svelte';
-	import articleAjax from '$lib/Store/ajax/articleAjax';
+	import articleAjax from '$lib/Store/article/articleAjax';
 	const { articles, currentTab, total, page, size } = articleStore;
 	export let data: PageData;
 	let articleList: articleProps[];

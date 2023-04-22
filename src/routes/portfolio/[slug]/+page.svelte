@@ -11,8 +11,8 @@
 	import timezone from 'dayjs/plugin/timezone';
 	import 'dayjs/locale/ko';
 	import { onDestroy, onMount } from 'svelte';
-	import articleAjax from '$lib/Store/ajax/articleAjax';
-	import commentAjax from '$lib/Store/ajax/commentAjax';
+	import articleAjax from '$lib/Store/article/articleAjax';
+	import commentAjax from '$lib/Store/comment/commentAjax';
 	import { _ } from 'svelte-i18n';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
@@ -27,7 +27,7 @@
 
 	onDestroy(() => {
 		articleAjax.reset();
-		commentAjax.reset();
+		commentAjax.commentReset();
 	});
 </script>
 

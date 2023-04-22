@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { article as articleProps } from '../../app';
+import type { article as articleProps } from '../../../app';
 
 const article = writable<articleProps>({
 	aid: 0,

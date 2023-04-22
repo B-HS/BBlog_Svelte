@@ -8,7 +8,7 @@
 	import type { article } from '../../app';
 
 	import WriteTags from '$lib/Article/writeTags.svelte';
-	import articleAjax from '$lib/Store/ajax/articleAjax';
+	import articleAjax from '$lib/Store/article/articleAjax';
 	export let showModal: boolean;
 	export let article: article;
 	let dialog: HTMLDialogElement;

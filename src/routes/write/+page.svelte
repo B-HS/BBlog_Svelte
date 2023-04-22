@@ -1,5 +1,5 @@
 <script lang="ts">
-	import articleAjax from '$lib/Store/ajax/articleAjax';
+	import articleAjax from '$lib/Store/article/articleAjax';
 	import { adminCheck } from '$lib/Store/routerGuard/routerGuard';
 	import { tst } from '$lib/Variables/toastStyleConfig';
 	import Icon from '@iconify/svelte';

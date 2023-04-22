@@ -2,7 +2,7 @@ import { tst } from '$lib/Variables/toastStyleConfig';
 import axios, { AxiosError } from 'axios';
 import { dictionary } from 'svelte-i18n';
 import type { comment } from '../../../app';
-import commentStore from '../commentStore';
+import commentStore from './commentStore';
 import globalStore from '../globalStore';
 // 타입이 애매해서 any로 돌림, 어차피 값은 lang의 ts파일 목록
 let dic: any;
@@ -69,7 +69,7 @@ const modifyComment = async (params: comment) => {
 	});
 };
 
-const reset = () => {
+const commentReset = () => {
 	globalStore.isLoading.update((val) => (val = true));
 	commentStore.commentList.update((val) => (val = []));
 	commentStore.page.update((val) => (val = 0));
@@ -78,4 +78,4 @@ const reset = () => {
 	globalStore.isLoading.update((val) => (val = false));
 };
 
-export default { loadCommentList, writeComment, deleteComment, reset, modifyComment, loadMoreCommentList };
+export default { loadCommentList, writeComment, deleteComment, commentReset, modifyComment, loadMoreCommentList };

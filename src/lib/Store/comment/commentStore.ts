@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { article as articleProps, comment } from '../../app';
+import type { article as articleProps, comment } from '../../../app';
 
 
 const page = writable<number>(0);

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import userAjax from '$lib/Store/ajax/userAjax';
+	import userAjax from '$lib/Store/user/userAjax';
 	import { adminCheck } from '$lib/Store/routerGuard/routerGuard';
 	import { tst } from '$lib/Variables/toastStyleConfig';
 	import { _ } from 'svelte-i18n';

@@ -3,8 +3,8 @@ import axios, { AxiosError } from 'axios';
 import { dictionary } from 'svelte-i18n';
 import { Cookies } from 'typescript-cookie';
 import type { article } from '../../../app';
-import articleStore from '../articleStore';
-import commentStore from '../commentStore';
+import articleStore from './articleStore';
+import commentStore from '../comment/commentStore';
 import globalStore from '../globalStore';
 // 타입이 애매해서 any로 돌림, 어차피 값은 lang의 ts파일 목록
 let dic: any;

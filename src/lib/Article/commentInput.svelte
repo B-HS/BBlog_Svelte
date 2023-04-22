@@ -1,6 +1,6 @@
 <script lang="ts">
-	import articleAjax from '$lib/Store/ajax/articleAjax';
-	import commentAjax from '$lib/Store/ajax/commentAjax';
+	import articleAjax from '$lib/Store/article/articleAjax';
+	import commentAjax from '$lib/Store/comment/commentAjax';
 	import { tst } from '$lib/Variables/toastStyleConfig';
 	import Icon from '@iconify/svelte';
 	import { _ } from 'svelte-i18n';

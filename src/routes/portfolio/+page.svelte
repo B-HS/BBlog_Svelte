@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import VerticalCard from '../../lib/Card/verticalCard.svelte';
-	import articleAjax from '$lib/Store/ajax/articleAjax';
+	import articleAjax from '$lib/Store/article/articleAjax';
 	import { onDestroy } from 'svelte';
 	import { _ } from 'svelte-i18n';
 	export let data: PageData;

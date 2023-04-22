@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { _ } from 'svelte-i18n';
-	import articleAjax from '$lib/Store/ajax/articleAjax';
+	import articleAjax from '$lib/Store/article/articleAjax';
 	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
 	import { onMount } from 'svelte';
 	import type { article } from '../../app';

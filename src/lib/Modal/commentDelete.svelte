@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import commentAjax from '$lib/Store/ajax/commentAjax';
+	import commentAjax from '$lib/Store/comment/commentAjax';
 	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
 	import { tst } from '$lib/Variables/toastStyleConfig';
 	import Icon from '@iconify/svelte';
