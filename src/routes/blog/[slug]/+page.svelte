@@ -22,7 +22,7 @@
 	let totalPage: number;
 	let pg: number;
 	let sg: number;
-	let referrer: string
+	let referrer: string;
 	const { commentList, page, size, commentTotal } = commentStore;
 	commentList.subscribe((val) => (comments = [...val]));
 	commentTotal.subscribe((val) => (totalPage = val));
@@ -30,6 +30,10 @@
 	page.subscribe((val) => (pg = val));
 
 	const getMoreComment = async () => {
+		console.log('called');
+		console.log(pg, totalPage);
+		console.log();
+
 		if (pg >= totalPage) {
 			return;
 		}
@@ -39,11 +43,12 @@
 
 	let observeObj: HTMLDivElement;
 	onMount(() => {
-		typeof document.referrer !==undefined?referrer= document.referrer:"NOT CHEKCED"
-		articleAjax.visit(data.slug as unknown as number, referrer)
-		commentStore.commentList.update(val=>val=data.comments)
-		commentStore.page.update(val=>val=1)
+		typeof document.referrer !== undefined ? (referrer = document.referrer) : 'NOT CHEKCED';
+		articleAjax.visit(data.slug as unknown as number, referrer);
+		commentStore.commentList.update((val) => (val = data.comments));
+		commentStore.page.update((val) => (val = 1));
 		page.update((val) => (val += 1));
+		commentStore.total.update((val) => (val = data.total));
 		const obr = new IntersectionObserver((ele) => {
 			if (ele[0].isIntersecting) getMoreComment();
 		});
@@ -63,7 +68,7 @@
 	<meta property="og:type" content="blog" />
 	<meta property="og:url" content="https://hyns.dev" />
 	<meta property="og:title" content={`HS :: ${data.article.title}`} />
-	<meta property="og:image" content={"/"+data.article.thumbnail} />
+	<meta property="og:image" content={'/' + data.article.thumbnail} />
 	<meta property="og:description" content={`${data.article.context.replace(/<[^>]+>/g, '')}`} />
 	<meta property="og:site_name" content="Hyunseok" />
 	<meta property="og:locale" content="ko_KR" />
@@ -83,8 +88,15 @@
 	<Tags tags={data.article.tags} />
 	<CommentInput aid={data.slug} />
 
-	{#each data.comments as comment}
-		<Comment {comment} />
-	{/each}
+	{#if comments}
+		{#each comments as comment}
+			<Comment {comment} />
+		{/each}
+	{:else}
+		{#each data.comments as comment}
+			<Comment {comment} />
+		{/each}
+	{/if}
+
 	<div class="w-full h-25" bind:this={observeObj}>{pg >= totalPage ? $_('load_not_exist') : $_('loading')}</div>
 </section>

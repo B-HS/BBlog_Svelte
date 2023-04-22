@@ -22,5 +22,6 @@ export const load = (async ({ fetch, params }) => {
 		article: data as article,
 		slug:params.slug,
 		comments: cmt.comments as comment[],
+		total: cmt.total
 	};
 }) satisfies PageLoad;
