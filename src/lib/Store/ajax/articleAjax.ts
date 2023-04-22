@@ -20,6 +20,11 @@ axios.interceptors.response.use(
 	}
 );
 
+const visit = async (aid:number, referrer:string)=>{
+	globalStore.isLoading.update((val) => (val = true));
+	axios.post('/v1/visit/read', { aid: aid, visitUrl: referrer })
+}
+
 const uploadImage = async (file: FormData) => {
 	globalStore.isLoading.update((val) => (val = true));
 	const { data, statusText } = await axios.post(`/v1/image/upload`, file);
@@ -86,4 +91,4 @@ const reset = () => {
 	globalStore.isLoading.update((val) => (val = false));
 };
 
-export default { uploadImage, loadArticleList, reset, writeArticle, modifyArticle, deleteArticle };
+export default { uploadImage, loadArticleList, reset, writeArticle, modifyArticle, deleteArticle, visit };

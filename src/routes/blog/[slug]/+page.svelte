@@ -16,12 +16,14 @@
 	import commentAjax from '$lib/Store/ajax/commentAjax';
 	import commentStore from '$lib/Store/commentStore';
 	import { _ } from 'svelte-i18n';
+	import axios from 'axios';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	let comments: comment[] = [];
 	let totalPage: number;
 	let pg: number;
 	let sg: number;
+	let referrer: string
 	const { commentList, page, size, commentTotal } = commentStore;
 	commentList.subscribe((val) => (comments = [...val]));
 	commentTotal.subscribe((val) => (totalPage = val));
@@ -38,11 +40,8 @@
 
 	let observeObj: HTMLDivElement;
 	onMount(() => {
-		fetch('/v1/visit/read', {
-			method: 'POST',
-			body: JSON.stringify({ aid: data.slug, visitUrl: document.referrer ? document.referrer : 'LINK NOT CHECKED' }),
-			headers: { 'Content-Type': 'application/json' }
-		});
+		typeof document.referrer !==undefined?referrer= document.referrer:"NOT CHEKCED"
+		articleAjax.visit(data.slug as unknown as number, referrer)
 		commentAjax.loadCommentList(sg, pg, data.slug);
 		page.update((val) => (val += 1));
 		const obr = new IntersectionObserver((ele) => {
