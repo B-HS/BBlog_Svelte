@@ -22,17 +22,15 @@
 	let totalPage: number;
 	let pg: number;
 	let sg: number;
-	const { commentList, page, size, commentTotal } = commentStore;
-	commentList.subscribe((val) => (comments = [...val]));
-	commentTotal.subscribe((val) => (totalPage = val));
-	size.subscribe((val) => (sg = val));
-	page.subscribe((val) => (pg = val));
+	commentStore.commentList.subscribe((val) => (comments = [...val]));
+	commentStore.commentTotal.subscribe((val) => (totalPage = val));
+	commentStore.size.subscribe((val) => (sg = val));
+	commentStore.page.subscribe((val) => (pg = val));
 
 	const getMoreComment = async () => {
-		
 		globalStore.isLoading.update((val) => (val = true));
 		if (pg >= totalPage) {
-			globalStore.isLoading.update((val) => (val = false))
+			globalStore.isLoading.update((val) => (val = false));
 			return;
 		}
 		commentStore
@@ -40,9 +38,9 @@
 			.then(async (res) => {
 				if (res.statusText === 'OK') {
 					res.json().then((cmt) => {
-						commentList.update((val) => (val = [...val, ...cmt.comments]));
-						commentTotal.update((val) => (val = cmt.total));
-						page.update((val) => (val += 1));
+						commentStore.commentList.update((val) => (val = [...val, ...cmt.comments]));
+						commentStore.commentTotal.update((val) => (val = cmt.total));
+						commentStore.page.update((val) => (val += 1));
 					});
 				}
 			})
@@ -53,7 +51,7 @@
 	onMount(() => {
 		commentStore.commentList.update((val) => (val = data.comments));
 		commentStore.page.update((val) => (val = 1));
-		page.update((val) => (val += 1));
+		commentStore.page.update((val) => (val += 1));
 		commentStore.total.update((val) => (val = data.total));
 		const obr = new IntersectionObserver((ele) => {
 			if (ele[0].isIntersecting) {

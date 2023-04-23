@@ -2,8 +2,8 @@ import { writable } from 'svelte/store';
 import urlParams from './urlParams';
 import { Cookies } from 'typescript-cookie';
 
-const { admin } = urlParams;
-const urls = writable<string[] | string>(admin);
+
+const urls = writable<string[] | string>(urlParams.admin);
 const authentication = writable<string>('user');
 
 const tokenChecker = () => {

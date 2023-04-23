@@ -8,7 +8,7 @@
 	import type { article as articleProps } from '../../app';
 	import { onDestroy, onMount } from 'svelte';
 	import globalStore from '$lib/Store/globalStore';
-	const { articles, currentTab, total, page, size } = articleStore;
+	
 	export let data: PageData;
 	let articleList: articleProps[];
 	let tab: number;
@@ -17,8 +17,8 @@
 	let sg: number;
 	let currentMenu: string;
 
-	articles.subscribe((val) => (articleList = val));
-	currentTab.subscribe((val) => {
+	articleStore.articles.subscribe((val) => (articleList = val));
+	articleStore.currentTab.subscribe((val) => {
 		tab = val;
 		switch (val) {
 			case 0:
@@ -33,23 +33,23 @@
 				break;
 		}
 	});
-	total.subscribe((val) => (totalPage = val));
-	page.subscribe((val) => (pg = val));
-	size.subscribe((val) => (sg = val));
+	articleStore.total.subscribe((val) => (totalPage = val));
+	articleStore.page.subscribe((val) => (pg = val));
+	articleStore.size.subscribe((val) => (sg = val));
 
 	const getMoreArticle = () => {
 		if (pg >= totalPage) {
 			globalStore.isLoading.update((val) => (val = false));
 			return;
 		}
-		page.update((val) => (val += 1));
+		articleStore.page.update((val) => (val += 1));
 		articleStore
 			.loadArticleList(sg, pg, currentMenu)
 			.then(async (res) => {
 				if (res.statusText === 'OK') {
 					const data = await res.json();
-					articles.update((val) => (val = [...val, ...data.articles]));
-					total.update((val) => (val = data.total));
+					articleStore.articles.update((val) => (val = [...val, ...data.articles]));
+					articleStore.total.update((val) => (val = data.total));
 				}
 			})
 			.finally(() => globalStore.isLoading.update((val) => (val = false)));
@@ -58,27 +58,27 @@
 	let observeObj: HTMLDivElement;
 
 	const menuChange = async (menu: number) => {
-		page.update((val) => (val = 0));
+		articleStore.page.update((val) => (val = 0));
 		articleStore.reset();
-		currentTab.update((val) => (val = menu));
+		articleStore.currentTab.update((val) => (val = menu));
 		globalStore.isLoading.update((val) => (val = true));
 		articleStore
 			.loadArticleList(sg, pg, currentMenu)
 			.then(async (res) => {
 				if (res.statusText === 'OK') {
 					const data = await res.json();
-					articles.update((val) => (val = [...val, ...data.articles]));
-					total.update((val) => (val = data.total));
+					articleStore.articles.update((val) => (val = [...val, ...data.articles]));
+					articleStore.total.update((val) => (val = data.total));
 				}
 			})
 			.finally(() => globalStore.isLoading.update((val) => (val = false)));
-		page.update((val) => (val += 1));
+			articleStore.page.update((val) => (val += 1));
 	};
 
 	onMount(() => {
-		articles.update((val) => (val = data.articles));
-		total.update((val) => (val = data.total));
-		page.update((val) => (val += 1));
+		articleStore.articles.update((val) => (val = data.articles));
+		articleStore.total.update((val) => (val = data.total));
+		articleStore.page.update((val) => (val += 1));
 		const obr = new IntersectionObserver((ele) => {
 			if (ele[0].isIntersecting) {
 				getMoreArticle()
