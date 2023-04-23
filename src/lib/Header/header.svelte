@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { navigating, page } from '$app/stores';
-	import routeStore from '$lib/Store/routerGuard/routeStore';
-	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
 	import Icon from '@iconify/svelte';
 	import { AppBar, LightSwitch, RadioGroup, RadioItem, drawerStore, modeCurrent, setModeCurrent } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';
@@ -10,7 +7,6 @@
 	import menus from '../Variables/menus';
 
 	let auth = 'user';
-	routeStore.authentication.subscribe((val) => (auth = val));
 	const drawerOpen = () =>
 		drawerStore.open({
 			width: 'w-1/2'
@@ -18,9 +14,7 @@
 	$: lang = 0;
 	$: innerWidth = 0;
 	$: lang === 0 ? init({ fallbackLocale: 'ko' }) : init({ fallbackLocale: 'jp' });
-	$: if ($navigating) routerGuard($page, true);
 	onMount(() => {
-		routerGuard($page, true);
 		setModeCurrent($modeCurrent);
 	});
 </script>

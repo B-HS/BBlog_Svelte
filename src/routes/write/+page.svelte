@@ -1,6 +1,5 @@
 <script lang="ts">
 	import articleAjax from '$lib/Store/article/articleAjax';
-	import { adminCheck } from '$lib/Store/routerGuard/routerGuard';
 	import { tst } from '$lib/Variables/toastStyleConfig';
 	import Icon from '@iconify/svelte';
 	import { Editor } from '@tiptap/core';
@@ -36,7 +35,6 @@
 	let locale = localeFromDateFnsLocale(ko);
 
 	onMount(() => {
-		adminCheck();
 		editor = new Editor({
 			element: ele,
 			extensions: [

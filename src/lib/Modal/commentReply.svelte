@@ -1,10 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import commentAjax from '$lib/Store/comment/commentAjax';
-	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
 	import { tst } from '$lib/Variables/toastStyleConfig';
 	import Icon from '@iconify/svelte';
-	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
 	import type { comment } from '../../app';
 	export let isOpen: boolean;
