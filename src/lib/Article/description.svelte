@@ -1,4 +1,5 @@
 <script lang="ts">
+	import routeStore from '$lib/Store/routerGuard/routeStore';
 	import type { article } from '../../app';
 	import Delete from '../Modal/articleDelete.svelte';
 	import Modify from '../Modal/articleModify.svelte';
@@ -7,6 +8,7 @@
 	let showModify = false;
 	let showDelete = false;
 	let auth = 'user';
+	routeStore.authentication.subscribe((val) => (auth = val));
 </script>
 
 <section class="description mx-2 px-2 w-full">

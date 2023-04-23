@@ -1,9 +1,11 @@
 <script lang="ts">
+	import routeStore from '$lib/Store/routerGuard/routeStore';
 	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
 	import { Cookies } from 'typescript-cookie';
 	onMount(() => {
 		Cookies.remove('token');
+		routeStore.authentication.update((val) => (val = 'user'));
 		const interval = setTimeout(() => history.back(), 1500);
 		return () => clearInterval(interval);
 	});
