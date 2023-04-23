@@ -1,6 +1,5 @@
 <script lang="ts">
-	import articleAjax from '$lib/Store/article/articleAjax';
-	import { adminCheck } from '$lib/Store/routerGuard/routerGuard';
+	import routeStore from '$lib/Store/routerGuard/routeStore';
 	import { tst } from '$lib/Variables/toastStyleConfig';
 	import Icon from '@iconify/svelte';
 	import { Editor } from '@tiptap/core';
@@ -16,6 +15,7 @@
 	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
 	import { _ } from 'svelte-i18n';
 	import { ko } from 'date-fns/locale';
+	import articleStore from '$lib/Store/article/articleStore';
 
 	const menuList = ['INTRO', 'DEV', 'ETC', 'PORTFOLIO'];
 	const hideList = [true, false];
@@ -34,9 +34,8 @@
 	let currentHide = hideList[1];
 	let thumbnail: string = 'basic.png';
 	let locale = localeFromDateFnsLocale(ko);
-
 	onMount(() => {
-		adminCheck();
+		routeStore.adminCheck();
 		editor = new Editor({
 			element: ele,
 			extensions: [
@@ -82,12 +81,12 @@
 		let formData = new FormData();
 		if (target.files) {
 			formData.append('upload', target.files[0]);
-			articleAjax.uploadImage(formData).then((res) => {
-				thumbnail = `https://hyns.dev/v1/image/` + res;
+			articleStore.uploadImage(formData).then((res) => {
+				thumbnail = `/v1/image/` + res;
 				editor
 					.chain()
 					.focus()
-					.setImage({ src: `https://hyns.dev/v1/image/` + res, alt: 'bblog img' })
+					.setImage({ src: `/v1/image/` + res, alt: 'bblog img' })
 					.run();
 			});
 		}
@@ -184,7 +183,7 @@
 
 	const write = async () => {
 		if (validator()) {
-			await articleAjax.writeArticle({
+			await articleStore.writeArticle({
 				title: title,
 				context: editor.getHTML(),
 				hide: currentHide,

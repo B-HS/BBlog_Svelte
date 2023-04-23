@@ -1,5 +1,5 @@
 <script lang="ts">
-	import articleAjax from '$lib/Store/article/articleAjax';
+	import articleStore from '$lib/Store/article/articleStore';
 	import { _ } from 'svelte-i18n';
 	import type { article } from '../../app';
 	export let showModal: boolean;
@@ -9,7 +9,7 @@
 	$: if (dialog && showModal) dialog.showModal();
 
 	const articleDelete = () => {
-		articleAjax.deleteArticle(article);
+		articleStore.deleteArticle(article);
 	};
 </script>
 

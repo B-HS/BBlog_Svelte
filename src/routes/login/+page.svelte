@@ -1,6 +1,6 @@
 <script lang="ts">
+	import routeStore from '$lib/Store/routerGuard/routeStore';
 	import userAjax from '$lib/Store/user/userAjax';
-	import { adminCheck } from '$lib/Store/routerGuard/routerGuard';
 	import { tst } from '$lib/Variables/toastStyleConfig';
 	import { _ } from 'svelte-i18n';
 	let id = '';
@@ -25,7 +25,7 @@
 					tst('fail', $_('login_fail'));
 					return;
 				}
-				adminCheck(true, true).then((res) => {
+				routeStore.adminCheck(true, true).then((res) => {
 					if (res) {
 						tst('fail', $_('login_fail'));
 					} else {

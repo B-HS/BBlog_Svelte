@@ -1,5 +1,5 @@
 <script lang="ts">
-	import commentAjax from '$lib/Store/comment/commentAjax';
+	import commentStore from '$lib/Store/comment/commentStore';
 	import { tst } from '$lib/Variables/toastStyleConfig';
 	import Icon from '@iconify/svelte';
 	import { _ } from 'svelte-i18n';
@@ -18,7 +18,7 @@
 	};
 
 	const commentDelete = () => {
-		if (validator()) commentAjax.deleteComment({ pw, aid: cmt.aid, rid: cmt.rid });
+		if (validator()) commentStore.deleteComment({ pw, aid: cmt.aid, rid: cmt.rid });
 		pw = '';
 		dialog.close();
 	};

@@ -11,11 +11,10 @@
 	import timezone from 'dayjs/plugin/timezone';
 	import 'dayjs/locale/ko';
 	import { onDestroy, onMount } from 'svelte';
-	import articleAjax from '$lib/Store/article/articleAjax';
 	import type { comment } from '../../../app';
-	import commentAjax from '$lib/Store/comment/commentAjax';
 	import commentStore from '$lib/Store/comment/commentStore';
 	import { _ } from 'svelte-i18n';
+	import articleStore from '$lib/Store/article/articleStore';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	let comments: comment[] = [];
@@ -37,7 +36,7 @@
 		if (pg >= totalPage) {
 			return;
 		}
-		await commentAjax.loadMoreCommentList(sg, pg, data.slug);
+		await commentStore.loadMoreCommentList(sg, pg, data.slug);
 		page.update((val) => (val += 1));
 	};
 
@@ -56,8 +55,8 @@
 	});
 
 	onDestroy(() => {
-		articleAjax.reset();
-		commentAjax.commentReset();
+		articleStore.reset();
+		commentStore.commentReset();
 	});
 </script>
 
@@ -66,7 +65,7 @@
 	<meta name="description" content={`${data.article.context.replace(/<[^>]+>/g, '')}`} />
 	<meta name="keywords" content={`${data.article.tags.join(', ')}`} />
 	<meta property="og:type" content="blog" />
-	<meta property="og:url" content="https://hyns.dev" />
+	<meta property="og:url" content="" />
 	<meta property="og:title" content={`HS :: ${data.article.title}`} />
 	<meta property="og:image" content={'/' + data.article.thumbnail} />
 	<meta property="og:description" content={`${data.article.context.replace(/<[^>]+>/g, '')}`} />

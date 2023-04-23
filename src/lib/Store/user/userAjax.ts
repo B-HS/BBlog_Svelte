@@ -1,13 +1,12 @@
-import globalStore from '../globalStore';
-import { tst } from '$lib/Variables/toastStyleConfig';
 import { dictionary } from 'svelte-i18n';
+import globalStore from '../globalStore';
 // 타입이 애매해서 any로 돌림, 어차피 값은 lang의 ts파일 목록
 let dic: any;
 dictionary.subscribe((val) => (dic = val));
 
 const login = async (params: { adminId: string; password: string }) => {
 	globalStore.isLoading.update((val) => (val = true));
-	const data = fetch('https://hyns.dev/v1/login', {
+	const data = fetch('/v1/login', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(params)

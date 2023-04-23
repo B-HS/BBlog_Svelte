@@ -7,7 +7,6 @@
 	import { _ } from 'svelte-i18n';
 	import type { article as articleProps } from '../../app';
 	import { onDestroy, onMount } from 'svelte';
-	import articleAjax from '$lib/Store/article/articleAjax';
 	const { articles, currentTab, total, page, size } = articleStore;
 	export let data: PageData;
 	let articleList: articleProps[];
@@ -42,16 +41,16 @@
 			return;
 		}
 		page.update((val) => (val += 1));
-		articleAjax.loadArticleList(sg, pg, currentMenu);
+		articleStore.loadArticleList(sg, pg, currentMenu);
 	};
 
 	let observeObj: HTMLDivElement;
 
 	const menuChange = async (menu: number) => {
 		page.update((val) => (val = 0));
-		articleAjax.reset();
+		articleStore.reset();
 		currentTab.update((val) => (val = menu));
-		await articleAjax.loadArticleList(sg, pg, currentMenu);
+		await articleStore.loadArticleList(sg, pg, currentMenu);
 		page.update((val) => (val += 1));
 	};
 
@@ -65,7 +64,7 @@
 		obr.observe(observeObj);
 	});
 	onDestroy(() => {
-		articleAjax.reset();
+		articleStore.reset();
 	});
 </script>
 
@@ -75,7 +74,7 @@
 	<meta name="description" content={`${data.articles.map(val=>val.context).join(" ").replace(/<[^>]+>/g, "")}`} />
 	<meta name="keywords" content={`${data.articles.length>0?data.articles[0].tags.join(', '):[]}`} />
 	<meta property="og:type" content="blog" />
-	<meta property="og:url" content="https://hyns.dev" />
+	<meta property="og:url" content="" />
 	<meta property="og:title" content={`HS :: Articles`} />
 	<meta property="og:image" content={"/favicon.ico"} />
 	<meta property="og:description" content={`${data.articles.map(val=>val.context).join(" ").replace(/<[^>]+>/g, "")}`} />

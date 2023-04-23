@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import VerticalCard from '../../lib/Card/verticalCard.svelte';
-	import articleAjax from '$lib/Store/article/articleAjax';
 	import { onDestroy } from 'svelte';
 	import { _ } from 'svelte-i18n';
+	import articleStore from '$lib/Store/article/articleStore';
 	export let data: PageData;
 	
 	onDestroy(() => {
-		articleAjax.reset();
+		articleStore.reset();
 	});
 
 
@@ -18,7 +18,7 @@
 	<meta name="description" content={`${data.articles.map(val=>val.context).join(" ").replace(/<[^>]+>/g, "")}`} />
 	<meta name="keywords" content="Java, Svelte, Typescript, React, Vue, Sveltekit, Nextjs, Tailwind, Chakra UI" />
 	<meta property="og:type" content="blog" />
-	<meta property="og:url" content="https://hyns.dev" />
+	<meta property="og:url" content="" />
 	<meta property="og:title" content={`HS :: Portfolio`} />
 	<meta property="og:image" content={"/favicon.ico"} />
 	<meta property="og:description" content={`${data.articles.map(val=>val.context).join(" ").replace(/<[^>]+>/g, "")}`} />

@@ -2,7 +2,7 @@ import type { article } from '../../../app';
 import type { PageLoad } from './$types';
 
 export const load = (async ({ fetch, params }) => {
-	const result = await fetch(`https://hyns.dev/v1/article/read`, {
+	const result = await fetch(`/v1/article/read`, {
 		method: 'POST',
 		body: JSON.stringify({ aid: params.slug }),
 		headers: { 'Content-Type': 'application/json' }

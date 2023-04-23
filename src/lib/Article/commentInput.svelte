@@ -1,6 +1,6 @@
 <script lang="ts">
-	import articleAjax from '$lib/Store/article/articleAjax';
-	import commentAjax from '$lib/Store/comment/commentAjax';
+	import articleStore from '$lib/Store/article/articleStore';
+	import commentStore from '$lib/Store/comment/commentStore';
 	import { tst } from '$lib/Variables/toastStyleConfig';
 	import Icon from '@iconify/svelte';
 	import { _ } from 'svelte-i18n';
@@ -23,8 +23,8 @@
 		let formData = new FormData();
 		if (target.files) {
 			formData.append('upload', target.files[0]);
-			articleAjax.uploadImage(formData).then((res) => {
-				commentParams.commentImg = `https://hyns.dev/v1/image/` + res;
+			articleStore.uploadImage(formData).then((res) => {
+				commentParams.commentImg = `/v1/image/` + res;
 				uploaded = true;
 			});
 		}
@@ -48,7 +48,7 @@
 	};
 
 	const writeComment = async () => {
-		if (validator()) await commentAjax.writeComment(commentParams);
+		if (validator()) await commentStore.writeComment(commentParams);
 		commentParams = {
 			commentDesc: '',
 			nickname: '',

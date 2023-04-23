@@ -5,7 +5,7 @@
 	import type { article } from '../../app';
 
 	import WriteTags from '$lib/Article/writeTags.svelte';
-	import articleAjax from '$lib/Store/article/articleAjax';
+	import articleStore from '$lib/Store/article/articleStore';
 	export let showModal: boolean;
 	export let article: article;
 	let dialog: HTMLDialogElement;
@@ -37,7 +37,7 @@
 	};
 	const modify = async () => {
 		if (validator()) {
-			await articleAjax.modifyArticle(modifiedArticle);
+			await articleStore.modifyArticle(modifiedArticle);
 		}
 	};
 
