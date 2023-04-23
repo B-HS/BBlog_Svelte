@@ -3,6 +3,8 @@
 	import { adminCheck } from '$lib/Store/routerGuard/routerGuard';
 	import { tst } from '$lib/Variables/toastStyleConfig';
 	import { _ } from 'svelte-i18n';
+	let id = '';
+	let pw = '';
 
 	const validator = () => {
 		if (!id || id.trim().length === 0) {
@@ -10,7 +12,7 @@
 			return false;
 		}
 		if (!pw || pw.trim().length === 0) {
-			tst('warning', $_('no_ㅔㅈ'));
+			tst('warning', $_('no_pw'));
 			return false;
 		}
 		return true;
@@ -23,21 +25,17 @@
 					tst('fail', $_('login_fail'));
 					return;
 				}
-
-				const result = await adminCheck(true, true);
-
-				if (!result) {
-					tst('fail', $_('login_fail'));
-					return;
-				}
-				tst('success', $_('login_success'));
-				history.back();
+				adminCheck(true, true).then((res) => {
+					if (res) {
+						tst('fail', $_('login_fail'));
+					} else {
+						tst('success', $_('login_success'));
+						history.back();
+					}
+				});
 			});
 		}
 	};
-
-	$: id = '';
-	$: pw = '';
 </script>
 
 <section class="w-full flex justify-center items-center h-full bg-opacity-10">

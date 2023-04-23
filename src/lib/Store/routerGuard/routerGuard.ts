@@ -45,10 +45,15 @@ export const adminCheck = async (isLogin?: boolean, isNormal?: boolean) => {
 			}
 			window.location.href = '/error';
 		} else {
-			const { statusText } = await tokenChecker('Bearer ' + cookie);
-			statusText === 'OK'
+			tokenChecker('Bearer ' + cookie).then(res=>{
+				console.log(res.statusText);
+				
+				res.statusText === 'OK'
 				? store.authentication.update((val) => (val = 'admin'))
 				: store.authentication.update((val) => (val = 'user'));
+			})
+			return
+			
 		}
 		if (isAuthenticated === 'user') {
 			if (isLogin) {

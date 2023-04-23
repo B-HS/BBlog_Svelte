@@ -1,19 +1,13 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import commentAjax from '$lib/Store/comment/commentAjax';
-	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
 	import { tst } from '$lib/Variables/toastStyleConfig';
 	import Icon from '@iconify/svelte';
-	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
 	import type { comment } from '../../app';
 	export let isOpen: boolean;
 	export let cmt: comment;
 	let dialog: HTMLDialogElement;
 	$: if (dialog && isOpen) dialog.showModal();
-	onMount(() => {
-		routerGuard($page, true);
-	});
 
 	const validator = () => {
 		if (!pw || pw.trim().length === 0) {

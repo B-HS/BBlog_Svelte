@@ -1,9 +1,6 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
 	import { tst } from '$lib/Variables/toastStyleConfig';
 	import Icon from '@iconify/svelte';
-	import { onMount } from 'svelte';
 	import { _ } from 'svelte-i18n';
 	import type { article } from '../../app';
 
@@ -16,9 +13,6 @@
 	let modifiedArticle: article = article;
 	let hashInput: string;
 	$: if (dialog && showModal) dialog.showModal();
-	onMount(() => {
-		routerGuard($page, true);
-	});
 
 	const enterHandler = (e: KeyboardEvent) => {
 		if (e.code === 'Enter') {

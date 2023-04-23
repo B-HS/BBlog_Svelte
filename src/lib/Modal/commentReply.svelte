@@ -11,9 +11,6 @@
 	export let cmt: comment;
 	let dialog: HTMLDialogElement;
 	$: if (dialog && isOpen) dialog.showModal();
-	onMount(() => {
-		routerGuard($page, true);
-	});
 
 	const validator = () => {
 		if (!pw || pw.trim().length === 0) {

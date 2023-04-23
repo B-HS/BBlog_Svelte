@@ -1,18 +1,12 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { _ } from 'svelte-i18n';
 	import articleAjax from '$lib/Store/article/articleAjax';
-	import { routerGuard } from '$lib/Store/routerGuard/routerGuard';
-	import { onMount } from 'svelte';
+	import { _ } from 'svelte-i18n';
 	import type { article } from '../../app';
 	export let showModal: boolean;
 	export let article: article;
 
 	let dialog: HTMLDialogElement;
 	$: if (dialog && showModal) dialog.showModal();
-	onMount(() => {
-		routerGuard($page, true);
-	});
 
 	const articleDelete = () => {
 		articleAjax.deleteArticle(article);
