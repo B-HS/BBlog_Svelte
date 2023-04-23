@@ -44,15 +44,18 @@
 	const validator = () => {
 		if (!commentParams.commentDesc || commentParams.commentDesc.trim().length === 0) {
 			tst('warning', $_('comment_no_desc'));
+			globalStore.isLoading.update((val) => (val = false));
 			return false;
 		}
 
 		if (!commentParams.nickname || commentParams.nickname.trim().length === 0) {
 			tst('warning', $_('comment_no_nickname'));
+			globalStore.isLoading.update((val) => (val = false));
 			return false;
 		}
 		if (!commentParams.pw || commentParams.pw.trim().length === 0) {
 			tst('warning', $_('comment_no_pw'));
+			globalStore.isLoading.update((val) => (val = false));
 			return false;
 		}
 		return true;

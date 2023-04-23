@@ -16,7 +16,7 @@
 >
 	<img
 		class="w-full"
-		src="https://paulryan.com.au/wp-content/uploads/2015/01/high-resolution-wallpapers-25.jpg"
+		src={`${cardInfo.thumbnail?"https://hyns.dev"+cardInfo.thumbnail:"https://mi.gumyo.net/files/47df371c-ec7f-4579-ac93-ca32fd25d54b"}`}
 		alt={`${cardInfo.title}'s first image`}
 		srcset=""
 	/>

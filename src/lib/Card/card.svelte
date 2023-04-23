@@ -9,7 +9,7 @@
 <a class="card w-full flex hover:-translate-y-0.5 transition-transform shadow-md" href={`/${type}/${cardInfo.aid}`}>
 	<div class="card_img flex border border-gray-600 border-opacity-50 object-cover">
 		<img
-			src="https://mi.gumyo.net/files/47df371c-ec7f-4579-ac93-ca32fd25d54b"
+			src={`${cardInfo.thumbnail?"https://hyns.dev"+cardInfo.thumbnail:"https://mi.gumyo.net/files/47df371c-ec7f-4579-ac93-ca32fd25d54b"}`}
 			width="240px"
 			height="240px"
 			alt="seyana"
