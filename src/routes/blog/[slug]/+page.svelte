@@ -18,52 +18,52 @@
 	import globalStore from '$lib/Store/globalStore';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
-	let comments: comment[] = [];
-	let totalPage: number;
-	let pg: number;
-	let sg: number;
-	commentStore.commentList.subscribe((val) => (comments = [...val]));
-	commentStore.commentTotal.subscribe((val) => (totalPage = val));
-	commentStore.size.subscribe((val) => (sg = val));
-	commentStore.page.subscribe((val) => (pg = val));
+	// let comments: comment[] = [];
+	// let totalPage: number;
+	// let pg: number;
+	// let sg: number;
+	// commentStore.commentList.subscribe((val) => (comments = [...val]));
+	// commentStore.commentTotal.subscribe((val) => (totalPage = val));
+	// commentStore.size.subscribe((val) => (sg = val));
+	// commentStore.page.subscribe((val) => (pg = val));
 
-	const getMoreComment = async () => {
-		globalStore.isLoading.update((val) => (val = true));
-		if (pg >= totalPage) {
-			globalStore.isLoading.update((val) => (val = false));
-			return;
-		}
-		commentStore
-			.loadMoreCommentList(sg, pg, data.slug)
-			.then(async (res) => {
-				if (res.statusText === 'OK') {
-					res.json().then((cmt) => {
-						commentStore.commentList.update((val) => (val = [...val, ...cmt.comments]));
-						commentStore.commentTotal.update((val) => (val = cmt.total));
-						commentStore.page.update((val) => (val += 1));
-					});
-				}
-			})
-			.finally(() => globalStore.isLoading.update((val) => (val = false)));
-	};
+	// const getMoreComment = async () => {
+	// 	globalStore.isLoading.update((val) => (val = true));
+	// 	if (pg >= totalPage) {
+	// 		globalStore.isLoading.update((val) => (val = false));
+	// 		return;
+	// 	}
+	// 	commentStore
+	// 		.loadMoreCommentList(sg, pg, data.slug)
+	// 		.then(async (res) => {
+	// 			if (res.statusText === 'OK') {
+	// 				res.json().then((cmt) => {
+	// 					commentStore.commentList.update((val) => (val = [...val, ...cmt.comments]));
+	// 					commentStore.commentTotal.update((val) => (val = cmt.total));
+	// 					commentStore.page.update((val) => (val += 1));
+	// 				});
+	// 			}
+	// 		})
+	// 		.finally(() => globalStore.isLoading.update((val) => (val = false)));
+	// };
 
-	let observeObj: HTMLDivElement;
-	onMount(() => {
-		commentStore.commentList.update((val) => (val = data.comments));
-		commentStore.page.update((val) => (val = 1));
-		commentStore.page.update((val) => (val += 1));
-		commentStore.total.update((val) => (val = data.total));
-		const obr = new IntersectionObserver((ele) => {
-			if (ele[0].isIntersecting) {
-				getMoreComment();
-			}
-		});
-		obr.observe(observeObj);
-	});
+	// let observeObj: HTMLDivElement;
+	// onMount(() => {
+	// 	commentStore.commentList.update((val) => (val = data.comments));
+	// 	commentStore.page.update((val) => (val = 1));
+	// 	commentStore.page.update((val) => (val += 1));
+	// 	commentStore.total.update((val) => (val = data.total));
+	// 	const obr = new IntersectionObserver((ele) => {
+	// 		if (ele[0].isIntersecting) {
+	// 			getMoreComment();
+	// 		}
+	// 	});
+	// 	obr.observe(observeObj);
+	// });
 
 	onDestroy(() => {
 		articleStore.reset();
-		commentStore.commentReset();
+		// commentStore.commentReset();
 	});
 </script>
 
@@ -92,7 +92,7 @@
 	/>
 	<Description article={data.article} />
 	<Tags tags={data.article.tags} />
-	<CommentInput aid={data.slug} />
+	<!-- <CommentInput aid={data.slug} />
 
 	{#if comments}
 		{#each comments as comment}
@@ -104,5 +104,5 @@
 		{/each}
 	{/if}
 
-	<div class="w-full h-25" bind:this={observeObj}>{pg >= totalPage ? $_('load_not_exist') : $_('loading')}</div>
+	<div class="w-full h-25" bind:this={observeObj}>{pg >= totalPage ? $_('load_not_exist') : $_('loading')}</div> -->
 </section>
