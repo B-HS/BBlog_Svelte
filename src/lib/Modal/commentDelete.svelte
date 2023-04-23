@@ -4,6 +4,7 @@
 	import Icon from '@iconify/svelte';
 	import { _ } from 'svelte-i18n';
 	import type { comment } from '../../app';
+	import globalStore from '$lib/Store/globalStore';
 	export let isOpen: boolean;
 	export let cmt: comment;
 	let dialog: HTMLDialogElement;
@@ -18,7 +19,25 @@
 	};
 
 	const commentDelete = () => {
-		if (validator()) commentStore.deleteComment({ pw, aid: cmt.aid, rid: cmt.rid });
+		globalStore.isLoading.update((val) => (val = true));
+		if (validator()) {
+			commentStore
+				.deleteComment({ pw, aid: cmt.aid, rid: cmt.rid })
+				.then((res) => {
+					if (res.statusText === 'OK') {
+						tst('success', $_('comment_removed'));
+						commentStore.loadCommentList(cmt.rid! + 10, 0, cmt.aid as unknown as string).then(async (res) => {
+							if (res.statusText === 'OK') {
+								res.json().then((cmt) => {
+									commentStore.commentList.update((val) => (val = [...cmt.comments]));
+									commentStore.commentTotal.update((val) => (val = cmt.total));
+								});
+							}
+						});
+					}
+				})
+				.finally(() => globalStore.isLoading.update((val) => (val = false)));
+		}
 		pw = '';
 		dialog.close();
 	};
@@ -42,7 +61,13 @@
 		<div class="border-t border-opacity-10 border-gray-200">
 			<dl>
 				<form class="px-4 py-5 sm:grid">
-					<input type="password" class="input w-full border-0 text-center" bind:value={pw} placeholder={$_('pw')} autocomplete="off"/>
+					<input
+						type="password"
+						class="input w-full border-0 text-center"
+						bind:value={pw}
+						placeholder={$_('pw')}
+						autocomplete="off"
+					/>
 				</form>
 
 				<div class="px-3 pb-2 flex justify-end">

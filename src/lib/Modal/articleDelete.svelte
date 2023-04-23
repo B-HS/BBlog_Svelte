@@ -2,6 +2,7 @@
 	import articleStore from '$lib/Store/article/articleStore';
 	import { _ } from 'svelte-i18n';
 	import type { article } from '../../app';
+	import globalStore from '$lib/Store/globalStore';
 	export let showModal: boolean;
 	export let article: article;
 
@@ -9,7 +10,11 @@
 	$: if (dialog && showModal) dialog.showModal();
 
 	const articleDelete = () => {
-		articleStore.deleteArticle(article);
+		globalStore.isLoading.update((val) => (val = true));
+		articleStore.deleteArticle(article).then(() => {
+			window.location.href = `${article.menu === 'PORTFOLIO' ? '/portfolio' : '/blog'}`;
+		})
+		.finally(() => globalStore.isLoading.update((val) => (val = false)));
 	};
 </script>
 

@@ -25,13 +25,15 @@
 					tst('fail', $_('login_fail'));
 					return;
 				}
-				routeStore.adminCheck(true, true).then((res) => {
-					if (res) {
-						tst('fail', $_('login_fail'));
-					} else {
-						tst('success', $_('login_success'));
-						history.back();
-					}
+				routeStore.tokenChecker().then(async (res) => {
+					res.text().then((res) => {
+						if (res === 'true') {
+							routeStore.authentication.update((val) => (val = 'admin'));
+							window.history.back()
+						} else {
+							routeStore.authentication.update((val) => (val = 'user'));
+						}
+					});
 				});
 			});
 		}

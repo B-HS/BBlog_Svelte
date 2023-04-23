@@ -7,7 +7,17 @@
 	import { _, init } from 'svelte-i18n';
 	import icons from '../Variables/icons';
 	import menus from '../Variables/menus';
-
+	const checkAuth = () => {
+		routeStore.tokenChecker().then(async (res) => {
+			res.text().then((res) => {
+				if (res==="true") {
+					routeStore.authentication.update((val) => (val = 'admin'));
+				} else {
+					routeStore.authentication.update((val) => (val = 'user'));
+				}
+			});
+		});
+	};
 	let auth = 'user';
 	routeStore.authentication.subscribe((val) => (auth = val));
 	const drawerOpen = () =>
@@ -17,9 +27,11 @@
 	$: lang = 0;
 	$: innerWidth = 0;
 	$: lang === 0 ? init({ fallbackLocale: 'ko' }) : init({ fallbackLocale: 'jp' });
-	$: if ($navigating) routeStore.routerGuard($page, true);
+	$: if ($navigating) {
+		checkAuth();
+	}
 	onMount(() => {
-		routeStore.routerGuard($page, true);
+		checkAuth();
 		setModeCurrent($modeCurrent);
 	});
 </script>

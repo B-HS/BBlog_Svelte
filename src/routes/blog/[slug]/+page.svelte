@@ -15,13 +15,13 @@
 	import commentStore from '$lib/Store/comment/commentStore';
 	import { _ } from 'svelte-i18n';
 	import articleStore from '$lib/Store/article/articleStore';
+	import globalStore from '$lib/Store/globalStore';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	let comments: comment[] = [];
 	let totalPage: number;
 	let pg: number;
 	let sg: number;
-	let referrer: string;
 	const { commentList, page, size, commentTotal } = commentStore;
 	commentList.subscribe((val) => (comments = [...val]));
 	commentTotal.subscribe((val) => (totalPage = val));
@@ -29,15 +29,24 @@
 	page.subscribe((val) => (pg = val));
 
 	const getMoreComment = async () => {
-		console.log('called');
-		console.log(pg, totalPage);
-		console.log();
-
+		
+		globalStore.isLoading.update((val) => (val = true));
 		if (pg >= totalPage) {
+			globalStore.isLoading.update((val) => (val = false))
 			return;
 		}
-		await commentStore.loadMoreCommentList(sg, pg, data.slug);
-		page.update((val) => (val += 1));
+		commentStore
+			.loadMoreCommentList(sg, pg, data.slug)
+			.then(async (res) => {
+				if (res.statusText === 'OK') {
+					res.json().then((cmt) => {
+						commentList.update((val) => (val = [...val, ...cmt.comments]));
+						commentTotal.update((val) => (val = cmt.total));
+						page.update((val) => (val += 1));
+					});
+				}
+			})
+			.finally(() => globalStore.isLoading.update((val) => (val = false)));
 	};
 
 	let observeObj: HTMLDivElement;

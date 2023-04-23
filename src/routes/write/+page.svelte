@@ -16,6 +16,7 @@
 	import { _ } from 'svelte-i18n';
 	import { ko } from 'date-fns/locale';
 	import articleStore from '$lib/Store/article/articleStore';
+	import globalStore from '$lib/Store/globalStore';
 
 	const menuList = ['INTRO', 'DEV', 'ETC', 'PORTFOLIO'];
 	const hideList = [true, false];
@@ -35,7 +36,15 @@
 	let thumbnail: string = 'basic.png';
 	let locale = localeFromDateFnsLocale(ko);
 	onMount(() => {
-		routeStore.adminCheck();
+		routeStore.tokenChecker().then(async (res) => {
+			res.text().then((res) => {
+				if (res !== 'true') {
+					tst("fail", $_('pageError'))
+					window.location.href = '/login';
+				}
+			});
+		});
+
 		editor = new Editor({
 			element: ele,
 			extensions: [
@@ -81,14 +90,22 @@
 		let formData = new FormData();
 		if (target.files) {
 			formData.append('upload', target.files[0]);
-			articleStore.uploadImage(formData).then((res) => {
-				thumbnail = `/v1/image/` + res;
-				editor
-					.chain()
-					.focus()
-					.setImage({ src: `/v1/image/` + res, alt: 'bblog img' })
-					.run();
-			});
+			articleStore
+				.uploadImage(formData)
+				.then((res) => {
+					if (res.statusText === 'OK') {
+						tst('success', $_('image_upload_success'));
+					}
+					return res.text();
+				})
+				.then((res) => {
+					thumbnail = `/v1/image/` + res;
+					editor
+						.chain()
+						.focus()
+						.setImage({ src: `/v1/image/` + res, alt: 'bblog img' })
+						.run();
+				});
 		}
 	};
 
@@ -183,18 +200,24 @@
 
 	const write = async () => {
 		if (validator()) {
-			await articleStore.writeArticle({
-				title: title,
-				context: editor.getHTML(),
-				hide: currentHide,
-				menu: currentMenu,
-				thumbnail: thumbnail,
-				tags: hashList,
-				github: github,
-				publish: publish,
-				startDate: startDate,
-				endDate: endDate
-			});
+			globalStore.isLoading.update((val) => (val = true));
+			articleStore
+				.writeArticle({
+					title: title,
+					context: editor.getHTML(),
+					hide: currentHide,
+					menu: currentMenu,
+					thumbnail: thumbnail,
+					tags: hashList,
+					github: github,
+					publish: publish,
+					startDate: startDate,
+					endDate: endDate
+				})
+				.then(async (res) => {
+					window.location.href = `${currentMenu === 'PORTFOLIO' ? '/portfolio/' : '/blog/'}${await res.text()}`;
+				})
+				.finally(() => globalStore.isLoading.update((val) => (val = false)));
 		}
 	};
 </script>

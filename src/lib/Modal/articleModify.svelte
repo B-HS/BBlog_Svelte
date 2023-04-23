@@ -6,6 +6,7 @@
 
 	import WriteTags from '$lib/Article/writeTags.svelte';
 	import articleStore from '$lib/Store/article/articleStore';
+	import globalStore from '$lib/Store/globalStore';
 	export let showModal: boolean;
 	export let article: article;
 	let dialog: HTMLDialogElement;
@@ -37,7 +38,15 @@
 	};
 	const modify = async () => {
 		if (validator()) {
-			await articleStore.modifyArticle(modifiedArticle);
+			globalStore.isLoading.update((val) => (val = true));
+			articleStore
+				.modifyArticle(modifiedArticle)
+				.then((res) => {
+					if (res.statusText === 'OK') {
+						window.location.reload();
+					}
+				})
+				.finally(() => globalStore.isLoading.update((val) => (val = false)));
 		}
 	};
 

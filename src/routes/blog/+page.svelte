@@ -7,6 +7,7 @@
 	import { _ } from 'svelte-i18n';
 	import type { article as articleProps } from '../../app';
 	import { onDestroy, onMount } from 'svelte';
+	import globalStore from '$lib/Store/globalStore';
 	const { articles, currentTab, total, page, size } = articleStore;
 	export let data: PageData;
 	let articleList: articleProps[];
@@ -38,10 +39,20 @@
 
 	const getMoreArticle = () => {
 		if (pg >= totalPage) {
+			globalStore.isLoading.update((val) => (val = false));
 			return;
 		}
 		page.update((val) => (val += 1));
-		articleStore.loadArticleList(sg, pg, currentMenu);
+		articleStore
+			.loadArticleList(sg, pg, currentMenu)
+			.then(async (res) => {
+				if (res.statusText === 'OK') {
+					const data = await res.json();
+					articles.update((val) => (val = [...val, ...data.articles]));
+					total.update((val) => (val = data.total));
+				}
+			})
+			.finally(() => globalStore.isLoading.update((val) => (val = false)));
 	};
 
 	let observeObj: HTMLDivElement;
@@ -50,7 +61,17 @@
 		page.update((val) => (val = 0));
 		articleStore.reset();
 		currentTab.update((val) => (val = menu));
-		await articleStore.loadArticleList(sg, pg, currentMenu);
+		globalStore.isLoading.update((val) => (val = true));
+		articleStore
+			.loadArticleList(sg, pg, currentMenu)
+			.then(async (res) => {
+				if (res.statusText === 'OK') {
+					const data = await res.json();
+					articles.update((val) => (val = [...val, ...data.articles]));
+					total.update((val) => (val = data.total));
+				}
+			})
+			.finally(() => globalStore.isLoading.update((val) => (val = false)));
 		page.update((val) => (val += 1));
 	};
 
@@ -59,7 +80,9 @@
 		total.update((val) => (val = data.total));
 		page.update((val) => (val += 1));
 		const obr = new IntersectionObserver((ele) => {
-			if (ele[0].isIntersecting) getMoreArticle();
+			if (ele[0].isIntersecting) {
+				getMoreArticle()
+			}
 		});
 		obr.observe(observeObj);
 	});
@@ -68,16 +91,27 @@
 	});
 </script>
 
-
 <svelte:head>
 	<title>{`HS :: Articles`}</title>
-	<meta name="description" content={`${data.articles.map(val=>val.context).join(" ").replace(/<[^>]+>/g, "")}`} />
-	<meta name="keywords" content={`${data.articles.length>0?data.articles[0].tags.join(', '):[]}`} />
+	<meta
+		name="description"
+		content={`${data.articles
+			.map((val) => val.context)
+			.join(' ')
+			.replace(/<[^>]+>/g, '')}`}
+	/>
+	<meta name="keywords" content={`${data.articles.length > 0 ? data.articles[0].tags.join(', ') : []}`} />
 	<meta property="og:type" content="blog" />
 	<meta property="og:url" content="" />
 	<meta property="og:title" content={`HS :: Articles`} />
-	<meta property="og:image" content={"/favicon.ico"} />
-	<meta property="og:description" content={`${data.articles.map(val=>val.context).join(" ").replace(/<[^>]+>/g, "")}`} />
+	<meta property="og:image" content={'/favicon.ico'} />
+	<meta
+		property="og:description"
+		content={`${data.articles
+			.map((val) => val.context)
+			.join(' ')
+			.replace(/<[^>]+>/g, '')}`}
+	/>
 	<meta property="og:site_name" content="Hyunseok" />
 	<meta property="og:locale" content="ko_KR" />
 </svelte:head>

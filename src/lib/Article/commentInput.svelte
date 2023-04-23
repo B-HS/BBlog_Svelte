@@ -5,6 +5,7 @@
 	import Icon from '@iconify/svelte';
 	import { _ } from 'svelte-i18n';
 	import type { comment } from '../../app';
+	import globalStore from '$lib/Store/globalStore';
 	export let aid: string | number;
 	$: uploaded = false;
 	let commentParams: comment = {
@@ -22,11 +23,21 @@
 		const target = e.target as HTMLInputElement;
 		let formData = new FormData();
 		if (target.files) {
+			globalStore.isLoading.update((val) => (val = true));
 			formData.append('upload', target.files[0]);
-			articleStore.uploadImage(formData).then((res) => {
-				commentParams.commentImg = `/v1/image/` + res;
-				uploaded = true;
-			});
+			articleStore
+				.uploadImage(formData)
+				.then((res) => {
+					if (res.statusText === 'OK') {
+						tst('success', $_('image_upload_success'));
+					}
+					return res.text();
+				})
+				.finally(() => globalStore.isLoading.update((val) => (val = false)))
+				.then((res) => {
+					commentParams.commentImg = `/v1/image/` + res;
+					uploaded = true;
+				});
 		}
 	};
 
@@ -47,18 +58,38 @@
 		return true;
 	};
 
-	const writeComment = async () => {
-		if (validator()) await commentStore.writeComment(commentParams);
-		commentParams = {
-			commentDesc: '',
-			nickname: '',
-			pw: '',
-			commentGroup: 0,
-			commentSort: 0,
-			commentImg:
-				'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FYWnhg%2Fbtr9rgVjbom%2FE4BgkmjwqMdKwzo6JiFAL1%2Fimg.png',
-			aid: aid as number
-		};
+	const writeComment = () => {
+		globalStore.isLoading.update((val) => (val = true));
+		if (validator()) {
+			commentStore
+				.writeComment(commentParams)
+				.then(async (res) => {
+					if (res.statusText === 'OK') {
+						tst('success', $_('comment_registered'));
+						commentStore
+							.loadCommentList(((await res.text()) as unknown as number) + 10, 0, commentParams.aid as unknown as string)
+							.then(async (res) => {
+								if (res.statusText === 'OK') {
+									res.json().then((cmt) => {
+										commentStore.commentList.update((val) => (val = [...cmt.comments]));
+										commentStore.commentTotal.update((val) => (val = cmt.total));
+										commentParams = {
+											commentDesc: '',
+											nickname: '',
+											pw: '',
+											commentGroup: 0,
+											commentSort: 0,
+											commentImg:
+												'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FYWnhg%2Fbtr9rgVjbom%2FE4BgkmjwqMdKwzo6JiFAL1%2Fimg.png',
+											aid: aid as number
+										};
+									});
+								}
+							});
+					}
+				})
+				.finally(() => globalStore.isLoading.update((val) => (val = false)));
+		}
 	};
 </script>
 
