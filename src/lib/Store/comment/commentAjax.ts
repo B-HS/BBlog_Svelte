@@ -9,16 +9,18 @@ dictionary.subscribe((val) => (dic = val));
 
 const loadCommentList = async (size: number, page: number, aid: string) => {
 	globalStore.isLoading.update((val) => (val = true));
-	fetch('/v1/comment/list', {
+	fetch('https://hyns.dev/v1/comment/list', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ aid: aid, page: page, size: size })
 	})
 		.then(async (res) => {
 			if (res.statusText === 'OK') {
-				const data = await res.json();
-				commentStore.commentList.update((val) => (val = [...data.comments]));
-				commentStore.commentTotal.update((val) => (val = data.total));
+				console.log('==============코멘트 로드');
+				res.json().then((cmt) => {
+					commentStore.commentList.update((val) => (val = [...cmt.comments]));
+					commentStore.commentTotal.update((val) => (val = cmt.total));
+				});
 			}
 		})
 		.finally(() => globalStore.isLoading.update((val) => (val = false)));
@@ -26,16 +28,18 @@ const loadCommentList = async (size: number, page: number, aid: string) => {
 
 const loadMoreCommentList = async (size: number, page: number, aid: string) => {
 	globalStore.isLoading.update((val) => (val = true));
-	fetch('/v1/comment/list', {
+	fetch('https://hyns.dev/v1/comment/list', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ aid: aid, page: page, size: size })
 	})
 		.then(async (res) => {
 			if (res.statusText === 'OK') {
-				const data = await res.json();
-				commentStore.commentList.update((val) => (val = [...val, ...data.comments]));
-				commentStore.commentTotal.update((val) => (val = data.total));
+				console.log('==============코멘트 더 로드');
+				res.json().then((cmt) => {
+					commentStore.commentList.update((val) => (val = [...val, ...cmt.comments]));
+					commentStore.commentTotal.update((val) => (val = cmt.total));
+				});
 			}
 		})
 		.finally(() => globalStore.isLoading.update((val) => (val = false)));
@@ -43,7 +47,7 @@ const loadMoreCommentList = async (size: number, page: number, aid: string) => {
 
 const writeComment = async (params: comment) => {
 	globalStore.isLoading.update((val) => (val = true));
-	fetch('/v1/comment/write', {
+	fetch('https://hyns.dev/v1/comment/write', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ ...params })
@@ -52,6 +56,7 @@ const writeComment = async (params: comment) => {
 			if (res.statusText === 'OK') {
 				tst('success', dic.ko.comment_registered);
 				loadCommentList(((await res.text()) as unknown as number) + 10, 0, params.aid as unknown as string);
+				console.log('==============코멘트 작성');
 			}
 		})
 		.finally(() => globalStore.isLoading.update((val) => (val = false)));
@@ -59,7 +64,7 @@ const writeComment = async (params: comment) => {
 
 const deleteComment = async (params: comment) => {
 	globalStore.isLoading.update((val) => (val = true));
-	fetch('/v1/comment/delete', {
+	fetch('https://hyns.dev/v1/comment/delete', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ ...params })
@@ -68,6 +73,7 @@ const deleteComment = async (params: comment) => {
 			if (res.statusText === 'OK') {
 				tst('success', dic.ko.comment_removed);
 				loadCommentList(params.rid! + 10, 0, params.aid as unknown as string);
+				console.log('==============코멘트 삭제');
 			}
 		})
 		.finally(() => globalStore.isLoading.update((val) => (val = false)));
@@ -75,7 +81,7 @@ const deleteComment = async (params: comment) => {
 
 const modifyComment = async (params: comment) => {
 	globalStore.isLoading.update((val) => (val = true));
-	fetch('/v1/comment/modify', {
+	fetch('https://hyns.dev/v1/comment/modify', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ ...params })
@@ -84,6 +90,7 @@ const modifyComment = async (params: comment) => {
 			if (res.statusText === 'OK') {
 				loadCommentList(((await res.text()) as unknown as number) + 5, 0, params.aid as unknown as string);
 				tst('success', dic.ko.comment_edited);
+				console.log('==============코멘트 수정');
 			}
 		})
 		.finally(() => globalStore.isLoading.update((val) => (val = false)));

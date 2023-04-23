@@ -24,7 +24,7 @@
 		if (target.files) {
 			formData.append('upload', target.files[0]);
 			articleAjax.uploadImage(formData).then((res) => {
-				commentParams.commentImg = `/v1/image/` + res;
+				commentParams.commentImg = `https://hyns.dev/v1/image/` + res;
 				uploaded = true;
 			});
 		}

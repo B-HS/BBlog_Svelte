@@ -12,14 +12,17 @@ dictionary.subscribe((val) => (dic = val));
 
 const uploadImage = async (file: FormData) => {
 	globalStore.isLoading.update((val) => (val = true));
-	const data = fetch('/v1/image/upload', {
+	const data = fetch('https://hyns.dev/v1/image/upload', {
 		method: 'POST',
 		body: file
 	})
 		.then((res) => {
 			if (res.statusText === 'OK') {
+				console.log("업로드됨");
 				tst('success', dic.ko.image_upload_success);
 			}
+			console.log("==============이미지 업로드");
+			console.log(res);
 			return res.text();
 		})
 		.finally(() => globalStore.isLoading.update((val) => (val = false)));
@@ -28,12 +31,13 @@ const uploadImage = async (file: FormData) => {
 
 const writeArticle = async (article: article) => {
 	globalStore.isLoading.update((val) => (val = true));
-	fetch('/v1/article/write', {
+	fetch('https://hyns.dev/v1/article/write', {
 		method: 'POST',
 		body: JSON.stringify(article),
 		headers: { 'Content-Type': 'application/json', token: 'Bearer ' + Cookies.get('token') }
 	})
 		.then(async (res) => {
+			console.log("==============글쓰기");
 			window.location.href = `${article.menu === 'PORTFOLIO' ? '/portfolio/' : '/blog/'}${await res.text()}`;
 		})
 		.finally(() => globalStore.isLoading.update((val) => (val = false)));
@@ -41,12 +45,13 @@ const writeArticle = async (article: article) => {
 
 const deleteArticle = async (article: article) => {
 	globalStore.isLoading.update((val) => (val = true));
-	fetch('/v1/article/delete', {
+	fetch('https://hyns.dev/v1/article/delete', {
 		method: 'POST',
 		body: JSON.stringify(article),
 		headers: { 'Content-Type': 'application/json', token: 'Bearer ' + Cookies.get('token') }
 	})
 		.then(async () => {
+			console.log("==============글삭제");
 			window.location.href = `${article.menu === 'PORTFOLIO' ? '/portfolio' : '/blog'}`;
 		})
 		.finally(() => globalStore.isLoading.update((val) => (val = false)));
@@ -54,13 +59,14 @@ const deleteArticle = async (article: article) => {
 
 const modifyArticle = async (article: article) => {
 	globalStore.isLoading.update((val) => (val = true));
-	fetch('/v1/article/modify', {
+	fetch('https://hyns.dev/v1/article/modify', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json', token: 'Bearer ' + Cookies.get('token') },
 		body: JSON.stringify(article)
 	})
 		.then((res) => {
 			if (res.statusText === 'OK') {
+				console.log("==============글수정");
 				window.location.reload();
 			}
 		})
@@ -69,13 +75,14 @@ const modifyArticle = async (article: article) => {
 
 const loadArticleList = async (size: number, page: number, menu: string) => {
 	globalStore.isLoading.update((val) => (val = true));
-	fetch('/v1/article/list', {
+	fetch('https://hyns.dev/v1/article/list', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ menu: menu, page: page, size: size })
 	})
 		.then(async (res) => {
 			if (res.statusText === 'OK') {
+				console.log("==============글로딩");
 				const data = await res.json();
 				articleStore.articles.update((val) => (val = [...val, ...data.articles]));
 				articleStore.total.update((val) => (val = data.total));

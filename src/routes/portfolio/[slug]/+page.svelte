@@ -17,14 +17,6 @@
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 
-	onMount(async () => {
-		await fetch('/v1/visit/read', {
-			method: 'POST',
-			body: JSON.stringify({ aid: data.slug, visitUrl: document.referrer ? document.referrer : 'LINK NOT CHECKED' }),
-			headers: { 'Content-Type': 'application/json' }
-		});
-	});
-
 	onDestroy(() => {
 		articleAjax.reset();
 		commentAjax.commentReset();

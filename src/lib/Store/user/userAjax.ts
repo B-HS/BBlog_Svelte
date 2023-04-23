@@ -7,7 +7,7 @@ dictionary.subscribe((val) => (dic = val));
 
 const login = async (params: { adminId: string; password: string }) => {
 	globalStore.isLoading.update((val) => (val = true));
-	const data = fetch('/v1/login', {
+	const data = fetch('https://hyns.dev/v1/login', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(params)

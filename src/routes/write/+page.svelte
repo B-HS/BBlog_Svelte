@@ -83,11 +83,11 @@
 		if (target.files) {
 			formData.append('upload', target.files[0]);
 			articleAjax.uploadImage(formData).then((res) => {
-				thumbnail = `/v1/image/` + res;
+				thumbnail = `https://hyns.dev/v1/image/` + res;
 				editor
 					.chain()
 					.focus()
-					.setImage({ src: `/v1/image/` + res, alt: 'bblog img' })
+					.setImage({ src: `https://hyns.dev/v1/image/` + res, alt: 'bblog img' })
 					.run();
 			});
 		}
