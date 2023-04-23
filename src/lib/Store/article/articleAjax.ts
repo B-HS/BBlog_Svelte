@@ -9,14 +9,6 @@ import globalStore from '../globalStore';
 let dic: any;
 dictionary.subscribe((val) => (dic = val));
 
-const visit = async (aid: number, referrer: string) => {
-	globalStore.isLoading.update((val) => (val = true));
-	fetch('/v1/visit/read', {
-		method: 'POST',
-		body: JSON.stringify({ aid: aid, visitUrl: referrer }),
-		headers: { 'Content-Type': 'application/json' }
-	}).finally(() => globalStore.isLoading.update((val) => (val = false)));
-};
 
 const uploadImage = async (file: FormData) => {
 	globalStore.isLoading.update((val) => (val = true));
@@ -105,4 +97,4 @@ const reset = () => {
 	globalStore.isLoading.update((val) => (val = false));
 };
 
-export default { uploadImage, loadArticleList, reset, writeArticle, modifyArticle, deleteArticle, visit };
+export default { uploadImage, loadArticleList, reset, writeArticle, modifyArticle, deleteArticle };

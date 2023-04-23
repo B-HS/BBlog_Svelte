@@ -43,14 +43,14 @@
 
 	let observeObj: HTMLDivElement;
 	onMount(() => {
-		typeof document.referrer !== undefined ? (referrer = document.referrer) : 'NOT CHEKCED';
-		articleAjax.visit(data.slug as unknown as number, referrer);
 		commentStore.commentList.update((val) => (val = data.comments));
 		commentStore.page.update((val) => (val = 1));
 		page.update((val) => (val += 1));
 		commentStore.total.update((val) => (val = data.total));
 		const obr = new IntersectionObserver((ele) => {
-			if (ele[0].isIntersecting) getMoreComment();
+			if (ele[0].isIntersecting) {
+				getMoreComment();
+			}
 		});
 		obr.observe(observeObj);
 	});
